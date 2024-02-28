@@ -6,19 +6,37 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import FirebaseAuth
+
+enum AuthFlow {
+    case authenticated
+    case notAuthenticated
+}
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+    @State var authFlow: AuthFlow = .notAuthenticated
+
+    init() {
+        if Auth.auth().currentUser != nil {
+            authFlow = .authenticated
         }
-        .padding()
+    }
+
+    var body: some View {
+        switch authFlow {
+        case .notAuthenticated:
+            AuthViewModel(authFlow: $authFlow)
+        case .authenticated:
+            MainView(authFlow: $authFlow)
+        }
     }
 }
 
-#Preview {
-    ContentView()
+
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
