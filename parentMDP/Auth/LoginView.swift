@@ -3,7 +3,12 @@
 //  parentMDP
 //
 //  Created by Pei-Tzu Huang on 2024/2/8.
+//  Edited by Eric Tran on 2024/3/2.
 //
+// SUMMARY:
+// The view responsible for the login page containing two text boxes that accept an email and password
+// Also contains a sign up button that will direct the user to the SignupView where the user can create a new account
+// Password requires at least one capital letter, one lowercase letter, and one special letter
 
 import SwiftUI
 import FirebaseAuth
@@ -13,12 +18,13 @@ struct LoginView: View {
     @State private var password: String = ""
     @Binding var currentShowingView: String
     @Binding var authFlow: AuthFlow
+    
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
             
             VStack {
-                // Header
+                // Header START
                 HStack {
                     Text("Welcome Back!")
                         .font(.largeTitle)
@@ -29,11 +35,15 @@ struct LoginView: View {
                 }
                 .padding()
                 .padding(.top)
+                // Header END
+                
                 Spacer()
-                // Email Textfield
+                
+                // Email TextField START
                 HStack {
                     Image(systemName: "mail")
-                    TextField("Email", text: $email)
+                        .foregroundColor(.gray)
+                    TextField("", text: $email, prompt: Text("Email").foregroundStyle(.gray))
                         .foregroundColor(.white)
                         .autocorrectionDisabled()
                         .autocapitalization(.none)
@@ -45,13 +55,14 @@ struct LoginView: View {
                         .foregroundColor(.white)
                     
                 )
-                
                 .padding()
+                // Email TextField END
                 
-                // Password Textfield
+                // Password TextField START
                 HStack {
                     Image(systemName: "lock")
-                    SecureField("Password", text: $password)
+                        .foregroundColor(.gray)
+                    SecureField("", text: $password, prompt: Text("Password").foregroundColor(.gray))
                         .foregroundColor(.white)
 
                     
@@ -64,8 +75,9 @@ struct LoginView: View {
                     
                 )
                 .padding()
+                // Password TextField END
                 
-                // switching between signup and login
+                // Button for switching between LoginView and SignupView START
                 Button(action: {
                     withAnimation {
                         self.currentShowingView = "signup"
@@ -74,7 +86,11 @@ struct LoginView: View {
                     Text("New to Kidoo?")
                         .foregroundColor(.gray)
                 }
+                // Button for switching between LoginView and SignupView END
+                
                 Spacer()
+                
+                // Button to initiate the sign in process START
                 Button(action: {
                     Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                         if let error = error {
@@ -92,16 +108,15 @@ struct LoginView: View {
                         .foregroundColor(.white)
                         .font(.title3)
                         .bold()
-                    
                         .frame(maxWidth: .infinity)
                         .padding()
-                    
                         .background(
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(Color.customPurple)
                         )
                         .padding(.horizontal)
                 }
+                // Button to initiate the sign in process END
 
                 
             }
