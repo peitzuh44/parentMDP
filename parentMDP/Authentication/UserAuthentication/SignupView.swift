@@ -36,7 +36,7 @@ struct SignupView: View {
         }
     }
     
-    // Function that signs up the new user with their inputed email and password
+    // Function that signs up the new user with their inputed email and password and set showAddKidView = true
     func signup() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -53,6 +53,7 @@ struct SignupView: View {
                     try db.collection("users").document(uid).setData(from: user)
                     self.myParent = parentCode
                     self.parentID = uid
+                    // SHOW ADD KID VIEW CHANGED TO TRUE
                     self.showAddKidView = true
                 } catch let error {
                     print("Error writing user to Firestore: \(error)")
@@ -100,9 +101,6 @@ struct SignupView: View {
                         Text("Already have an account?")
                             .foregroundColor(.white)
                     }
-                    .navigationDestination(isPresented: $showAddKidView) {
-                        AddKidView(authFlow: $authFlow)
-                    }
                     // Return to Login View button END
                     
                     Spacer()
@@ -123,6 +121,10 @@ struct SignupView: View {
                                     .fill(Color.customPurple)
                             )
                             .padding(.horizontal)
+                    }
+                    // This pushes the AddKidView onto the navigations stack after successful signup
+                    .navigationDestination(isPresented: $showAddKidView) {
+                        AddKidView(authFlow: $authFlow)
                     }
                     // Sign Up Button END
                 }
