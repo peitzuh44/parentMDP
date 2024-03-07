@@ -3,7 +3,7 @@
 //  parentMDP
 //
 //  Created by Pei-Tzu Huang on 2024/2/13.
-//
+//  Edited by Eric Tran on 2024/3/7
 
 import FirebaseAuth
 import FirebaseCore

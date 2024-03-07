@@ -3,7 +3,9 @@
 //  parentMDP
 //
 //  Created by Pei-Tzu Huang on 2024/2/8.
+//  Edited by Eric Tran on 2024/3/6
 //
+//  SUMMARY:
 
 import SwiftUI
 import Firebase
@@ -19,6 +21,8 @@ struct SignupView: View {
     @State private var errorMessage: String?
     @State private var parentID: String = ""
     @State private var myParent: String = ""
+    
+    // Function that fetches the parent code that will be shared to the kids when they install the app
     private func fetchParentCode(forParentID parentID: String, completion: @escaping (String?) -> Void) {
         let db = Firestore.firestore()
         db.collection("users").document(parentID).getDocument { documentSnapshot, error in
@@ -32,6 +36,7 @@ struct SignupView: View {
         }
     }
     
+    // Function that signs up the new user with their inputed email and password
     func signup() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -59,9 +64,11 @@ struct SignupView: View {
     var body: some View {
         NavigationStack {
             ZStack{
-                Color.customNavyBlue.edgesIgnoringSafeArea(.all)
+                // Background Color
+                Color.customDarkBlue.edgesIgnoringSafeArea(.all)
                 
                 VStack {
+                    // HEADER START
                     HStack {
                         Text("Welcome to Kidoo!")
                             .foregroundColor(.white)
@@ -72,40 +79,19 @@ struct SignupView: View {
                     }
                     .padding()
                     .padding(.top)
+                    // HEADER END
                     
                     Spacer()
                     
-                    HStack {
-                        Image(systemName: "mail")
-                        TextField("Email", text: $email)
-                            .autocorrectionDisabled()
-                            .textInputAutocapitalization(.none)
-                        
-                    }
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 2)
-                            .foregroundColor(.white)
-                        
-                    )
+                    // Email Textfield START
+                    EmailComponent(email: $email)
+                    // Email Textfield END
                     
-                    .padding()
+                    // Password Textfield START
+                    PasswordComponent(password: $password)
+                    // Password Textfield END
                     
-                    HStack {
-                        Image(systemName: "lock")
-                        SecureField("Password", text: $password)
-                        
-                    }
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 2)
-                            .foregroundColor(.white)
-                        
-                    )
-                    .padding()
-                    
+                    // Return to Login View button START
                     Button(action: {
                         withAnimation {
                             self.currentShowingView = "login"
@@ -117,10 +103,12 @@ struct SignupView: View {
                     .navigationDestination(isPresented: $showAddKidView) {
                         AddKidView(authFlow: $authFlow)
                     }
+                    // Return to Login View button END
                     
                     Spacer()
                     Spacer()
                     
+                    // Sign Up Button START
                     Button(action: {
                         signup()
                     }) {
@@ -136,6 +124,7 @@ struct SignupView: View {
                             )
                             .padding(.horizontal)
                     }
+                    // Sign Up Button END
                 }
             }
         }

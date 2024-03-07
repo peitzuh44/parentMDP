@@ -40,41 +40,11 @@ struct LoginView: View {
                 Spacer()
                 
                 // Email TextField START
-                HStack {
-                    Image(systemName: "mail")
-                        .foregroundColor(.gray)
-                    TextField("", text: $email, prompt: Text("Email").foregroundStyle(.gray))
-                        .foregroundColor(.white)
-                        .autocorrectionDisabled()
-                        .autocapitalization(.none)
-                }
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(lineWidth: 2)
-                        .foregroundColor(.white)
-                    
-                )
-                .padding()
+                EmailComponent(email: $email)
                 // Email TextField END
                 
                 // Password TextField START
-                HStack {
-                    Image(systemName: "lock")
-                        .foregroundColor(.gray)
-                    SecureField("", text: $password, prompt: Text("Password").foregroundColor(.gray))
-                        .foregroundColor(.white)
-
-                    
-                }
-                .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(lineWidth: 2)
-                        .foregroundColor(.white)
-                    
-                )
-                .padding()
+                PasswordComponent(password: $password)
                 // Password TextField END
                 
                 // Button for switching between LoginView and SignupView START

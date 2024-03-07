@@ -3,11 +3,13 @@
 //  parentMDP
 //
 //  Created by Pei-Tzu Huang on 2024/2/8.
+//  Edited by Eric Tran on 2024/3/6
 //
+// This file contains the custom colors of the project that we need as well as the background gradient
 
 import Foundation
-
 import SwiftUI
+
 let backgroundGradient = LinearGradient(gradient: Gradient(colors: [Color.customPurple, Color.customBlue]), startPoint: .top, endPoint: .bottom)
 
 extension Color {

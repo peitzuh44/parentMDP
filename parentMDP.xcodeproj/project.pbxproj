@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C3B11C22B9A40E90058368E /* EmailComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B11C12B9A40E90058368E /* EmailComponent.swift */; };
+		7C3B11C42B9A41D30058368E /* PasswordComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B11C32B9A41D30058368E /* PasswordComponent.swift */; };
 		AF2B767C2B7585F400B9535F /* parentMDPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B767B2B7585F400B9535F /* parentMDPApp.swift */; };
 		AF2B767E2B7585F400B9535F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B767D2B7585F400B9535F /* ContentView.swift */; };
 		AF2B76802B7585F600B9535F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF2B767F2B7585F600B9535F /* Assets.xcassets */; };
@@ -66,7 +68,6 @@
 		AF75D72A2B7C3D62009CBF30 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D7292B7C3D62009CBF30 /* AuthViewModel.swift */; };
 		AF75D72C2B7C3E5A009CBF30 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D72B2B7C3E5A009CBF30 /* MainView.swift */; };
 		AF75D72E2B7C3E7C009CBF30 /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D72D2B7C3E7C009CBF30 /* RewardView.swift */; };
-		AF75D7342B7C40BF009CBF30 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D7332B7C40BF009CBF30 /* AuthView.swift */; };
 		AF75D7362B7C431B009CBF30 /* TaskViewDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D7352B7C431B009CBF30 /* TaskViewDatePicker.swift */; };
 		AFC6EC8E2B8186AD000CFB9B /* RewardActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC6EC8D2B8186AD000CFB9B /* RewardActionSheet.swift */; };
 		AFC6EC902B819035000CFB9B /* PurchasedByPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC6EC8F2B819035000CFB9B /* PurchasedByPicker.swift */; };
@@ -89,6 +90,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C3B11C12B9A40E90058368E /* EmailComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailComponent.swift; sourceTree = "<group>"; };
+		7C3B11C32B9A41D30058368E /* PasswordComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordComponent.swift; sourceTree = "<group>"; };
 		AF2B76782B7585F400B9535F /* parentMDP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = parentMDP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF2B767B2B7585F400B9535F /* parentMDPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parentMDPApp.swift; sourceTree = "<group>"; };
 		AF2B767D2B7585F400B9535F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -139,7 +142,6 @@
 		AF75D7292B7C3D62009CBF30 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		AF75D72B2B7C3E5A009CBF30 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		AF75D72D2B7C3E7C009CBF30 /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
-		AF75D7332B7C40BF009CBF30 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		AF75D7352B7C431B009CBF30 /* TaskViewDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewDatePicker.swift; sourceTree = "<group>"; };
 		AFC6EC8D2B8186AD000CFB9B /* RewardActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardActionSheet.swift; sourceTree = "<group>"; };
 		AFC6EC8F2B819035000CFB9B /* PurchasedByPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasedByPicker.swift; sourceTree = "<group>"; };
@@ -182,6 +184,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C3B11BA2B9A38170058368E /* UserAuthentication */ = {
+			isa = PBXGroup;
+			children = (
+				7C3B11C52B9A423C0058368E /* Components */,
+				AF75D7292B7C3D62009CBF30 /* AuthViewModel.swift */,
+				AF2B76D52B758F1F00B9535F /* SignupView.swift */,
+				AF2B76D72B758F2A00B9535F /* LoginView.swift */,
+			);
+			path = UserAuthentication;
+			sourceTree = "<group>";
+		};
+		7C3B11BB2B9A3F9D0058368E /* Custom Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Custom Modifiers";
+			sourceTree = "<group>";
+		};
+		7C3B11BC2B9A3FB20058368E /* Custom Colors */ = {
+			isa = PBXGroup;
+			children = (
+				AF2B76952B7589D000B9535F /* Color.swift */,
+			);
+			path = "Custom Colors";
+			sourceTree = "<group>";
+		};
+		7C3B11C52B9A423C0058368E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7C3B11C12B9A40E90058368E /* EmailComponent.swift */,
+				7C3B11C32B9A41D30058368E /* PasswordComponent.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		AF2B766F2B7585F400B9535F = {
 			isa = PBXGroup;
 			children = (
@@ -205,7 +242,7 @@
 				AF5573A62B7E886200A8724A /* Extensions */,
 				AF2B76B02B758D3300B9535F /* Model */,
 				AF2B76942B75899300B9535F /* Utilities */,
-				AF2B76912B7588D700B9535F /* Auth */,
+				AF2B76912B7588D700B9535F /* Authentication */,
 				AF2B768F2B7588C000B9535F /* Dashboard */,
 				AF2B769B2B758A8200B9535F /* Task */,
 				AF2B76932B75896000B9535F /* Challenge */,
@@ -251,18 +288,15 @@
 			path = Dashboard;
 			sourceTree = "<group>";
 		};
-		AF2B76912B7588D700B9535F /* Auth */ = {
+		AF2B76912B7588D700B9535F /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				AF75D7332B7C40BF009CBF30 /* AuthView.swift */,
-				AF2B76D52B758F1F00B9535F /* SignupView.swift */,
-				AF2B76D72B758F2A00B9535F /* LoginView.swift */,
+				7C3B11BA2B9A38170058368E /* UserAuthentication */,
 				AF2B76D92B758F3800B9535F /* AddKidView.swift */,
 				AF2B76DC2B758F4A00B9535F /* AddKidSheet.swift */,
 				AF2B76DE2B758F5C00B9535F /* InviteKidView.swift */,
-				AF75D7292B7C3D62009CBF30 /* AuthViewModel.swift */,
 			);
-			path = Auth;
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		AF2B76922B7588E000B9535F /* Picker */ = {
@@ -303,7 +337,8 @@
 		AF2B76942B75899300B9535F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				AF2B76952B7589D000B9535F /* Color.swift */,
+				7C3B11BC2B9A3FB20058368E /* Custom Colors */,
+				7C3B11BB2B9A3F9D0058368E /* Custom Modifiers */,
 				AF2B769F2B758B2300B9535F /* Compenents */,
 				AF2B76922B7588E000B9535F /* Picker */,
 			);
@@ -462,6 +497,7 @@
 				AF2B76DD2B758F4A00B9535F /* AddKidSheet.swift in Sources */,
 				AF2B769A2B758A3100B9535F /* Button.swift in Sources */,
 				AF2B76B82B758D7900B9535F /* InventoryModel.swift in Sources */,
+				7C3B11C42B9A41D30058368E /* PasswordComponent.swift in Sources */,
 				AF2B76B42B758D5A00B9535F /* KidModel.swift in Sources */,
 				AF5573AE2B7EBA0200A8724A /* PricePicker.swift in Sources */,
 				AF5573A52B7E875700A8724A /* CalendarDatePicker.swift in Sources */,
@@ -490,6 +526,7 @@
 				AF2B76C02B758DC600B9535F /* PublicTaskView.swift in Sources */,
 				AF2B76CC2B758E8E00B9535F /* DashboardView.swift in Sources */,
 				AFDBDC8C2B8C067000155ED7 /* RewardViewModel.swift in Sources */,
+				7C3B11C22B9A40E90058368E /* EmailComponent.swift in Sources */,
 				AF2B769E2B758B0400B9535F /* TaskView.swift in Sources */,
 				AF2B76D22B758ED300B9535F /* RedeemRewardView.swift in Sources */,
 				AF5573B82B7EE5F700A8724A /* ChallengeActionSheet.swift in Sources */,
@@ -520,7 +557,6 @@
 				AF2B76BC2B758D9B00B9535F /* RewardModel.swift in Sources */,
 				AF5573832B7D39B000A8724A /* KidSelector.swift in Sources */,
 				AFDBDC7F2B8A7D7700155ED7 /* TaskActionSheet.swift in Sources */,
-				AF75D7342B7C40BF009CBF30 /* AuthView.swift in Sources */,
 				AF2B76962B7589D100B9535F /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -583,7 +619,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -643,7 +679,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
