@@ -3,7 +3,9 @@
 //  parentMDP
 //
 //  Created by Pei-Tzu Huang on 2024/2/8.
+//  Edited by Eric Tran on 2024/3/7.
 //
+//  This is the view for the text field component that can be customized accordingly to the values passed into it, the focused state is used to activate an overlay over the text field whenever the text box is focused on
 
 import SwiftUI
 
@@ -21,12 +23,12 @@ struct CustomTextfield: View {
 
         HStack {
             Image(systemName: icon)
-            TextField(placeholder, text: $text)
+                .foregroundColor(.gray)
+            TextField("", text: $text, prompt: Text(placeholder).foregroundColor(.gray))
                 .focused($focused)
                 .foregroundColor(.white)
                 .autocorrectionDisabled()
                 .autocapitalization(.none)
-            // Use the Binding directly
         }
         .onTapGesture {
             focused = true
@@ -34,7 +36,6 @@ struct CustomTextfield: View {
         .padding(20)
         .background(background)
         .cornerRadius(10)
-
         .overlay {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(focused ? AnyShapeStyle(color) : AnyShapeStyle(background),

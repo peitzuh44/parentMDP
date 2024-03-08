@@ -3,7 +3,7 @@
 //  parentMDP
 //
 //  Created by Pei-Tzu Huang on 2024/2/8.
-//
+//  Edited by Eric Tran on 2024/3/7.
 
 import SwiftUI
 
@@ -19,6 +19,7 @@ struct BirthdatePicker: View {
                     .datePickerStyle(.wheel)
                     .labelsHidden()
                     .padding(10)
+                    .colorScheme(.dark)
 
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()

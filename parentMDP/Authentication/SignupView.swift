@@ -5,7 +5,7 @@
 //  Created by Pei-Tzu Huang on 2024/2/8.
 //  Edited by Eric Tran on 2024/3/6
 //
-//  SUMMARY:
+//  SUMMARY: This view contains a button to go back to the login view and the input for an email and password that will be sent to FireBase when you press the signup button. This will push the AddKidView onto the ViewStack once the signup is successful
 
 import SwiftUI
 import Firebase
@@ -36,8 +36,14 @@ struct SignupView: View {
         }
     }
     
+    // Generates the parent code that will be used for the kids to get connected to their parent's account
+    private func generateRandomParentCode(length: Int) -> String {
+        let lettersAndNumbers = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in lettersAndNumbers.randomElement()! })
+    }
+    
     // Function that signs up the new user with their inputed email and password and set showAddKidView = true
-    func signup() {
+    private func signup() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 self.errorMessage = error.localizedDescription

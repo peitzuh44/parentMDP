@@ -3,9 +3,16 @@
 //  parentMDP
 //
 //  Created by Pei-Tzu Huang on 2024/2/8.
+//  Edited by Eric Tran on 2024/3/7.
 //
+//  SUMMARY: This sheet is pulled up whenever we want to add a new kid, this will ask for the name, birthdate, and gender of the kid and add the kid to the db once we fill out all of the information
 
 import SwiftUI
+
+enum GenderOptions: String, CaseIterable {
+    case male = "male"
+    case female = "female"
+}
 
 struct AddKidSheet: View {
     @Environment(\.presentationMode) var presentationMode
@@ -14,17 +21,14 @@ struct AddKidSheet: View {
     @State private var selectedGender: GenderOptions?
     @State private var selectedBirthdate = Date()
     @AppStorage("kidID") var kidID: String = ""
-    
-    
     @State private var showBirthdatePicker = false
-
 
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
             
             VStack{
-                //Header
+                // Header START
                 HStack{
                     //cancel button
                     Button(action: {
@@ -40,9 +44,13 @@ struct AddKidSheet: View {
                 .foregroundColor(.white)
                 .padding()
                 .background(Color.customNavyBlue)
-                //kid's name
+                // Header END
+                
+                // CustomTextField for kid's name START
                 CustomTextfield(text: $name, placeholder: "Kid's Name", icon: "", background: Color.customNavyBlue, color: Color.white)
-                //birthdate
+                // CustomTextField for kid's name END
+                
+                // Button that will show the BirthDate Picker START
                 Button(action:{
                     self.showBirthdatePicker = true
                 }){
@@ -62,32 +70,32 @@ struct AddKidSheet: View {
                         .presentationDetents([.height(380)])
                         .presentationDragIndicator(.hidden)
                 }
+                // Button that will show the Birthdate Picker END
 
-                
+                // GenderPicker START
                 GenderPicker(selectedGender: $selectedGender)
-                
+                // GenderPicker END
                 
                 Spacer()
+                
+                // Add Kid Button START
                 Button(action:{
-                    presentationMode.wrappedValue.dismiss()
+                    // If the user has selected the gender and given a name, proceed!
                     if let selectedGender = selectedGender {
-                        viewModel.addKids(name: name, gender: selectedGender.rawValue, birthdate: selectedBirthdate)
-                        presentationMode.wrappedValue.dismiss()
+                        if !name.isEmpty {
+                            viewModel.addKids(name: name, gender: selectedGender.rawValue, birthdate: selectedBirthdate)
+                            presentationMode.wrappedValue.dismiss()
+                        }
                     }
-
                 }){
                     Text("Add")
                         .foregroundStyle(Color.white)
-
-                    
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 50)
-                .buttonStyle(ThreeD(backgroundColor: Color.customPurple, shadowColor: Color.black)
-                             )
+                .buttonStyle(ThreeD(backgroundColor: Color.customPurple, shadowColor: Color.black))
                 .padding()
-
-                
+                // Add Kid Button END
             }
         }
 
@@ -96,45 +104,4 @@ struct AddKidSheet: View {
     }
 }
 
-struct AddKidSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        AddKidView(authFlow: Binding.constant(.notAuthenticated))
-    }
-}
-
-
-
-enum GenderOptions: String, CaseIterable {
-    case male = "male"
-    case female = "female"
-}
-struct GenderPicker: View {
-    @Binding var selectedGender: GenderOptions?
-
-    var body: some View {
-        HStack{
-            ForEach(GenderOptions.allCases, id: \.self) { option in
-                Button(action: {
-                    self.selectedGender = option
-                }) {
-                    VStack(spacing: 24) {
-                        Image(imageString(for: option))
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 80)
-                        Text(option.rawValue)
-                            .foregroundColor(.white)
-                    }
-                    .frame(width: 130, height: 160)
-                    .background(self.selectedGender == option ? Color.customPurple : Color.black.opacity(0.6)) // Replaced custom colors for the example
-                    .cornerRadius(10)
-                }
-            }
-        }
-        .padding()
-    }
-    private func imageString(for gender: GenderOptions) -> String {
-        return gender.rawValue
-    }
-}
 

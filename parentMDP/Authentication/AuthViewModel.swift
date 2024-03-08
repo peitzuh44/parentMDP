@@ -4,18 +4,13 @@
 //
 //  Created by Pei-Tzu Huang on 2024/2/13.
 //  Edited by Eric Tran on 2024/3/7
+//
+//  SUMMARY: This is the root of the authentication portion of the app, here we have two possible views where the user can either log in or sign up. If they log in, they are sent to the main view, and if they sign up, they will be sent to the add kid view
 
 import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestore
 import SwiftUI
-
-
-func generateRandomParentCode(length: Int) -> String {
-    let lettersAndNumbers = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    return String((0..<length).map{ _ in lettersAndNumbers.randomElement()! })
-}
-
 
 struct AuthViewModel: View {
     @Binding var authFlow: AuthFlow
@@ -26,7 +21,7 @@ struct AuthViewModel: View {
             LoginView(currentShowingView: $currentViewShowing, authFlow: $authFlow)
         } else {
             SignupView(currentShowingView: $currentViewShowing, authFlow: $authFlow)
-                .transition(.move(edge: .bottom))
+                .transition(.move(edge: .top))
         }
     }
 }

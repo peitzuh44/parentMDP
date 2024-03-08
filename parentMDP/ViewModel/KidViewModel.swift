@@ -14,8 +14,7 @@ class KidViewModel: ObservableObject {
     @Published var kids: [KidModel] = []
     private let db = Firestore.firestore()
 
-    
-    //fetch kids
+    // function that fetches kids from the database (only the user's kid)
     func fetchKids() {
         guard let userID = Auth.auth().currentUser?.uid else {
             print("User not logged in")
@@ -44,7 +43,7 @@ class KidViewModel: ObservableObject {
     }
 
     
-    // add kids
+    // function that adds kids to your database given a name, gender, and birthdate
     func addKids(name: String, gender: String, birthdate: Date) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             print("User not logged in")
@@ -67,7 +66,8 @@ class KidViewModel: ObservableObject {
             }
         }
     }
-
+    
+    // Function that adds the kids to the firebase
     private func proceedToAddKids(name: String, gender: String, birthdate: Date, parentID: String, myParent: String) {
         let newKidRef = db.collection("kids").document()
         let kidID = newKidRef.documentID
@@ -102,16 +102,12 @@ class KidViewModel: ObservableObject {
     
     //delete kids
     
-    //calculate age
-    
-    func calculateAge(from birthdate: Date) -> Int {
+    // Calculate Age
+    func calculateAge(birthday: Date) -> Int {
         let calendar = Calendar.current
         let now = Date()
-        let ageComponents = calendar.dateComponents([.year], from: birthdate, to: now)
-        let age = ageComponents.year!
-        return age
+        let ageComponents = calendar.dateComponents([.year], from: birthday, to: now)
+        return ageComponents.year!
     }
-
-
 }
 

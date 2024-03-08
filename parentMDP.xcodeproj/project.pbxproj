@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7C3B11C22B9A40E90058368E /* EmailComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B11C12B9A40E90058368E /* EmailComponent.swift */; };
 		7C3B11C42B9A41D30058368E /* PasswordComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B11C32B9A41D30058368E /* PasswordComponent.swift */; };
+		7C3B11C82B9AE4760058368E /* GenderPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B11C72B9AE4760058368E /* GenderPicker.swift */; };
 		AF2B767C2B7585F400B9535F /* parentMDPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B767B2B7585F400B9535F /* parentMDPApp.swift */; };
 		AF2B767E2B7585F400B9535F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B767D2B7585F400B9535F /* ContentView.swift */; };
 		AF2B76802B7585F600B9535F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF2B767F2B7585F600B9535F /* Assets.xcassets */; };
@@ -92,6 +93,7 @@
 /* Begin PBXFileReference section */
 		7C3B11C12B9A40E90058368E /* EmailComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailComponent.swift; sourceTree = "<group>"; };
 		7C3B11C32B9A41D30058368E /* PasswordComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordComponent.swift; sourceTree = "<group>"; };
+		7C3B11C72B9AE4760058368E /* GenderPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderPicker.swift; sourceTree = "<group>"; };
 		AF2B76782B7585F400B9535F /* parentMDP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = parentMDP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF2B767B2B7585F400B9535F /* parentMDPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parentMDPApp.swift; sourceTree = "<group>"; };
 		AF2B767D2B7585F400B9535F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -184,17 +186,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7C3B11BA2B9A38170058368E /* UserAuthentication */ = {
-			isa = PBXGroup;
-			children = (
-				7C3B11C52B9A423C0058368E /* Components */,
-				AF75D7292B7C3D62009CBF30 /* AuthViewModel.swift */,
-				AF2B76D52B758F1F00B9535F /* SignupView.swift */,
-				AF2B76D72B758F2A00B9535F /* LoginView.swift */,
-			);
-			path = UserAuthentication;
-			sourceTree = "<group>";
-		};
 		7C3B11BB2B9A3F9D0058368E /* Custom Modifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +210,16 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		7C3B11C62B9A6DD30058368E /* AddingKids */ = {
+			isa = PBXGroup;
+			children = (
+				AF2B76D92B758F3800B9535F /* AddKidView.swift */,
+				AF2B76DC2B758F4A00B9535F /* AddKidSheet.swift */,
+				AF2B76DE2B758F5C00B9535F /* InviteKidView.swift */,
+			);
+			path = AddingKids;
+			sourceTree = "<group>";
+		};
 		AF2B766F2B7585F400B9535F = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +240,7 @@
 		AF2B767A2B7585F400B9535F /* parentMDP */ = {
 			isa = PBXGroup;
 			children = (
+				7C3B11C62B9A6DD30058368E /* AddingKids */,
 				AF5573A62B7E886200A8724A /* Extensions */,
 				AF2B76B02B758D3300B9535F /* Model */,
 				AF2B76942B75899300B9535F /* Utilities */,
@@ -291,10 +293,10 @@
 		AF2B76912B7588D700B9535F /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				7C3B11BA2B9A38170058368E /* UserAuthentication */,
-				AF2B76D92B758F3800B9535F /* AddKidView.swift */,
-				AF2B76DC2B758F4A00B9535F /* AddKidSheet.swift */,
-				AF2B76DE2B758F5C00B9535F /* InviteKidView.swift */,
+				7C3B11C52B9A423C0058368E /* Components */,
+				AF75D7292B7C3D62009CBF30 /* AuthViewModel.swift */,
+				AF2B76D52B758F1F00B9535F /* SignupView.swift */,
+				AF2B76D72B758F2A00B9535F /* LoginView.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -316,6 +318,7 @@
 				AFC6EC8F2B819035000CFB9B /* PurchasedByPicker.swift */,
 				AFC6EC9D2B83EF13000CFB9B /* KidSelectorSheet.swift */,
 				AF5573822B7D39B000A8724A /* KidSelector.swift */,
+				7C3B11C72B9AE4760058368E /* GenderPicker.swift */,
 			);
 			path = Picker;
 			sourceTree = "<group>";
@@ -339,7 +342,7 @@
 			children = (
 				7C3B11BC2B9A3FB20058368E /* Custom Colors */,
 				7C3B11BB2B9A3F9D0058368E /* Custom Modifiers */,
-				AF2B769F2B758B2300B9535F /* Compenents */,
+				AF2B769F2B758B2300B9535F /* Components */,
 				AF2B76922B7588E000B9535F /* Picker */,
 			);
 			path = Utilities;
@@ -373,7 +376,7 @@
 			path = Reward;
 			sourceTree = "<group>";
 		};
-		AF2B769F2B758B2300B9535F /* Compenents */ = {
+		AF2B769F2B758B2300B9535F /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				AF2B76972B7589FC00B9535F /* CustomTextfield.swift */,
@@ -381,7 +384,7 @@
 				AF2B76A02B758B4700B9535F /* CustomSegmentedControl.swift */,
 				AF5573842B7D3A8000A8724A /* ProgressBar.swift */,
 			);
-			path = Compenents;
+			path = Components;
 			sourceTree = "<group>";
 		};
 		AF2B76B02B758D3300B9535F /* Model */ = {
@@ -507,6 +510,7 @@
 				AF75D72A2B7C3D62009CBF30 /* AuthViewModel.swift in Sources */,
 				AF5573B02B7EE47D00A8724A /* EditRewardSheet.swift in Sources */,
 				AFC6EC922B819C91000CFB9B /* ChallengeView.swift in Sources */,
+				7C3B11C82B9AE4760058368E /* GenderPicker.swift in Sources */,
 				AFDBDC942B8E723B00155ED7 /* SkillViewModel.swift in Sources */,
 				AF5573852B7D3A8000A8724A /* ProgressBar.swift in Sources */,
 				AF5573AC2B7EB28100A8724A /* RarityPicker.swift in Sources */,
