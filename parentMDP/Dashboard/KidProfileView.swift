@@ -250,6 +250,8 @@ struct AvatarAttribute: View {
         .frame(width: 350, height: 120)
         .background(
             Color.customNavyBlue
+            
+            
                 .cornerRadius(20)        )
     }
 }

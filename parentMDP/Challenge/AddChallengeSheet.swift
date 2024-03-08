@@ -53,7 +53,7 @@ struct AddChallengeSheet: View {
                         Image(systemName: "xmark")
                     }
                     Spacer()
-                    Text("New Private Task")
+                    Text("New Challenge")
                     Spacer()
                     
                 }

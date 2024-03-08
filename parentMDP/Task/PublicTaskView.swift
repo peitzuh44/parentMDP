@@ -16,7 +16,6 @@ struct PublicTaskView: View {
     @State private var showDeleteTaskAlert = false
     @State private var showCompletePicker = false
 
-
     var body: some View {
         VStack{
             List{
