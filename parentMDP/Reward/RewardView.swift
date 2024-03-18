@@ -9,11 +9,12 @@ import SwiftUI
 import FirebaseAuth
 
 struct RewardView: View {
+    // MARK: Properties
+
     @ObservedObject var rewardVM = RewardViewModel() // reward VM
     @ObservedObject var kidVM = KidViewModel()
     @State private var selectedReward: RewardModel? // rewardModel
 
-    
     //sheets
     @State private var showAddSheet = false
     @State private var showActionSheet = false
@@ -21,9 +22,12 @@ struct RewardView: View {
     @State private var showPurchasedByPicker = false
     @State private var showDeleteAlert = false
 
+    // MARK: Body
+
     var body: some View {
         ZStack(alignment: .bottomTrailing){
             Color.customDarkBlue.ignoresSafeArea(.all)
+            // MARK: Foreground
                 List{
                     ForEach(rewardVM.rewards) { reward in
                         RewardListItem(reward: reward)
@@ -39,13 +43,15 @@ struct RewardView: View {
                             .padding(.vertical, 2)
                     )
                 }
+            
+                // MARK: Fetching Factors
                 .onAppear{
                     rewardVM.fetchRewards()
                 }
                 .scrollContentBackground(.hidden)
                 .scrollIndicators(.hidden)
         
-
+            // MARK: Add Reward Button
             Button(action:{
                 showAddSheet.toggle()
             }){
@@ -59,6 +65,7 @@ struct RewardView: View {
                     
                 }
             }
+            // MARK: Sheets and Alerts
             .sheet(isPresented: $showAddSheet) {
                 AddRewardSheet()
                     .presentationDetents([.height(750)])
@@ -104,8 +111,6 @@ struct RewardView: View {
                     secondaryButton: .cancel()
                 )
             }
-
-            
             .padding()
         }
     
@@ -113,7 +118,7 @@ struct RewardView: View {
 }
 
 
-
+// MARK: Reward List Item
 struct RewardListItem : View {
     let reward: RewardModel
 

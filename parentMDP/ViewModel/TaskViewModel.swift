@@ -18,7 +18,7 @@ class TaskViewModel: ObservableObject {
        }
     
     
-    // fetch tasks
+    // MARK: Fetch Review Task
     func fetchReviewTask(forUserID userID: String) {
         db.collection("taskInstances")
             .whereField("createdBy", isEqualTo: userID)
@@ -37,6 +37,8 @@ class TaskViewModel: ObservableObject {
             }
         
     }
+    
+    // MARK: Fetch Tasks
     func fetchTasks(forUserID userID: String, dateToFetch: Date, selectedKidID: String, privateOrPublic: String){
         
         if privateOrPublic == "private"  {
@@ -51,7 +53,8 @@ class TaskViewModel: ObservableObject {
         
         
     }
-    // fetch privateTasks
+    
+    // MARK: Fetch Private Task
     func fetchPrivateTasks(forUserID userID: String, dateToFetch: Date, selectedKidID: String){
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: dateToFetch)
@@ -77,6 +80,7 @@ class TaskViewModel: ObservableObject {
             }
     }
 
+    // Fetch Public Task
     func fetchPublicTasks(forUserID userID: String, dateToFetch: Date) {
         let startOfDay = Calendar.current.startOfDay(for: dateToFetch)
         let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay) ?? dateToFetch
@@ -99,7 +103,7 @@ class TaskViewModel: ObservableObject {
             }
     }
     
-    // delete tasks
+    //MARK: Delete Tasks
     func deleteTask(taskID: String, taskOriginalID: String?, selectedTaskDueDate: Date) {
         if let taskOriginalID = taskOriginalID, !taskOriginalID.isEmpty {
             // The task is part of a repeating series; delete the task original and future instances.
@@ -117,6 +121,7 @@ class TaskViewModel: ObservableObject {
     }
     
     
+    // MARK: Delete Rpeating Task
     private func deleteRepeatingTask(taskOriginalID: String, selectedTaskDueDate: Date) {
         // Delete future task instances
         db.collection("taskInstances")
@@ -150,8 +155,8 @@ class TaskViewModel: ObservableObject {
                 }
             }
     }
-    //update tasks
     
+    //MARK: Update Task
     func updateTask(_ task: TaskInstancesModel, name: String, timeCreated: Date, createdBy: String, assignTo: String, difficulty: String, routine: String, dueOrStartDate: Date, repeatingPattern: String, selectedDays: [Int]?, privateOrPublic: String) {
         let taskID = task.id
         let taskOriginalID = task.taskOriginalID
@@ -180,12 +185,10 @@ class TaskViewModel: ObservableObject {
     }
 }
 
-// create tasks
 
 extension TaskViewModel {
     
-    //create task - when updating the task, the func needs to know what type(private/public) task it is and run the correct function
-    
+    // MARK: Create Tasks
     func createTask(name: String, timeCreated: Date, createdBy: String, assignTo: String, difficulty: String, routine: String, dueOrStartDate: Date, repeatingPattern: String, selectedDays: [Int]?, privateOrPublic: String){
         if privateOrPublic == "private" {
             createPrivateTask(name: name, timeCreated: timeCreated, createdBy: createdBy, assignTo: assignTo, difficulty: difficulty, routine: routine, dueOrStartDate: dueOrStartDate, repeatingPattern: repeatingPattern, selectedDays: selectedDays)
@@ -197,7 +200,7 @@ extension TaskViewModel {
     }
     
     
-    //create private task
+    //MARK: Create Private Task
     func createPrivateTask(name: String, timeCreated: Date, createdBy: String, assignTo: String, difficulty: String, routine: String, dueOrStartDate: Date, repeatingPattern: String, selectedDays: [Int]?) {
         
         if repeatingPattern.lowercased() == "does not repeat" {
@@ -207,6 +210,7 @@ extension TaskViewModel {
             
         }
         
+        // MARK: Create One-off Private Task
         func createOneOffPrivateTask(name: String, timeCreated: Date, createdBy: String, assignTo: String, difficulty: String, routine: String, repeatingPattern: String, due: Date){
             let db = Firestore.firestore()
             let newTaskInstancesRef = db.collection("taskInstances").document()
@@ -220,6 +224,7 @@ extension TaskViewModel {
             }
         }
         
+        // MARK: Create repeating private task
         func createRepeatingPrivateTask(name: String, timeCreated: Date, createdBy: String, difficulty: String, routine: String, repeatingPattern: String, selectedDays: [Int]?, startDate: Date, assignTo: String){
             let db = Firestore.firestore()
             let newTaskOriginalRef = db.collection("taskOriginal").document()
@@ -235,7 +240,7 @@ extension TaskViewModel {
         }
     }
     
-    // create public task
+    // MARK: Create Public Task
     func createPublicTask(name: String, timeCreated: Date, createdBy: String, difficulty: String, dueOrStartDate: Date, repeatingPattern: String, selectedDays: [Int]?, completedBy: String) {
         
         if repeatingPattern.lowercased() == "does not repeat" {
@@ -244,6 +249,8 @@ extension TaskViewModel {
             createRepeatingPublicTask(name: name, timeCreated: timeCreated, createdBy: createdBy, difficulty: difficulty, repeatingPattern: repeatingPattern, selectedDays: selectedDays, startDate: dueOrStartDate)
             
         }
+        
+        // MARK: Create Oneoff Public Task
         func createOneOffPublicTask(name: String, timeCreated: Date, createdBy: String, difficulty: String, repeatingPattern: String, due: Date){
             let db = Firestore.firestore()
             let newTaskInstancesRef = db.collection("taskInstances").document()
@@ -269,6 +276,8 @@ extension TaskViewModel {
                 print("Error: \(error)")
             }
         }
+        
+        // MARK: Create repeating public task
         func createRepeatingPublicTask(name: String, timeCreated: Date, createdBy: String, difficulty: String, repeatingPattern: String, selectedDays: [Int]?, startDate: Date){
             let db = Firestore.firestore()
             let newTaskOriginalRef = db.collection("taskOriginal").document()
@@ -285,6 +294,7 @@ extension TaskViewModel {
     }
     
     
+    // MARK: Generate private task instances
     func generatePrivateTaskInstances(privateTaskOriginal: TaskOriginalModel, selectedDays: [Int]?) {
         let db = Firestore.firestore()
         var nextDueDate = privateTaskOriginal.startDate
@@ -318,6 +328,7 @@ extension TaskViewModel {
         }
     }
     
+    // MARK: Generate Public Task Instances
     func generatePublicTaskInstances(publicTaskOriginal: TaskOriginalModel, selectedDays: [Int]?) {
         let db = Firestore.firestore()
         var nextDueDate = publicTaskOriginal.startDate
@@ -355,6 +366,7 @@ extension TaskViewModel {
 }
 
 
+// MARK: Generate next due date
 func getNextDueDate(currentDueDate: Date, repeatingPattern: String, selectedDays: [Int]?) -> Date {
     let calendar = Calendar.current
 
@@ -417,7 +429,7 @@ func shouldContinueGeneratingTaskInstances(startingFrom date: Date) -> Bool {
 
 extension TaskViewModel {
     
-    // Converts task difficulty into gold amount
+    // MARK: Reward Calculation
     func goldAmount(difficulty: String) -> Int {
         // Example difficulty mapping, adjust as necessary
         switch difficulty {
@@ -443,6 +455,7 @@ extension TaskViewModel {
 
     }
 
+// MARK: Mark private task as complete
 private func markPrivateTaskAsComplete(taskID: String, completion: @escaping () -> Void) {
         let taskRef = db.collection("taskInstances").document(taskID)
         taskRef.updateData(["status": "complete"]) { error in
@@ -455,24 +468,25 @@ private func markPrivateTaskAsComplete(taskID: String, completion: @escaping () 
         }
     }
     
+// MARK: Mark public task as complete
+private func markPublicTaskAsComplete(taskID: String, selectedKidID: String, completion: @escaping () -> Void) {
     
-    private func markPublicTaskAsComplete(taskID: String, selectedKidID: String, completion: @escaping () -> Void) {
-        
-        let taskRef = db.collection("taskInstances").document(taskID)
-        taskRef.updateData(
-            ["status": "complete",
-             "completedBy": selectedKidID
-            ]
-        ) { error in
-            if let error = error {
-                print("Error updating challenge status: \(error)")
-            } else {
-                print("Challenge marked as complete")
-                completion()
-            }
+    let taskRef = db.collection("taskInstances").document(taskID)
+    taskRef.updateData(
+        ["status": "complete",
+         "completedBy": selectedKidID
+        ]
+    ) { error in
+        if let error = error {
+            print("Error updating challenge status: \(error)")
+        } else {
+            print("Challenge marked as complete")
+            completion()
         }
     }
+}
 
+// MARK: Update kid coinBalance
 private func updateKidGoldBalance(kidID: String, goldToAdd: Int) {
         let kidRef = db.collection("kids").document(kidID)
         db.runTransaction({ (transaction, errorPointer) -> Any? in
@@ -506,7 +520,7 @@ private func updateKidGoldBalance(kidID: String, goldToAdd: Int) {
 
 
 
-// put in the kid's app
+// MARK: Mark complete by kid
 extension TaskViewModel {
     
     func markAsCompleteByKids(updatedTask: TaskInstancesModel) {

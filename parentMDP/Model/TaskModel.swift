@@ -8,7 +8,6 @@
 import Foundation
 
 struct TaskOriginalModel: Identifiable, Codable {
-    
     var id: String
     var name: String
     let timeCreated: Date
@@ -21,8 +20,6 @@ struct TaskOriginalModel: Identifiable, Codable {
     var assignTo: String? // private task only
     var privateOrPublic: String
  
-    
-    
     enum CodingKeys: String, CodingKey {
         case id, name, timeCreated, createdBy, difficulty, repeatingPattern, selectedDays, startDate, routine, assignTo, privateOrPublic
         
@@ -30,7 +27,6 @@ struct TaskOriginalModel: Identifiable, Codable {
 }
 
 struct TaskInstancesModel: Identifiable, Codable {
-    
     var id: String
     var name: String
     let timeCreated: Date

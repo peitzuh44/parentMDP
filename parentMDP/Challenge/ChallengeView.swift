@@ -11,6 +11,8 @@ import FirebaseFirestore
 
 
 struct ChallengeView: View {
+    
+    // MARK: Properties
     @ObservedObject var challengeVM = ChallengeViewModel()
     @ObservedObject var kidVM = KidViewModel()
     @State private var selectedChallenge: ChallengeModel?
@@ -40,12 +42,14 @@ struct ChallengeView: View {
     }
     
     
+    // MARK: Body
     var body: some View {
         ZStack (alignment: .bottomTrailing){
             Color.customDarkBlue.ignoresSafeArea(.all)
             VStack {
                 CustomSegmentedControl(segments: ["assigned", "self-selected"], selectedSegment: $assignedOrSelfSelected)
                 
+                // MARK: Kid Picker
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
                     showKidSelector = true
@@ -93,14 +97,17 @@ struct ChallengeView: View {
                     .padding(.horizontal)
                     
                 }
-                    .padding()
+                .padding()
                 
+                // MARK: Return View By Case
                 if assignedOrSelfSelected == "assigned" {
                     AssignedChallengeView(challengeVM: challengeVM, kidVM: kidVM, selectedChallenge: $selectedChallenge, showActionSheet: $showActionSheet)
                 } else if assignedOrSelfSelected == "self-selected" {
                     SelfSelectedChallengeView(challengeVM: challengeVM, kidVM: kidVM, selectedChallenge: $selectedChallenge, showActionSheet: $showActionSheet)
                 }
             }
+            
+            // MARK: Sheets
             .sheet(isPresented: Binding(
                 get: { showActionSheet },
                 set: { showActionSheet = $0 }
@@ -123,7 +130,8 @@ struct ChallengeView: View {
                     .presentationDragIndicator(.hidden)
                 
             }
-            //fetching
+            
+            // MARK: Fetching Conditions
             .onAppear {
                 kidVM.fetchKids()
             }
@@ -137,7 +145,7 @@ struct ChallengeView: View {
             .onChange(of: selectedKidID) {challengeVM.fetchChallenges(forUserID: currentUserID, selectedKidID: selectedKidID, assignedOrSelfSelected: assignedOrSelfSelected)}
             .onChange(of: assignedOrSelfSelected) {challengeVM.fetchChallenges(forUserID: currentUserID, selectedKidID: selectedKidID, assignedOrSelfSelected: assignedOrSelfSelected)}
             
-            // Add Task Button
+            // MARK: Add Challenge Button
             Button(action:{
                 showAddChallengeSheet.toggle()
             }){

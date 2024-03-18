@@ -102,7 +102,6 @@ struct KidListItem: View {
                 Text(kid.name)
                     .font(.title2)
                     .bold()
-                Text("level: \(kid.level)")
             }
             Spacer()
         }

@@ -69,6 +69,9 @@
 		AFC432AA2BA7BB2A0053494F /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */; };
 		AFC432AC2BA7BB4B0053494F /* CustomTabBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */; };
 		AFC432AE2BA7BB6B0053494F /* TabBarItemsPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432AD2BA7BB6B0053494F /* TabBarItemsPreferenceKey.swift */; };
+		AFC432B02BA7F6810053494F /* EmojiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432AF2BA7F6810053494F /* EmojiPicker.swift */; };
+		AFC432B22BA7FA860053494F /* TemplateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432B12BA7FA860053494F /* TemplateModel.swift */; };
+		AFC432B42BA7FC920053494F /* JournalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432B32BA7FC920053494F /* JournalModel.swift */; };
 		AFC6EC8E2B8186AD000CFB9B /* RewardActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC6EC8D2B8186AD000CFB9B /* RewardActionSheet.swift */; };
 		AFC6EC902B819035000CFB9B /* PurchasedByPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC6EC8F2B819035000CFB9B /* PurchasedByPicker.swift */; };
 		AFC6EC922B819C91000CFB9B /* ChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC6EC912B819C91000CFB9B /* ChallengeView.swift */; };
@@ -148,6 +151,9 @@
 		AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarContainerView.swift; sourceTree = "<group>"; };
 		AFC432AD2BA7BB6B0053494F /* TabBarItemsPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemsPreferenceKey.swift; sourceTree = "<group>"; };
+		AFC432AF2BA7F6810053494F /* EmojiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPicker.swift; sourceTree = "<group>"; };
+		AFC432B12BA7FA860053494F /* TemplateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateModel.swift; sourceTree = "<group>"; };
+		AFC432B32BA7FC920053494F /* JournalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalModel.swift; sourceTree = "<group>"; };
 		AFC6EC8D2B8186AD000CFB9B /* RewardActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardActionSheet.swift; sourceTree = "<group>"; };
 		AFC6EC8F2B819035000CFB9B /* PurchasedByPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasedByPicker.swift; sourceTree = "<group>"; };
 		AFC6EC912B819C91000CFB9B /* ChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeView.swift; sourceTree = "<group>"; };
@@ -263,6 +269,9 @@
 			isa = PBXGroup;
 			children = (
 				AFC6EC9F2B83F081000CFB9B /* KidViewModel.swift */,
+				AFDBDC762B89772300155ED7 /* TaskViewModel.swift */,
+				AFDBDC8D2B8C5FA800155ED7 /* ChallengeViewModel.swift */,
+				AFDBDC8B2B8C066F00155ED7 /* RewardViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -310,6 +319,7 @@
 				AFC6EC9D2B83EF13000CFB9B /* KidSelectorSheet.swift */,
 				AF5573822B7D39B000A8724A /* KidSelector.swift */,
 				7C3B11C72B9AE4760058368E /* GenderPicker.swift */,
+				AFC432AF2BA7F6810053494F /* EmojiPicker.swift */,
 			);
 			path = Picker;
 			sourceTree = "<group>";
@@ -318,7 +328,6 @@
 			isa = PBXGroup;
 			children = (
 				AFC6EC912B819C91000CFB9B /* ChallengeView.swift */,
-				AFDBDC8D2B8C5FA800155ED7 /* ChallengeViewModel.swift */,
 				AF5573B52B7EE5EB00A8724A /* EditChallengeSheet.swift */,
 				AF5573B72B7EE5F700A8724A /* ChallengeActionSheet.swift */,
 				AF5573B92B7FCA9D00A8724A /* AssignedChallengeView.swift */,
@@ -342,7 +351,6 @@
 			isa = PBXGroup;
 			children = (
 				AF2B769D2B758B0400B9535F /* TaskView.swift */,
-				AFDBDC762B89772300155ED7 /* TaskViewModel.swift */,
 				AF2B76C12B758DEC00B9535F /* AddTaskSheet.swift */,
 				AF2B76BF2B758DC600B9535F /* PublicTaskView.swift */,
 				AFDBDC7C2B8A7D6C00155ED7 /* EditTaskSheet.swift */,
@@ -361,7 +369,6 @@
 				AF5573A92B7EB10500A8724A /* AddRewardSheet.swift */,
 				AF5573AF2B7EE47D00A8724A /* EditRewardSheet.swift */,
 				AFC6EC8D2B8186AD000CFB9B /* RewardActionSheet.swift */,
-				AFDBDC8B2B8C066F00155ED7 /* RewardViewModel.swift */,
 			);
 			path = Reward;
 			sourceTree = "<group>";
@@ -387,6 +394,8 @@
 				AF2B76B92B758D8800B9535F /* ChallengeModel.swift */,
 				AF2B76BB2B758D9B00B9535F /* RewardModel.swift */,
 				AFDBDC742B89741400155ED7 /* TaskModel.swift */,
+				AFC432B12BA7FA860053494F /* TemplateModel.swift */,
+				AFC432B32BA7FC920053494F /* JournalModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -524,6 +533,7 @@
 				AF2B76A72B758BB300B9535F /* WeekdayPicker.swift in Sources */,
 				AF2B767E2B7585F400B9535F /* ContentView.swift in Sources */,
 				AF2B76CE2B758E9F00B9535F /* KidProfileView.swift in Sources */,
+				AFC432B42BA7FC920053494F /* JournalModel.swift in Sources */,
 				AF2B76B62B758D6A00B9535F /* UserModel.swift in Sources */,
 				AFDBDC7D2B8A7D6C00155ED7 /* EditTaskSheet.swift in Sources */,
 				AF2B76C02B758DC600B9535F /* PublicTaskView.swift in Sources */,
@@ -542,6 +552,7 @@
 				AF2B76A92B758BD200B9535F /* AssignToPicker.swift in Sources */,
 				AF2B76D42B758EE400B9535F /* SettingsView.swift in Sources */,
 				AF75D72C2B7C3E5A009CBF30 /* MainView.swift in Sources */,
+				AFC432B22BA7FA860053494F /* TemplateModel.swift in Sources */,
 				AF75D7362B7C431B009CBF30 /* TaskViewDatePicker.swift in Sources */,
 				AFC6EC9E2B83EF13000CFB9B /* KidSelectorSheet.swift in Sources */,
 				AFC432A82BA7BAF60053494F /* TabBarItem.swift in Sources */,
@@ -552,6 +563,7 @@
 				AFDBDC8E2B8C5FA800155ED7 /* ChallengeViewModel.swift in Sources */,
 				AF5573AA2B7EB10500A8724A /* AddRewardSheet.swift in Sources */,
 				AF2B76AF2B758C6300B9535F /* DifficultyPicker.swift in Sources */,
+				AFC432B02BA7F6810053494F /* EmojiPicker.swift in Sources */,
 				AFDBDC962B8E973800155ED7 /* ManageSkillsView.swift in Sources */,
 				AF2B76D02B758EC500B9535F /* ReviewTaskView.swift in Sources */,
 				AFDBDC752B89741500155ED7 /* TaskModel.swift in Sources */,

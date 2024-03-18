@@ -10,12 +10,12 @@ import FirebaseAuth
 
 
 struct AddRewardSheet: View {
+    // MARK: Properties
+
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var rewardVM = RewardViewModel()
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
 
-    
-    
     // picker
     @State private var showRarityPicker = false
     @State private var showPricePicker = false
@@ -26,10 +26,11 @@ struct AddRewardSheet: View {
     @State private var selectedprice: Int = 0
     
  
-    
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customDarkBlue.ignoresSafeArea(.all)
+            // MARK: Foreground
             VStack{
                 //Header
                 HStack{
@@ -111,6 +112,8 @@ struct AddRewardSheet: View {
         }
     }
 }
+
+// MARK: Preview
 
 #Preview {
     AddRewardSheet()

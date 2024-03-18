@@ -7,46 +7,32 @@
 
 import Foundation
 
+
+// MARK: KidModel
 struct KidModel: Identifiable, Codable, Hashable{
     var id: String
+    let timeCreated: Date
     var name: String
     let gender: String
     let birthdate: Date
     var parentID: String
     let myParent: String
-    var createdAt: Date
     // avatar attributes
     var avatarImage: String
-    var exp: Int
-    var level: Int
-    var avatarClass: String
-    var hp: Int
-    var attack: Int
-    var defense: Int
-    var magic: Int
+    var health: Int
+    var mental: Int
+    var social: Int
+    var intelligence: Int
     // currency
-    var pointBalance: Int
-    var goldBalance: Int
+    var coinBalance: Int
     var gemBalance: Int
-
-
+    
     enum CodingKeys: String, CodingKey {
-        case id, name, gender, birthdate, parentID, myParent, createdAt, avatarImage, exp, level, avatarClass, hp, attack, defense, magic, pointBalance, goldBalance, gemBalance
+        case id, timeCreated, name, gender, birthdate, parentID, myParent, avatarImage, health, mental, social, intelligence, coinBalance, gemBalance
     }
 }
 
-struct SkillTemplateModel: Identifiable, Codable, Hashable{
-    var id: String
-    var name: String
-    var category: String
-    
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case category
-    }
-}
+
 
 struct SkillModel: Identifiable, Codable, Hashable{
     var id: String
@@ -59,12 +45,6 @@ struct SkillModel: Identifiable, Codable, Hashable{
     
     
     enum CodingKeys: String, CodingKey {
-        case id
-        case createdBy
-        case kid
-        case name
-        case category
-        case exp
-        case level
+        case id, createdBy, kid, name, category, exp, level
     }
 }

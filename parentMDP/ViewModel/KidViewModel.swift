@@ -23,7 +23,7 @@ class KidViewModel: ObservableObject {
         
         db.collection("kids")
             .whereField("parentID", isEqualTo: userID)
-            .order(by: "createdAt", descending: false)
+            .order(by: "timeCreated", descending: false)
             .addSnapshotListener { [weak self] querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
                     print("Error fetching documents: \(String(describing: error?.localizedDescription))")
@@ -71,24 +71,7 @@ class KidViewModel: ObservableObject {
     private func proceedToAddKids(name: String, gender: String, birthdate: Date, parentID: String, myParent: String) {
         let newKidRef = db.collection("kids").document()
         let kidID = newKidRef.documentID
-        let kid = KidModel(id: kidID, 
-                           name: name,
-                           gender: gender,
-                           birthdate: birthdate,
-                           parentID: parentID,
-                           myParent: myParent,
-                           createdAt: Date(), 
-                           avatarImage: "",
-                           exp: 0,
-                           level: 0,
-                           avatarClass: "",
-                           hp: 0,
-                           attack: 0,
-                           defense: 0,
-                           magic: 0,
-                           pointBalance: 0,
-                           goldBalance: 0,
-                           gemBalance: 0)
+        let kid = KidModel(id: kidID, timeCreated: Date(), name: name, gender: gender, birthdate: birthdate, parentID: parentID, myParent: myParent, avatarImage: "avatar1", health: 0, mental: 0, social: 0, intelligence: 0, coinBalance: 0, gemBalance: 0)
         
         do {
             try newKidRef.setData(from: kid)

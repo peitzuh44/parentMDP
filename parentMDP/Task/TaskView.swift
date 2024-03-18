@@ -10,6 +10,8 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct TaskView: View {
+    
+    // MARK: Properties
     //examples
     @ObservedObject var taskVM = TaskViewModel()
     @ObservedObject var kidVM = KidViewModel()
@@ -43,6 +45,8 @@ struct TaskView: View {
         return kidVM.kids.first { $0.id == selectedKidID }?.name
     }
     
+    
+    // MARK: Body
     var body: some View {
         ZStack(alignment: .bottomTrailing){
             // Background Color
@@ -52,6 +56,8 @@ struct TaskView: View {
                     //header - private/public task picker and date picker
                     CustomSegmentedControl(segments: ["private", "public"], selectedSegment: $privateOrPublic)
                     TaskViewDatePicker(selectedDate: $dateToFetch)
+                    
+                    // MARK: Return View By Case
                     if privateOrPublic == "private" {
                         VStack{
                             Button(action:{
@@ -103,6 +109,7 @@ struct TaskView: View {
                 }
                 .padding(.horizontal)
                 Spacer()
+                // MARK: Return View By Case
                 if privateOrPublic == "private" {
                     PrivateTaskView(taskVM: taskVM, kidVM: kidVM, selectedTask: $selectedTask, showActionSheet: $showActionSheet)
                 } else if privateOrPublic == "public" {
@@ -110,6 +117,7 @@ struct TaskView: View {
 
                 }
             }
+            // MARK: Sheets and Alerts
             .sheet(isPresented: $showAddView) {
                 AddTaskSheet(showAddPrivateTaskSheet: $showAddPrivateTask, showAddPublicTaskSheet: $showAddPublicTask)
                     .presentationDetents([.height(250)])
@@ -176,6 +184,7 @@ struct TaskView: View {
                 )
             }
             
+            // MARK: Fetching Conditions
             .onAppear {
                 kidVM.fetchKids()
             }
@@ -212,87 +221,52 @@ struct TaskView: View {
     }
     
     
+// MARK: Leaderboard For Public Tasks
+
+struct PublicTaskLeaderBoardItem: View {
+    let avatarImage: String
+    let completedTasks: Int
     
-    struct PublicTaskLeaderBoardItem: View {
-        let avatarImage: String
-        let completedTasks: Int
-        
-        var body: some View {
-            VStack(spacing: 10) {
-                Image(avatarImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 80)
-                Text("\(completedTasks) tasks")
-                    .foregroundColor(.white)
-            }
-            .frame(width: 130, height: 160)
-            .background(Color.customNavyBlue)
-            .cornerRadius(10)
+    var body: some View {
+        VStack(spacing: 10) {
+            Image(avatarImage)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 80)
+            Text("\(completedTasks) tasks")
+                .foregroundColor(.white)
         }
+        .frame(width: 130, height: 160)
+        .background(Color.customNavyBlue)
+        .cornerRadius(10)
     }
+}
     
-    struct LeaderboardItem: Hashable {
-        let avatarImage: String
-        let completedTasks: Int
-    }
+
+struct LeaderboardItem: Hashable {
+    let avatarImage: String
+    let completedTasks: Int
+}
+
+
+struct PublicTaskLeaderBoard: View {
+    // Sample data
+    @State private var leaderboardData: [LeaderboardItem] = [
+        LeaderboardItem(avatarImage: "avatar1", completedTasks: 5),
+        LeaderboardItem(avatarImage: "avatar2", completedTasks: 3),
+        LeaderboardItem(avatarImage: "avatar3", completedTasks: 7)
+    ]
     
-    
-    struct PublicTaskLeaderBoard: View {
-        // Sample data
-        @State private var leaderboardData: [LeaderboardItem] = [
-            LeaderboardItem(avatarImage: "avatar1", completedTasks: 5),
-            LeaderboardItem(avatarImage: "avatar2", completedTasks: 3),
-            LeaderboardItem(avatarImage: "avatar3", completedTasks: 7)
-        ]
-        
-        var body: some View {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
-                    ForEach(leaderboardData.sorted { $0.completedTasks > $1.completedTasks }, id: \.self) { item in
-                        PublicTaskLeaderBoardItem(avatarImage: item.avatarImage, completedTasks: item.completedTasks)
-                    }
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(leaderboardData.sorted { $0.completedTasks > $1.completedTasks }, id: \.self) { item in
+                    PublicTaskLeaderBoardItem(avatarImage: item.avatarImage, completedTasks: item.completedTasks)
                 }
-                .padding(.horizontal, 10)
             }
-            .padding(.vertical)
+            .padding(.horizontal, 10)
         }
+        .padding(.vertical)
     }
+}
     
-
-
-
-
-//struct RoutineItemView: View {
-//    @State var routine: String
-//    @State var totalTasks: Int
-//    @State var completedTasks: Int
-//    var body: some View {
-//        HStack(spacing: 16){
-//            ZStack{
-//                CircularProgressBar(diameter: 60, percent: 40, color1: .blue, color2: .purple)
-//                Image(routine)
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fill)
-//                    .frame(width: 30, height: 30)
-//                
-//                
-//            }
-//            Text("\(totalTasks) out of \(completedTasks) complete")
-//                .font(Font.custom("inter", size: 14)
-//                )
-//            
-//        }
-//        .padding()
-//        .frame(width: 180, height: 100)
-//        .foregroundColor(.white)
-//        .background(Color.customNavyBlue)
-//        .cornerRadius(20)
-//    }
-//}
-//
-//HStack{
-//    RoutineItemView(routine: "morning", totalTasks: 6, completedTasks: 4)
-//    Spacer()
-//    RoutineItemView(routine: "night", totalTasks: 4, completedTasks: 4)
-//}

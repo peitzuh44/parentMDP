@@ -15,7 +15,7 @@ class RewardViewModel: ObservableObject {
     private let db = Firestore.firestore()
     
     
-    //fetch rewards
+    //MARK: Fetch Rewards
     func fetchRewards(){
         guard let userID = Auth.auth().currentUser?.uid else {
             print("User not logged in")
@@ -43,7 +43,7 @@ class RewardViewModel: ObservableObject {
             }
     }
     
-    //delete reward
+    //MARK: Delete Reward
     func deleteReward(rewardID: String) {
         db.collection("rewards").document(rewardID).delete { error in
             if let error = error {
@@ -54,7 +54,7 @@ class RewardViewModel: ObservableObject {
         }
     }
     
-    // create reward
+    // MARK: Create Reward
     func createReward(name: String, rarity: String, price: Int, createdBy: String){
         let newRewardRef = db.collection("rewards").document()
         let rewardID = newRewardRef.documentID
@@ -67,7 +67,7 @@ class RewardViewModel: ObservableObject {
         }
     }
     
-    
+    // MARK: Update Reward
     func updateReward(updatedReward: RewardModel) {
         let docRef = db.collection("rewards").document(updatedReward.id)
         
@@ -93,6 +93,8 @@ class RewardViewModel: ObservableObject {
 
 
 extension RewardViewModel {
+    
+    // MARK: Purchase Reward
     func purchaseRewardAndUpdateKidGold(reward: RewardModel, purchasedBy: String) {
         
         let kidRef = db.collection("kids").document(purchasedBy)
@@ -143,7 +145,7 @@ extension RewardViewModel {
         }
     }
     
-
+// MARK: Balance Calculation
 private func deductKidGemBalance(kidID: String, gemToDeduct: Int) {
         let kidRef = db.collection("kids").document(kidID)
         db.runTransaction({ (transaction, errorPointer) -> Any? in

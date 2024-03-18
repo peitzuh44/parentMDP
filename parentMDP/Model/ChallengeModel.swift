@@ -6,21 +6,27 @@
 //
 
 import Foundation
+
+
+// MARK: Challenge model
 struct ChallengeModel: Identifiable, Codable {
     var id: String
     var name: String
-    let createdBy: String
+    var description: String
     let timeCreated: Date
+    let createdBy: String
     var assignTo: String
     var difficulty: String
-    var due: Date
-    var status: String
     var reward: Int
+    var due: Date
     var assignedOrSelfSelected: String
+    var relatedSkills: [String] // related to the kid's skills
+    var status: String
+    var dateCompleted: Date?
 
 
     enum CodingKeys: String, CodingKey {
-        case id, name, createdBy, timeCreated, assignTo, difficulty, due, status, reward, assignedOrSelfSelected
+        case id, name, description, createdBy, timeCreated, assignTo, difficulty, reward, due,  assignedOrSelfSelected, relatedSkills, status, dateCompleted
     }
    
 }

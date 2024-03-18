@@ -14,7 +14,7 @@ class ChallengeViewModel: ObservableObject {
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
 
     
-    // fetch challenges
+    // MARK: Fetch Challenges
     func fetchChallenges(forUserID userID: String, selectedKidID: String, assignedOrSelfSelected: String) {
         
         db.collection("challenges")
@@ -37,13 +37,13 @@ class ChallengeViewModel: ObservableObject {
         
     }
     
-    // create challenges
-    func createChallenge(name: String, createdBy: String, assignTo: String, difficulty: String, due: Date, assignedOrSelfSelected: String, reward: Int){
+    // MARK: Create Challenges
+    func createChallenge(name: String, description: String, createdBy: String, assignTo: String, difficulty: String, due: Date, assignedOrSelfSelected: String, reward: Int, skills: [String], dateCompleted: Date?){
         let db = Firestore.firestore()
         let newChallengeRef = db.collection("challenges").document()
         let challengeID = newChallengeRef.documentID
         let challenge =
-        ChallengeModel(id: challengeID, name: name, createdBy: createdBy, timeCreated: Date(), assignTo: assignTo, difficulty: difficulty, due: due, status: "todo", reward: reward, assignedOrSelfSelected: assignedOrSelfSelected)
+        ChallengeModel(id: challengeID, name: name, description: description, timeCreated: Date(), createdBy: createdBy, assignTo: assignTo, difficulty: difficulty, reward: reward, due: due, assignedOrSelfSelected: assignedOrSelfSelected, relatedSkills: skills, status: "ongoing")
         do {
             try db.collection("challenges").document(challengeID).setData(from: challenge)
         } catch let error {
@@ -51,7 +51,7 @@ class ChallengeViewModel: ObservableObject {
         }
     }
     
-    // delete challenge
+    // MARK: Delete Challenges
     func deleteChallenge(challengeID: String) {
         db.collection("challenges").document(challengeID).delete { error in
             if let error = error {
@@ -70,23 +70,23 @@ class ChallengeViewModel: ObservableObject {
 
 extension ChallengeViewModel {
     
+// MARK: Mark Complete / Update Reward
+func completeChallengeAndUpdateKidGem(challenge: ChallengeModel) {
+    // First, mark the challenge as complete.
+    let amountToAdd = challenge.reward
     
-    func completeChallengeAndUpdateKidGem(challenge: ChallengeModel) {
-        // First, mark the challenge as complete.
-        let amountToAdd = challenge.reward
-        
-        
-        markChallengeAsComplete(challengeID: challenge.id) { [self] in
-            if challenge.assignedOrSelfSelected == "assigned" {
-                self.updateKidGemBalance(kidID: challenge.assignTo, gemToAdd: amountToAdd)
+    
+    markChallengeAsComplete(challengeID: challenge.id) { [self] in
+        if challenge.assignedOrSelfSelected == "assigned" {
+            self.updateKidGemBalance(kidID: challenge.assignTo, gemToAdd: amountToAdd)
 
-            }
-            if challenge.assignedOrSelfSelected == "self-selected" {
-                self.updateKidGoldBalance(kidID: challenge.assignTo, goldToAdd: amountToAdd)
-            }
+        }
+        if challenge.assignedOrSelfSelected == "self-selected" {
+            self.updateKidGoldBalance(kidID: challenge.assignTo, goldToAdd: amountToAdd)
         }
     }
-
+}
+// MARK: Mark As Complete
 private func markChallengeAsComplete(challengeID: String, completion: @escaping () -> Void) {
         let challengeRef = db.collection("challenges").document(challengeID)
         challengeRef.updateData(["status": "complete"]) { error in
@@ -99,6 +99,7 @@ private func markChallengeAsComplete(challengeID: String, completion: @escaping 
         }
     }
 
+// MARK: Update Gem Balance
 private func updateKidGemBalance(kidID: String, gemToAdd: Int) {
         let kidRef = db.collection("kids").document(kidID)
         db.runTransaction({ (transaction, errorPointer) -> Any? in
@@ -126,7 +127,7 @@ private func updateKidGemBalance(kidID: String, gemToAdd: Int) {
             }
         }
     }
-    
+    // MARK: Update coin balance
     private func updateKidGoldBalance(kidID: String, goldToAdd: Int) {
             let kidRef = db.collection("kids").document(kidID)
             db.runTransaction({ (transaction, errorPointer) -> Any? in

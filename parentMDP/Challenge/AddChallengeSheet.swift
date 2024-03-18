@@ -26,6 +26,8 @@ struct AddChallengeSheet: View {
     // selected properties
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
     @State private var name: String = ""
+    @State private var description: String = ""
+
     @State private var selectedDate: Date = Date()
     @State private var selectedKidID: String? = nil
     @State private var selectedDifficulty: DifficultyOptions = .easy
@@ -100,7 +102,7 @@ struct AddChallengeSheet: View {
                     Spacer()
                     Button(action:{
                         presentationMode.wrappedValue.dismiss()
-                        challengeVM.createChallenge(name: name, createdBy: currentUserID, assignTo: selectedKidID!, difficulty: selectedDifficulty.rawValue, due: selectedDate, assignedOrSelfSelected: selectedType.rawValue, reward: selectedreward)
+                        challengeVM.createChallenge(name: name, description: description, createdBy: currentUserID, assignTo: selectedKidID!, difficulty: selectedDifficulty.rawValue, due: selectedDate, assignedOrSelfSelected: selectedType.rawValue, reward: selectedreward, skills: ["one", "two"], dateCompleted: Date())
 
                       
                     }){

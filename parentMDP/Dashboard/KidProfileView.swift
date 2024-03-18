@@ -56,11 +56,6 @@ struct KidInfoItem: View {
                                 .weight(.bold)
                         )
                     Spacer()
-                    Text("Level \(kid.level)")
-                        .font(
-                            Font.custom("inter", size: 16)
-                                .weight(.bold)
-                        )
 
                 }
                 .frame(width: 200)
@@ -152,7 +147,7 @@ struct GoldTag: View {
     var kid: KidModel
     var body: some View {
         ZStack(alignment: .leading) {
-            Text("\(kid.goldBalance)")
+            Text("\(kid.coinBalance)")
                 .font(
                 Font.custom("Inter", size: 14)
                 .weight(.bold)
@@ -211,7 +206,7 @@ struct AvatarAttribute: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 48, height: 48)
                     .clipped()
-                Text("\(kid.hp)")
+                Text("\(kid.health)")
             }
             Spacer()
             VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: 5){
@@ -220,7 +215,7 @@ struct AvatarAttribute: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 48, height: 48)
                     .clipped()
-                Text("\(kid.attack)")
+                Text("\(kid.mental)")
             }
             Spacer()
 
@@ -230,7 +225,7 @@ struct AvatarAttribute: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 48, height: 48)
                     .clipped()
-                Text("\(kid.defense)")
+                Text("\(kid.social)")
             }
             Spacer()
 
@@ -240,7 +235,7 @@ struct AvatarAttribute: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 48, height: 48)
                     .clipped()
-                Text("\(kid.magic)")
+                Text("\(kid.intelligence)")
             }
             Spacer()
 
