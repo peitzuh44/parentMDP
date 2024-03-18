@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ChallengeActionSheet: View {
+    // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
     @Binding var showEditSheet: Bool
     @Binding var showDeleteAlert: Bool
@@ -17,10 +18,14 @@ struct ChallengeActionSheet: View {
     @ObservedObject var challengeVM: ChallengeViewModel
     @ObservedObject var kidVM: KidViewModel
     @State var challenge: ChallengeModel
+    
+    // MARK: Body
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
             VStack(spacing: 16){
+                
+                // MARK: Challenge Info
                 HStack{
                     HStack{
                         Image("attack")
@@ -46,6 +51,8 @@ struct ChallengeActionSheet: View {
                 .cornerRadius(20)
                 .padding(.horizontal)
                 
+                
+                // MARK: Action Sheet Buttons
                 HStack(spacing: 12){
                     Button(action:{
                     presentationMode.wrappedValue.dismiss()

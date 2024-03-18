@@ -9,12 +9,9 @@
 
 import SwiftUI
 
-enum GenderOptions: String, CaseIterable {
-    case male = "male"
-    case female = "female"
-}
 
 struct AddKidSheet: View {
+    // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
     var viewModel: KidViewModel
     @State private var name: String = ""
@@ -23,12 +20,14 @@ struct AddKidSheet: View {
     @AppStorage("kidID") var kidID: String = ""
     @State private var showBirthdatePicker = false
 
+    // MARK: Body
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
             
             VStack{
                 // Header START
+                // MARK: Header
                 HStack{
                     //cancel button
                     Button(action: {
@@ -105,3 +104,9 @@ struct AddKidSheet: View {
 }
 
 
+
+// MARK: Gender Options
+enum GenderOptions: String, CaseIterable {
+    case male = "male"
+    case female = "female"
+}

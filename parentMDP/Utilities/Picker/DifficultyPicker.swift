@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+// MARK: Enum Options
 enum DifficultyOptions: String, CaseIterable {
     case easy = "Easy"
     case mid = "Medium"
@@ -18,9 +20,12 @@ enum DifficultyOptions: String, CaseIterable {
 }
 
 struct DifficultyPicker: View {
+    // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
     @Binding var selectedDifficulty: DifficultyOptions
     
+    
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customNavyBlue.ignoresSafeArea(.all)
@@ -55,6 +60,7 @@ struct DifficultyPicker: View {
         }
     }
     
+    // MARK: Functions - return by case
     private func emoji(for difficulty: DifficultyOptions) -> String {
         switch difficulty {
         case .easy:

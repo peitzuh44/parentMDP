@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct EditTaskSheet: View {
+    // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
     
     var selectedTask: TaskInstancesModel
@@ -34,33 +35,34 @@ struct EditTaskSheet: View {
     @State private var selectedRoutine: RoutineOptions?
     
         
-        init(selectedTask: TaskInstancesModel, taskVM: TaskViewModel, kidVM: KidViewModel) {
-            self.selectedTask = selectedTask
-            self.taskVM = taskVM
-            self.kidVM = kidVM
-            _name = State(initialValue: selectedTask.name)
-            _selectedDifficulty = State(initialValue: DifficultyOptions(rawValue: selectedTask.difficulty)!)
-            _selectedRepeat = State(initialValue: RepeatingOptions(rawValue: selectedTask.repeatingPattern)!)
-            _selectedDate = State(initialValue: selectedTask.due)
-            
-            if let routineRawValue = selectedTask.routine, let routine = RoutineOptions(rawValue: routineRawValue) {
-                _selectedRoutine = State(initialValue: routine)
-            } else {
-                _selectedRoutine = State(initialValue: nil) // For public tasks without a routine
-            }
-            _selectedKidID = State(initialValue: selectedTask.assignTo)
-        }
+    // MARK: INIT
+    init(selectedTask: TaskInstancesModel, taskVM: TaskViewModel, kidVM: KidViewModel) {
+        self.selectedTask = selectedTask
+        self.taskVM = taskVM
+        self.kidVM = kidVM
+        _name = State(initialValue: selectedTask.name)
+        _selectedDifficulty = State(initialValue: DifficultyOptions(rawValue: selectedTask.difficulty)!)
+        _selectedRepeat = State(initialValue: RepeatingOptions(rawValue: selectedTask.repeatingPattern)!)
+        _selectedDate = State(initialValue: selectedTask.due)
         
+        if let routineRawValue = selectedTask.routine, let routine = RoutineOptions(rawValue: routineRawValue) {
+            _selectedRoutine = State(initialValue: routine)
+        } else {
+            _selectedRoutine = State(initialValue: nil) // For public tasks without a routine
+        }
+        _selectedKidID = State(initialValue: selectedTask.assignTo)
+    }
+       
+    // MARK: Functions
     func name(for selectedKidID: String?) -> String? {
         guard let selectedKidID = selectedKidID else { return nil }
         return kidVM.kids.first { $0.id == selectedKidID }?.name
     }
     
+    // MARK: Body
     var body: some View {
         ZStack {
-            
             Color.customDarkBlue.ignoresSafeArea(.all)
-            
             VStack{
                 //Header
                 HStack{
@@ -79,6 +81,7 @@ struct EditTaskSheet: View {
                 .padding()
                 .background(Color.customNavyBlue)
                 
+                // MARK: Forms
                 VStack(spacing: 12) {
                     // task name
                     CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
@@ -127,6 +130,8 @@ struct EditTaskSheet: View {
                         WeekdayPicker(selectedDays: $selectedDays)
                     }
                     
+                    
+                    // MARK: Button
                     Button(action:{
                         presentationMode.wrappedValue.dismiss()
                         let daysArray = selectedDays.isEmpty ? nil : Array(selectedDays)
@@ -145,30 +150,32 @@ struct EditTaskSheet: View {
     }
     
 }
+
+
+// MARK: Generic Picker Button
+struct GenericPickerButton<Content: View>: View {
+    let pickerText: String
+    let selectionText: String
+    @Binding var isPresenting: Bool
+    let content: () -> Content
     
-    struct GenericPickerButton<Content: View>: View {
-        let pickerText: String
-        let selectionText: String
-        @Binding var isPresenting: Bool
-        let content: () -> Content
-        
-        var body: some View {
-            Button(action: {
-                self.isPresenting = true
-            }) {
-                HStack {
-                    Text(pickerText)
-                    Spacer()
-                    Text(selectionText)
-                }
-                .frame(width: 330, height: 24)
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.customNavyBlue)
-                .cornerRadius(10)
+    var body: some View {
+        Button(action: {
+            self.isPresenting = true
+        }) {
+            HStack {
+                Text(pickerText)
+                Spacer()
+                Text(selectionText)
             }
-            .sheet(isPresented: $isPresenting) {
-                self.content()
-            }
+            .frame(width: 330, height: 24)
+            .foregroundColor(.white)
+            .padding()
+            .background(Color.customNavyBlue)
+            .cornerRadius(10)
+        }
+        .sheet(isPresented: $isPresenting) {
+            self.content()
         }
     }
+}

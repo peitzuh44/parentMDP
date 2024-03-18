@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct BirthdatePicker: View {
+    // MARK: Properties
     @Binding var selectedBirthdate: Date
     @Environment(\.presentationMode) var presentationMode
 
+    // MARK: Body
     var body: some View {
         ZStack{
             Color.customNavyBlue.ignoresSafeArea(.all)
@@ -20,7 +22,6 @@ struct BirthdatePicker: View {
                     .labelsHidden()
                     .padding(10)
                     .colorScheme(.dark)
-
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
                 }){
@@ -38,6 +39,8 @@ struct BirthdatePicker: View {
     }
 }
 
+
+// MARK: Preivew
 struct BirthdatePicker_Previews: PreviewProvider {
     @State static var previewDate = Date()
     

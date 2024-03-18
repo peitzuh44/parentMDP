@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// MARK: Options
+
 
 enum RoutineOptions: String, CaseIterable {
     case morning = "Morning"
@@ -18,9 +20,12 @@ enum RoutineOptions: String, CaseIterable {
 }
 
 struct RoutinePicker: View {
+    // MARK: Properties
+
     @Environment(\.presentationMode) var presentationMode
     @Binding var selectedRoutine: RoutineOptions?
     
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customNavyBlue.ignoresSafeArea(.all)
@@ -55,6 +60,7 @@ struct RoutinePicker: View {
         }
     }
 
+    // MARK: Functions
     private func emoji(for routine: RoutineOptions) -> String {
         switch routine {
         case .morning:

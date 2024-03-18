@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct InviteKidView: View {
+    // MARK: Properties
     @Binding var authFlow: AuthFlow
 
+    // MARK: Body
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
@@ -18,8 +20,10 @@ struct InviteKidView: View {
                     .foregroundStyle(Color.white)
                     .font(.largeTitle)
                 Spacer()
+                
+                // MARK: REQUIRED - parent code
                 HStack{
-                    Text("NK8M3n4")
+                    Text("NK8M3n4") // fetch the parent code
                         .foregroundStyle(Color.white)
                         .padding(.vertical)
                     Button(action:{

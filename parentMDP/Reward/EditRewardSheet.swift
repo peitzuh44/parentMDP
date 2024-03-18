@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct EditRewardSheet: View {
+    // MARK: Properties
+
     @Environment(\.presentationMode) var presentationMode
     var selectedReward: RewardModel
     @ObservedObject var rewardVM: RewardViewModel
@@ -22,6 +24,7 @@ struct EditRewardSheet: View {
     
     
     
+    // MARK: INIT
     init(selectedReward: RewardModel, rewardVM: RewardViewModel, kidVM: KidViewModel) {
         self.selectedReward = selectedReward
         self.rewardVM = rewardVM
@@ -32,7 +35,7 @@ struct EditRewardSheet: View {
 
     }
 
-
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customDarkBlue.ignoresSafeArea(.all)
@@ -53,6 +56,8 @@ struct EditRewardSheet: View {
                 .foregroundColor(.white)
                 .padding()
                 .background(Color.customNavyBlue)
+                
+                // MARK: Forms
                 VStack(spacing: 12){
                     CustomTextfield(text: $name, placeholder: "new reward...", icon: "", background: Color.customNavyBlue, color: Color.white)
                     // rarity picker

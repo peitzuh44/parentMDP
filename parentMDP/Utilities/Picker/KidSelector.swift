@@ -56,15 +56,19 @@ import SwiftUI
 
 
 struct ChallengeViewKidSelector: View {
+    // MARK: Properties
     @ObservedObject var kidVM: KidViewModel
+    @Environment(\.presentationMode) var presentationMode
+    @State var selectedKidID: String
+    @Binding var showKidSelector: Bool
     
+    // MARK: Functions
     func name(for selectedKidID: String?) -> String? {
         guard let selectedKidID = selectedKidID else { return nil }
         return kidVM.kids.first { $0.id == selectedKidID }?.name
     }
-    @Environment(\.presentationMode) var presentationMode
-    @State var selectedKidID: String
-    @Binding var showKidSelector: Bool
+    
+    // MARK: Body
     var body: some View {
         Button(action: {
             presentationMode.wrappedValue.dismiss()

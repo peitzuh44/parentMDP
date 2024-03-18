@@ -8,6 +8,8 @@
 import SwiftUI
 import FirebaseAuth
 struct CreatePrivateTaskSheet: View {
+    
+    // MARK: Properties
     @ObservedObject var taskVM = TaskViewModel()
     @ObservedObject var kidVM = KidViewModel()
     @Environment(\.presentationMode) var presentationMode
@@ -30,13 +32,13 @@ struct CreatePrivateTaskSheet: View {
     @State private var selectedKidID: String? = nil
     @State private var selectedRoutine: RoutineOptions? = .anytime
     
-    
+    // MARK: Functions
     func name(for selectedKidID: String?) -> String? {
         guard let selectedKidID = selectedKidID else { return nil }
         return kidVM.kids.first { $0.id == selectedKidID }?.name
     }
 
-    
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customDarkBlue.ignoresSafeArea(.all)
@@ -58,6 +60,7 @@ struct CreatePrivateTaskSheet: View {
                 .padding()
                 .background(Color.customNavyBlue)
                 
+                // MARK: Form
                 VStack(spacing: 12) {
                     // task name
                     CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
@@ -104,6 +107,8 @@ struct CreatePrivateTaskSheet: View {
                         WeekdayPicker(selectedDays: $selectedDays)
                     }
                     Spacer()
+                    
+                    // MARK: Button
                     Button(action:{
                         presentationMode.wrappedValue.dismiss()
                         let daysArray = selectedDays.isEmpty ? nil : Array(selectedDays)

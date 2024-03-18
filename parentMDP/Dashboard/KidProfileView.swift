@@ -9,13 +9,17 @@ import SwiftUI
 
 
 struct KidProfileView: View {
+    
+    // MARK: Properties
     var kid: KidModel
+    
+    // MARK: Body
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
             ScrollView{
                 VStack(spacing: 12){
-                    //Assets
+                    // MARK: Assets
                     HStack(spacing: 18){
                         GoldTag(kid: kid)
                         GemTag(kid: kid)
@@ -33,6 +37,8 @@ struct KidProfileView: View {
     }
 }
 
+
+// MARK: Kid Info Item
 struct KidInfoItem: View {
     var kid: KidModel
     var body: some View {
@@ -75,9 +81,11 @@ struct KidInfoItem: View {
 }
 
 
-struct StatsItem: View {
+
+// MARK: AttributeItem
+struct AttributeItem: View {
     @State private var image: String
-    @State private var value: Int // shuold retrieve from the kidModel
+    @State private var value: Int // should retrieve from the kidModel
     var body: some View {
         HStack(spacing: 0) {
             Image(image)
@@ -91,6 +99,8 @@ struct StatsItem: View {
 }
 
 
+
+// MARK: Skills Board
 struct SkillItem: View{
     @State var skills: String
     @State var level: Int
@@ -111,7 +121,6 @@ struct SkillItem: View{
     }
 }
 struct SkillBoard: View {
-    
     var kid: KidModel
     var body: some View {
         NavigationLink(destination: ManageSkillsView(kidID: kid.id)) {
@@ -143,6 +152,8 @@ struct SkillBoard: View {
     
 }
 
+
+// MARK: Currency Tags
 struct GoldTag: View {
     var kid: KidModel
     var body: some View {
@@ -194,6 +205,8 @@ struct GemTag: View {
 }
 
 
+
+// MARK: Attributes
 struct AvatarAttribute: View {
     var kid: KidModel
 

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ManageSkillsView: View {
     
+    // MARK: Properties
     var kidID: String
     
     @ObservedObject var skillVM = SkillViewModel()
@@ -18,6 +19,7 @@ struct ManageSkillsView: View {
     @State private var showAddNewSkillSheet = false
     
     
+    // MARK: Body
     var body: some View {
         NavigationView {
             ZStack{
@@ -47,17 +49,20 @@ struct ManageSkillsView: View {
                 .scrollContentBackground(.hidden)
                 .scrollIndicators(.hidden)
             }
-                .sheet(isPresented: $showSkillTemplateSheet) {
+            .sheet(isPresented: $showSkillTemplateSheet) {
                     SkillTemplateSheet(kidID: kidID, skillVM: skillVM)
                             .presentationDetents([.height(750)])
                             .presentationDragIndicator(.hidden)
                     }
-                .onAppear {
-                    skillVM.fetchSkills(selectedKidID: kidID)
-                }
+                
+            // MARK: Fetching Factors
+            .onAppear {
+                skillVM.fetchSkills(selectedKidID: kidID)
+            }
             }
 
         }
+        // MARK: Navigation ToolBar
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) { // Places the button on the right
                 Button {

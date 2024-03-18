@@ -7,11 +7,17 @@
 
 import SwiftUI
 
+
+// MARK: Kid Selector (TaskView)
 struct TaskViewKidSelectorSheet: View {
+    
+    // MARK: Properties
     @ObservedObject var kidVM: KidViewModel
     @Binding var selectedKidID: String
     @Environment(\.presentationMode) var presentationMode
 
+    
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customNavyBlue.ignoresSafeArea(.all)
@@ -19,6 +25,7 @@ struct TaskViewKidSelectorSheet: View {
                 Text("Select Kid...")
                     .foregroundColor(.white)
                     .padding(.horizontal)
+                // MARK: Kid Options
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
                         ForEach(kidVM.kids) {
@@ -47,6 +54,7 @@ struct TaskViewKidSelectorSheet: View {
 
 
         }
+        // MARK: Fetching
         .onReceive(kidVM.$kids) { kids in
             // Set the selectedKidID to the first kid's ID if it hasn't been set yet
             if selectedKidID == nil, let firstKid = kids.first {
@@ -57,12 +65,15 @@ struct TaskViewKidSelectorSheet: View {
 }
 
 
-
+// MARK: Kid Selector (ChallengeView)
 struct ChallengeViewKidSelectorSheet: View {
+    
+    // MARK: Properties
     @ObservedObject var kidVM: KidViewModel
     @Binding var selectedKidID: String
     @Environment(\.presentationMode) var presentationMode
 
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customNavyBlue.ignoresSafeArea(.all)
@@ -70,6 +81,7 @@ struct ChallengeViewKidSelectorSheet: View {
                 Text("Select Kid...")
                     .foregroundColor(.white)
                     .padding(.horizontal)
+                // MARK: Kid Options
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
                         ForEach(kidVM.kids) {

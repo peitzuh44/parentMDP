@@ -13,12 +13,16 @@
 import SwiftUI
 import FirebaseAuth
 
+
 struct LoginView: View {
+    // MARK: Properties
     @State private var email: String = ""
     @State private var password: String = ""
     @Binding var currentShowingView: String
     @Binding var authFlow: AuthFlow
     
+    
+    // MARK: Body
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
@@ -94,6 +98,7 @@ struct LoginView: View {
     }
 }
 
+// MARK: Previews
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView(currentShowingView: .constant("login"), authFlow: Binding.constant(.notAuthenticated))

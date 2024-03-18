@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct EmailComponent: View {
+    // MARK: Properties
     @Binding var email: String
     
+    // MARK: Body
     var body: some View {
         HStack {
             Image(systemName: "mail")

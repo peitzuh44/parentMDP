@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct PasswordComponent: View {
+    // MARK: Properties
     @Binding var password: String
     
+    // MARK: Body
     var body: some View {
         HStack {
             Image(systemName: "lock")

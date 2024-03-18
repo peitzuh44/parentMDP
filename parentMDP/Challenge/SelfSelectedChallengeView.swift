@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct SelfSelectedChallengeView: View {
+    // MARK: Properties
     @ObservedObject var challengeVM: ChallengeViewModel
     @ObservedObject var kidVM: KidViewModel
     @Binding var selectedChallenge: ChallengeModel?
     @Binding var showActionSheet: Bool
     @State private var showEditTaskSheet = false
     @State private var showDeleteTaskAlert = false
+    
+    
+    // MARK: Body
     var body: some View {
         List {
             Section {

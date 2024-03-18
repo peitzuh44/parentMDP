@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-import SwiftUI
+
 struct Weekday: Identifiable {
    let id: Int
    let name: String
 }
 
 struct WeekdayPicker: View {
+    // MARK: Properties
    let weekdays = [
        Weekday(id: 0, name: "M"),
        Weekday(id: 1, name: "T"),
@@ -25,6 +26,7 @@ struct WeekdayPicker: View {
    ]
    @Binding var selectedDays: Set<Int>
 
+    // MARK: Body
    var body: some View {
                HStack {
                    ForEach(weekdays) { weekday in

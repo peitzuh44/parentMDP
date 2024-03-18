@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct AssignToPicker: View {
+    // MARK: Properties
     @ObservedObject var viewModel: KidViewModel
     @Binding var selectedKidID: String?
     @Environment(\.presentationMode) var presentationMode
 
+    
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customNavyBlue.ignoresSafeArea(.all)
@@ -19,6 +22,8 @@ struct AssignToPicker: View {
                 Text("ASSIGN TO")
                     .foregroundColor(.white)
                     .padding(.horizontal)
+                
+                // MARK: Kid Options
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
                         ForEach(viewModel.kids) { kid in
@@ -42,6 +47,7 @@ struct AssignToPicker: View {
                     }
                     .padding(.horizontal, 10)
                 }
+                // MARK: Fetching
                 .onAppear {
                     viewModel.fetchKids()
                     }

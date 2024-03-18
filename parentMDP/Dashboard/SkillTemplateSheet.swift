@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct SkillTemplateSheet: View {
+    
+    // MARK: Properties
     var kidID: String
     @ObservedObject var skillVM = SkillViewModel()
     @State private var selectedSkillTemplate: SkillTemplateModel?
     @State private var selectedCategory: SkillCategoryOption = .sports
     @State private var searchTerm: String = ""
 
-
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customDarkBlue.ignoresSafeArea(.all)
@@ -22,6 +24,7 @@ struct SkillTemplateSheet: View {
                 // search
                 CustomTextfield(text: $searchTerm, placeholder: "search for skill", icon: "", background: Color.customNavyBlue, color: Color.white)
                 
+                // MARK: CHANGE TO "HScrollPicker"
                 SkillCategoryPicker(selectedCategory: $selectedCategory)
                 VStack {
                     List{
@@ -48,15 +51,12 @@ struct SkillTemplateSheet: View {
                                 .fill(Color.customNavyBlue)
                                 .padding(.vertical, 2)
                         )
-
-            
-            
-            
                     }
                     .scrollContentBackground(.hidden)
                     .scrollIndicators(.hidden)
                 }
                 }
+            // MARK: Fetching
             .onChange(of: selectedCategory) {
                 skillVM.fetchSkillTemplates(category: selectedCategory.rawValue)
             }

@@ -13,9 +13,12 @@ import FirebaseFirestore
 import SwiftUI
 
 struct AuthViewModel: View {
+    // MARK: Properties
+
     @Binding var authFlow: AuthFlow
     @State private var currentViewShowing: String = "login"
     
+    // MARK: Body
     var body: some View {
         if(currentViewShowing == "login") {
             LoginView(currentShowingView: $currentViewShowing, authFlow: $authFlow)
@@ -27,6 +30,7 @@ struct AuthViewModel: View {
 }
 
 
+// MARK: Preview
 struct AuthViewModel_Previews: PreviewProvider {
     static var previews: some View {
         AuthViewModel(authFlow: .constant(.notAuthenticated))

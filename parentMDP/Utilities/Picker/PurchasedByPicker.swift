@@ -8,15 +8,19 @@
 import SwiftUI
 
 struct PurchasedByPicker: View {
+    // MARK: Properties
     @ObservedObject var rewardVM: RewardViewModel
-    var reward: RewardModel
     @ObservedObject var kidVM: KidViewModel
+    var reward: RewardModel
     @State var selectedKidID: String = ""
     @Environment(\.presentationMode) var presentationMode
 
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customNavyBlue.ignoresSafeArea(.all)
+            
+            // MARK: Kid Options
             VStack (alignment: .leading, spacing: 16){
                 Text("Purchased by...")
                     .foregroundColor(.white)
@@ -47,6 +51,8 @@ struct PurchasedByPicker: View {
                     .padding(.horizontal, 10)
                 }
             }
+            
+            // MARK: Fetching
             .onAppear{
                 kidVM.fetchKids()
             }

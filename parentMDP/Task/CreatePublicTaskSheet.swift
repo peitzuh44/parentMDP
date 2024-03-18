@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 struct CreatePublicTaskSheet: View {
+    // MARK: Properties
     @ObservedObject var taskVM = TaskViewModel()
     @Environment(\.presentationMode) var presentationMode
 
@@ -26,7 +27,7 @@ struct CreatePublicTaskSheet: View {
     @State private var selectedDays: Set<Int> = []
     
 
-    
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customDarkBlue.ignoresSafeArea(.all)
@@ -82,6 +83,7 @@ struct CreatePublicTaskSheet: View {
                         WeekdayPicker(selectedDays: $selectedDays)
                     }
                     Spacer()
+                    // MARK: Button
                     Button(action:{
                         presentationMode.wrappedValue.dismiss()
                         let daysArray = selectedDays.isEmpty ? nil : Array(selectedDays)

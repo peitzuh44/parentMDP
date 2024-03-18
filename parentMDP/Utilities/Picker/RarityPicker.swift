@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: Enum Options
 enum RarityOptions: String, CaseIterable {
     case common = "common"
     case rare = "rare"
@@ -19,9 +20,13 @@ enum RarityOptions: String, CaseIterable {
     }
 }
 
+
 struct RarityPicker: View {
+    // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
     @Binding var selectedRarity: RarityOptions
+    
+    // MARK: Body
         var body: some View {
             ZStack {
                 Color.customNavyBlue.ignoresSafeArea(.all)
@@ -56,6 +61,8 @@ struct RarityPicker: View {
             }
         }
 
+    
+    // MARK: Functions - return by case
         private func emoji(for routine: RarityOptions) -> String {
             switch routine {
             case .common:

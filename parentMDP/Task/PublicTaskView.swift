@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PublicTaskView: View {
+    // MARK: Properties
     @ObservedObject var kidVM: KidViewModel
     @ObservedObject var taskVM: TaskViewModel
     @Binding var selectedTask: TaskInstancesModel?
@@ -15,7 +16,7 @@ struct PublicTaskView: View {
     @State private var showEditTaskSheet = false
     @State private var showDeleteTaskAlert = false
     @State private var showCompletePicker = false
-
+    // MARK: Body
     var body: some View {
         VStack{
             List{

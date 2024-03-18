@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AssignedChallengeView: View {
+    // MARK: Properties
     @ObservedObject var challengeVM: ChallengeViewModel
     @ObservedObject var kidVM: KidViewModel
     @Binding var selectedChallenge: ChallengeModel?
@@ -15,6 +16,7 @@ struct AssignedChallengeView: View {
     @State private var showEditTaskSheet = false
     @State private var showDeleteAlert = false
     
+    // MARK: Functions
     func difficultyColor(for difficulty: String) -> Color {
            switch difficulty {
            case "Easy":
@@ -28,6 +30,7 @@ struct AssignedChallengeView: View {
            }
        }
     
+    // MARK: Boduy
     var body: some View {
         List {
             Section {
@@ -53,10 +56,10 @@ struct AssignedChallengeView: View {
 
 
 
+
+// MARK: Challenge Item
 struct ChallengeItem: View {
     let challenge: ChallengeModel
-
-    
     var body: some View {
         HStack {
             HStack(spacing: 4){
@@ -66,7 +69,6 @@ struct ChallengeItem: View {
                     .frame(width: 30)
                     .padding(.vertical)
                 Text(challenge.name)
-                
             }
             Spacer()
             // Difficulty tag
@@ -90,22 +92,3 @@ struct ChallengeItem: View {
 }
 
 
-////Reward
-//VStack(alignment: .leading, spacing: 4){
-//    // Gem Tag
-//    HStack(spacing: 4){
-//        Image("gem")
-//            .resizable()
-//            .aspectRatio(contentMode: .fit)
-//            .frame(width: 24)
-//        Text("300")
-//        
-//    }
-//    HStack(spacing: 4){
-//        Image("xp")
-//            .resizable()
-//            .aspectRatio(contentMode: .fit)
-//            .frame(width: 24)
-//        Text("300")
-//    }
-//}

@@ -13,6 +13,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct SignupView: View {
+    // MARK: Properties
     @Binding var currentShowingView: String
     @Binding var authFlow: AuthFlow
     @State private var showAddKidView: Bool = false
@@ -36,6 +37,8 @@ struct SignupView: View {
         }
     }
     
+    
+    // MARK: Functions
     // Generates the parent code that will be used for the kids to get connected to their parent's account
     private func generateRandomParentCode(length: Int) -> String {
         let lettersAndNumbers = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -68,6 +71,8 @@ struct SignupView: View {
         }
     }
 
+    
+    // MARK: Body
     var body: some View {
         NavigationStack {
             ZStack{
@@ -139,6 +144,7 @@ struct SignupView: View {
     }
 }
 
+// MARK: Preview
 struct SignupView_Previews: PreviewProvider {
     static var previews: some View {
         SignupView(currentShowingView: .constant("signup"), authFlow: Binding.constant(.notAuthenticated))

@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct CompletedByKidPicker: View {
+    // MARK: Properties
     @ObservedObject var kidVM: KidViewModel
     @ObservedObject var taskVM: TaskViewModel
-
     var task: TaskInstancesModel
     @State private var completedBy: String?
     @Environment(\.presentationMode) var presentationMode
 
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customNavyBlue.ignoresSafeArea(.all)
@@ -22,6 +23,7 @@ struct CompletedByKidPicker: View {
                 Text("Completed by...")
                     .foregroundColor(.white)
                     .padding(.horizontal)
+                // MARK: Kid Options
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
                         ForEach(kidVM.kids) {
@@ -52,6 +54,7 @@ struct CompletedByKidPicker: View {
 
 
         }
+        // MARK: Fetching
         .onAppear{
             kidVM.fetchKids()
         }

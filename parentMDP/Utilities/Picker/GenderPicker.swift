@@ -7,8 +7,10 @@
 import SwiftUI
 
 struct GenderPicker: View {
+    // MARK: Properties
     @Binding var selectedGender: GenderOptions?
 
+    // MARK: Body
     var body: some View {
         HStack{
             ForEach(GenderOptions.allCases, id: \.self) { option in

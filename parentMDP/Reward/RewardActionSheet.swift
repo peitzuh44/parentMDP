@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct RewardActionSheet: View {
+    // MARK: Properties
+
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var rewardVM: RewardViewModel
     @ObservedObject var kidVM: KidViewModel
@@ -17,7 +19,7 @@ struct RewardActionSheet: View {
     @Binding var showPurchaseByPicker: Bool
 
     
-    
+    // MARK: Functions
     func rarityColor(for rarity: String) -> Color {
            switch rarity {
            case "common":
@@ -35,9 +37,11 @@ struct RewardActionSheet: View {
            }
        }
     
+    // MARK: Body
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
+            // MARK: Reward Detail
             VStack(spacing: 16){
                 HStack{
                     HStack{
@@ -64,6 +68,7 @@ struct RewardActionSheet: View {
                 .cornerRadius(20)
                 .padding(.horizontal)
                 
+                // MARK: Action Sheet Buttons
                 HStack(spacing: 24){
                     Button(action:{
                     presentationMode.wrappedValue.dismiss()

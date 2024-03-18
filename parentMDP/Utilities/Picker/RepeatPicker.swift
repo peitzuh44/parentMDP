@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-import SwiftUI
+
+// MARK: Options
 enum RepeatingOptions: String, CaseIterable{
     case oneOff = "Does not repeat"
     case daily = "Everyday"
@@ -20,19 +21,26 @@ enum RepeatingOptions: String, CaseIterable{
     }
     
 }
+
+
 struct RepeatPicker: View {
+    
+    // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
     @Binding var selectedRepeat: RepeatingOptions
 
+    
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customNavyBlue.ignoresSafeArea(.all)
             VStack(alignment: .leading) {
+                
+                // MARK: One-Off Option
                 Text("NO REPEAT")
                     .foregroundColor(.white)
                     .padding(.horizontal, 20)
                     .padding(.top, 10)
-                
                 
                 Button(action: {
                     self.selectedRepeat = .oneOff
@@ -55,7 +63,7 @@ struct RepeatPicker: View {
                 }
                 .padding(.horizontal, 10)
 
-                // Repeat Section
+                // MARK: Repeat Section
                 Text("REPEAT")
                     .foregroundColor(.white)
                     .padding(.horizontal, 20)

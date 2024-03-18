@@ -9,6 +9,7 @@ import FirebaseFirestore
 
 
 class ChallengeViewModel: ObservableObject {
+    // MARK: Properties
     @Published var challenges: [ChallengeModel] = []
     private let db = Firestore.firestore()
     let currentUserID = Auth.auth().currentUser?.uid ?? ""

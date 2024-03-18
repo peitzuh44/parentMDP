@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct TaskViewDatePicker: View {
-    @Binding var selectedDate: Date 
+    // MARK: Properties
+    @Binding var selectedDate: Date
     
     private var displayDate: String {
         let dateFormatter = DateFormatter()
@@ -29,6 +30,7 @@ struct TaskViewDatePicker: View {
         }
     }
     
+    // MARK: Body
     var body: some View {
         HStack {
             Button(action: {

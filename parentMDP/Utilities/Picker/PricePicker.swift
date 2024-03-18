@@ -7,8 +7,12 @@
 import SwiftUI
 
 struct PricePicker: View {
+    
+    // MARK: Properties
     @Binding var selectedPrice: Int
     let priceRange: [Int] = Array(stride(from: 10, to: 1000, by: 10))
+    
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customNavyBlue.ignoresSafeArea(.all)
@@ -26,6 +30,8 @@ struct PricePicker: View {
     }
 }
 
+
+// MARK: Preview 
 struct PricePicker_Previews: PreviewProvider {
     @State static var selectedPrice: Int = 0
 

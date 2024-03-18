@@ -19,7 +19,6 @@ enum AuthFlow {
 
 struct ContentView: View {
     @State var authFlow: AuthFlow = .notAuthenticated
-
     init() {
         if Auth.auth().currentUser != nil {
             authFlow = .authenticated
@@ -40,6 +39,7 @@ struct ContentView: View {
 
 
 
+// MARK: Preview
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()

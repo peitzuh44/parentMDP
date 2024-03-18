@@ -7,7 +7,10 @@
 
 import SwiftUI
 import FirebaseAuth
+
+
 struct TaskActionSheet: View {
+    // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var taskVM: TaskViewModel
     @ObservedObject var kidVM: KidViewModel
@@ -19,6 +22,7 @@ struct TaskActionSheet: View {
     @Binding var showCompleteByPicker: Bool
     
     
+    // MARK: Functions
     func difficultyColor(for difficulty: String) -> Color {
            switch difficulty {
            case "Easy":
@@ -32,7 +36,7 @@ struct TaskActionSheet: View {
            }
        }
     
-
+    // MARK: Body
     var body: some View {
         ZStack {
             Color.customDarkBlue.ignoresSafeArea(.all)
@@ -65,7 +69,8 @@ struct TaskActionSheet: View {
                 .background(Color.customNavyBlue)
                 .cornerRadius(20)
                 .padding(.horizontal)
-
+                
+                // MARK: Return By Case
                 if task.privateOrPublic == "private" {
                     privateTaskUI
                 }
@@ -76,6 +81,8 @@ struct TaskActionSheet: View {
         }
     }
     
+    
+    // MARK: Private Task
     private var privateTaskUI: some View {
         
         HStack(spacing: 24) {
@@ -87,6 +94,8 @@ struct TaskActionSheet: View {
             
         }
     }
+    
+    // MARK: Public Task
     private var publicTaskUI: some View {
         
         HStack(spacing: 24) {
@@ -101,17 +110,16 @@ struct TaskActionSheet: View {
 }
 
 
-
+// MARK: ActionSheetButton
 struct ActionSheetButton: View {
     @Environment(\.presentationMode) var presentationMode
-    
     let image: String
     let text: String
     let color: Color
     let size: CGFloat
     @Binding var isPresenting: Bool
     var action: (() -> Void)? // Optional action to run
-
+    
     var body: some View {
         Button(action: {
             action?()

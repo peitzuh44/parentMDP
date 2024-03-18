@@ -10,11 +10,13 @@
 import SwiftUI
 
 struct AddKidView: View {
+    // MARK: Properties
     @StateObject var viewModel = KidViewModel()
     @Binding var authFlow: AuthFlow
     @State private var navigateToInviteKidView = false
     @State var showAddKidSheet = false
     
+    // MARK: Body
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
@@ -54,6 +56,8 @@ struct AddKidView: View {
                                 .padding(.vertical, 2)
                         )
                     }
+                    
+                    // MARK: Fetching
                     .onAppear() {
                         // This fetches the kids from the database when we first load the add kids view
                         viewModel.fetchKids()
@@ -62,6 +66,8 @@ struct AddKidView: View {
                     .scrollIndicators(.hidden)
                     // List of Kids that have been added END
                     
+                    
+                    // MARK: Buttons
                     // Button to pull up the add kid sheet START
                     Button(action: {
                         showAddKidSheet = true

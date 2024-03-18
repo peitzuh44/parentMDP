@@ -9,6 +9,8 @@ import SwiftUI
 import FirebaseAuth
 
 struct AddChallengeSheet: View {
+    // MARK: Properties
+
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var challengeVM = ChallengeViewModel()
     @ObservedObject var kidVM = KidViewModel()
@@ -27,7 +29,6 @@ struct AddChallengeSheet: View {
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
     @State private var name: String = ""
     @State private var description: String = ""
-
     @State private var selectedDate: Date = Date()
     @State private var selectedKidID: String? = nil
     @State private var selectedDifficulty: DifficultyOptions = .easy
@@ -36,12 +37,13 @@ struct AddChallengeSheet: View {
     @State private var selectedSkill: String? = nil
 
 
-
+    // MARK: Functions
     func name(for selectedKidID: String?) -> String? {
         guard let selectedKidID = selectedKidID else { return nil }
         return kidVM.kids.first { $0.id == selectedKidID }?.name
     }
     
+    // MARK: Body
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
@@ -120,6 +122,8 @@ struct AddChallengeSheet: View {
     
 }
 
+
+// MARK: Challenge Type Picker
 enum ChallengeTypeOptions: String, CaseIterable {
     case assigned = "assigned"
     case selfSelected = "self-selected"

@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct AddTaskSheet: View {
+    // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
     @Binding var showAddPrivateTaskSheet: Bool
     @Binding var showAddPublicTaskSheet: Bool
+    
+    // MARK: Body
+
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
@@ -31,8 +35,6 @@ struct AddTaskSheet: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 80)
-                                
-                            
                             Text("individual")
                             
                         }

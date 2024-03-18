@@ -10,15 +10,20 @@ import FirebaseFirestore
 import FirebaseAuth
 
 struct DashboardView: View {
+    
+    //MARK: Properties
     @ObservedObject var kidVM = KidViewModel()
     @State private var selectedKid: KidModel?
     @State private var showKidDetail = false
+    
+    // MARK: Body
     var body: some View {
         NavigationStack{
             ZStack{
                 Color.customDarkBlue.ignoresSafeArea(.all)
+                
                 List{
-                    // kid list section
+                    // MARK: Kid Section
                     Section{
                         ForEach(kidVM.kids) { kid in
                             NavigationLink(value: kid) {
@@ -30,14 +35,14 @@ struct DashboardView: View {
                             .foregroundColor(.white)
                             .bold()
                     }
-                    // kid list section styling
+                    // kid list styling
                     .listRowSeparator(.hidden)
                     .listRowBackground(
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color.customNavyBlue)
                             .padding(.vertical, 4)
                     )
-                    // review section
+                    // MARK: Action Buttons Section
                     Section{
                         //review task navigation link
                         Button(action:
@@ -53,6 +58,7 @@ struct DashboardView: View {
                             .foregroundColor(.white)
                         }
                         .padding(.vertical)
+                        
                         //review gift navigation link
                         Button(action:
                                 {
@@ -69,7 +75,7 @@ struct DashboardView: View {
                         .padding(.vertical)
                     }
                     
-                    // Review Section Styling
+                    // Action Button Section Styling
                     .listRowSeparator(.hidden)
                     .listRowBackground(
                         RoundedRectangle(cornerRadius: 10)
@@ -89,6 +95,8 @@ struct DashboardView: View {
     }
 }
   
+
+// MARK: Kid List Item
 struct KidListItem: View {
     var kid: KidModel
     var body: some View {
