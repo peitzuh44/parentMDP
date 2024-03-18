@@ -9,32 +9,20 @@ import SwiftUI
 
 struct MainView: View {
     @Binding var authFlow: AuthFlow
+    @State private var selection: TabBarItem = .home
 
     var body: some View {
-        TabView {
-                DashboardView()
-                       .tabItem {
-                           Image(systemName: "person.crop.circle")
-                           Text("Dashboard")
-                       }
-                TaskView()
-                       .tabItem {
-                           Image(systemName: "checklist")
-                           Text("Quests")
-                       }
-               RewardView()
-                   .tabItem{
-                       Image(systemName: "gift")
-                       Text("Reward")
+        CustomTabBarContainerView(selection: $selection) {
+            DashboardView()
+                .tabBarItem(tab: .home, selection: $selection)
+            TaskView()
+                .tabBarItem(tab: .quest, selection: $selection)
+            ChallengeView()
+                .tabBarItem(tab: .challenge, selection: $selection)
+            RewardView()
+                .tabBarItem(tab: .reward, selection: $selection)
 
-                   }
-                ChallengeView()
-                   .tabItem {
-                       Image(systemName: "star.square")
-                       Text("Challenges")
-                   }
-            
-               }
+        }
            }
     }
 

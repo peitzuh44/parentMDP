@@ -65,6 +65,10 @@
 		AF75D72C2B7C3E5A009CBF30 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D72B2B7C3E5A009CBF30 /* MainView.swift */; };
 		AF75D72E2B7C3E7C009CBF30 /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D72D2B7C3E7C009CBF30 /* RewardView.swift */; };
 		AF75D7362B7C431B009CBF30 /* TaskViewDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D7352B7C431B009CBF30 /* TaskViewDatePicker.swift */; };
+		AFC432A82BA7BAF60053494F /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A72BA7BAF60053494F /* TabBarItem.swift */; };
+		AFC432AA2BA7BB2A0053494F /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */; };
+		AFC432AC2BA7BB4B0053494F /* CustomTabBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */; };
+		AFC432AE2BA7BB6B0053494F /* TabBarItemsPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432AD2BA7BB6B0053494F /* TabBarItemsPreferenceKey.swift */; };
 		AFC6EC8E2B8186AD000CFB9B /* RewardActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC6EC8D2B8186AD000CFB9B /* RewardActionSheet.swift */; };
 		AFC6EC902B819035000CFB9B /* PurchasedByPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC6EC8F2B819035000CFB9B /* PurchasedByPicker.swift */; };
 		AFC6EC922B819C91000CFB9B /* ChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC6EC912B819C91000CFB9B /* ChallengeView.swift */; };
@@ -140,6 +144,10 @@
 		AF75D72B2B7C3E5A009CBF30 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		AF75D72D2B7C3E7C009CBF30 /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
 		AF75D7352B7C431B009CBF30 /* TaskViewDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewDatePicker.swift; sourceTree = "<group>"; };
+		AFC432A72BA7BAF60053494F /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
+		AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
+		AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarContainerView.swift; sourceTree = "<group>"; };
+		AFC432AD2BA7BB6B0053494F /* TabBarItemsPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemsPreferenceKey.swift; sourceTree = "<group>"; };
 		AFC6EC8D2B8186AD000CFB9B /* RewardActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardActionSheet.swift; sourceTree = "<group>"; };
 		AFC6EC8F2B819035000CFB9B /* PurchasedByPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasedByPicker.swift; sourceTree = "<group>"; };
 		AFC6EC912B819C91000CFB9B /* ChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeView.swift; sourceTree = "<group>"; };
@@ -361,6 +369,7 @@
 		AF2B769F2B758B2300B9535F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				AFC432A62BA7BAD50053494F /* CustomTabBar */,
 				AF2B76972B7589FC00B9535F /* CustomTextfield.swift */,
 				AF2B76992B758A3100B9535F /* Button.swift */,
 				AF2B76A02B758B4700B9535F /* CustomSegmentedControl.swift */,
@@ -388,6 +397,17 @@
 				AF5573A72B7E887700A8724A /* DateExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AFC432A62BA7BAD50053494F /* CustomTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				AFC432A72BA7BAF60053494F /* TabBarItem.swift */,
+				AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */,
+				AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */,
+				AFC432AD2BA7BB6B0053494F /* TabBarItemsPreferenceKey.swift */,
+			);
+			path = CustomTabBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -486,12 +506,14 @@
 				AF2B76D62B758F1F00B9535F /* SignupView.swift in Sources */,
 				AF75D72A2B7C3D62009CBF30 /* AuthViewModel.swift in Sources */,
 				AF5573B02B7EE47D00A8724A /* EditRewardSheet.swift in Sources */,
+				AFC432AE2BA7BB6B0053494F /* TabBarItemsPreferenceKey.swift in Sources */,
 				AFC6EC922B819C91000CFB9B /* ChallengeView.swift in Sources */,
 				7C3B11C82B9AE4760058368E /* GenderPicker.swift in Sources */,
 				AFDBDC942B8E723B00155ED7 /* SkillViewModel.swift in Sources */,
 				AF5573852B7D3A8000A8724A /* ProgressBar.swift in Sources */,
 				AF5573AC2B7EB28100A8724A /* RarityPicker.swift in Sources */,
 				AFC6ECA02B83F081000CFB9B /* KidViewModel.swift in Sources */,
+				AFC432AA2BA7BB2A0053494F /* CustomTabBarView.swift in Sources */,
 				AF2B76D82B758F2A00B9535F /* LoginView.swift in Sources */,
 				AF2B76BE2B758DBA00B9535F /* PrivateTaskView.swift in Sources */,
 				AF2B76DF2B758F5C00B9535F /* InviteKidView.swift in Sources */,
@@ -522,6 +544,7 @@
 				AF75D72C2B7C3E5A009CBF30 /* MainView.swift in Sources */,
 				AF75D7362B7C431B009CBF30 /* TaskViewDatePicker.swift in Sources */,
 				AFC6EC9E2B83EF13000CFB9B /* KidSelectorSheet.swift in Sources */,
+				AFC432A82BA7BAF60053494F /* TabBarItem.swift in Sources */,
 				AF2B76A52B758B9700B9535F /* RepeatPicker.swift in Sources */,
 				AFDBDC902B8C651900155ED7 /* AddChallengeSheet.swift in Sources */,
 				AFC6EC902B819035000CFB9B /* PurchasedByPicker.swift in Sources */,
@@ -535,6 +558,7 @@
 				AF5573B62B7EE5EB00A8724A /* EditChallengeSheet.swift in Sources */,
 				AF5573BA2B7FCA9D00A8724A /* AssignedChallengeView.swift in Sources */,
 				AFDBDC812B8AA65800155ED7 /* CreatePrivateTaskSheet.swift in Sources */,
+				AFC432AC2BA7BB4B0053494F /* CustomTabBarContainerView.swift in Sources */,
 				AF2B76BC2B758D9B00B9535F /* RewardModel.swift in Sources */,
 				AF5573832B7D39B000A8724A /* KidSelector.swift in Sources */,
 				AFDBDC7F2B8A7D7700155ED7 /* TaskActionSheet.swift in Sources */,
