@@ -13,6 +13,7 @@ struct DashboardView: View {
     
     //MARK: Properties
     @ObservedObject var kidVM = KidViewModel()
+    @ObservedObject var taskVM = TaskViewModel()
     @State private var selectedKid: KidModel?
     @State private var showKidDetail = false
     
@@ -44,20 +45,17 @@ struct DashboardView: View {
                     // MARK: Action Buttons Section
                     Section{
                         //review task navigation link
-                        Button(action:
-                                {
-                            
-                        }){
+                        NavigationLink {
+                            ReviewTaskView(taskVM: taskVM)
+                        } label: {
                             HStack{
                                 Image(systemName: "checkmark.square.fill")
                                 Text("2 tasks to review")
                                 Spacer()
-                                Image(systemName: "arrow.right")
                             }
                             .foregroundColor(.white)
                         }
-                        .padding(.vertical)
-                        
+                        .padding(.vertical)                        
                         //review gift navigation link
                         Button(action:
                                 {

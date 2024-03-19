@@ -10,11 +10,47 @@ import FirebaseAuth
 
 
 struct ReviewTaskView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @ObservedObject var taskVM: TaskViewModel
+    @State var selectedKidID: String? = ""
+    let currentUserID = Auth.auth().currentUser?.uid ?? ""
 
-#Preview {
-    ReviewTaskView()
+    var body: some View {
+        ZStack{
+            Color.customDarkBlue.ignoresSafeArea(.all)
+            VStack{
+                // Approve all button
+                List{
+                    ForEach(taskVM.tasks(forStatus: "todo")){ task in
+                        HStack {
+                            Text(task.name).foregroundColor(.white)
+                            Spacer()
+                            Button(action: {
+                                taskVM.completeTaskAndUpdateKidGold(task: task, completedBy: selectedKidID)
+                            }) {
+                                Text("Approve")
+                                    .foregroundStyle(.white)
+                                    .padding()
+                                    .background(.blue)
+                                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                            }
+                            .padding(.vertical, 8)
+                            
+                        }
+                    }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.customNavyBlue)
+                            .padding(.vertical, 2)
+                    )
+                }
+                .scrollContentBackground(.hidden)
+                .scrollIndicators(.hidden)
+            }
+            .onAppear {
+                taskVM.fetchReviewTask(forUserID: currentUserID)
+            }
+        }
+    }
+    
 }

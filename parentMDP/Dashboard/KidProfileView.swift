@@ -12,7 +12,6 @@ struct KidProfileView: View {
     
     // MARK: Properties
     var kid: KidModel
-    
     // MARK: Body
     var body: some View {
         ZStack{

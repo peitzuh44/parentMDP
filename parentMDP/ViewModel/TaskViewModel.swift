@@ -17,6 +17,12 @@ class TaskViewModel: ObservableObject {
         return tasks.filter { $0.routine!.lowercased() == routine.lowercased() }
        }
     
+    func tasks(forStatus status: String) -> [TaskInstancesModel] {
+           print("Filtering tasks for routine: \(status)")
+        return tasks.filter { $0.status.lowercased() == status.lowercased() }
+       }
+    
+    
     
     // MARK: Fetch Review Task
     func fetchReviewTask(forUserID userID: String) {
