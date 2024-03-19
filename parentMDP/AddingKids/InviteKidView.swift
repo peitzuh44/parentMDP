@@ -15,7 +15,6 @@ struct InviteKidView: View {
     
     // MARK: Functions
     // Function that fetches the parent code that will be shared to the kids when they install the app
-    
     func fetchParentCode(forParentID parentID: String, completion: @escaping (String) -> Void) {
         let db = Firestore.firestore()
         db.collection("users").document(parentID).getDocument { documentSnapshot, error in

@@ -59,49 +59,51 @@ struct TaskView: View {
                     
                     // MARK: Return View By Case
                     if privateOrPublic == "private" {
-                        VStack{
-                            Button(action:{
-                                self.showKidSelector = true
-                            }){
-                                HStack(spacing: 2){
-                                    Spacer()
-                                    Image("avatar1")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 80)
-                                        .padding(8)
-                                    
-                                    VStack(alignment: .leading, spacing: 8){
-                                        Text(self.name(for: selectedKidID) ?? "Select kid")
-                                            .font(.title2)
-                                        
-                                        VStack(alignment: .leading, spacing: 8){
-                                            LinearProgressBar(width: 220, height: 8, percent: 80, color1: .yellow, color2: .orange)
-                                            HStack{
-                                                Text("Daily progress")
-                                                Spacer()
-                                                Text("8/10")
-                                            }
-                                            .font(.caption)
-                                            
-                                        }
-                                        .padding(.trailing)
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                }
-                                .foregroundColor(.white)
-                                .frame(height: 130)
-                                .background(
-                                    Color.customNavyBlue
-                                        .cornerRadius(20))
-                                
-                            }
-              
-                            
-                            
-                        }
+                        
+                        // Kid Selector Button
+//                        VStack{
+//                            Button(action:{
+//                                self.showKidSelector = true
+//                            }){
+//                                HStack(spacing: 2){
+//                                    Spacer()
+//                                    Image("avatar1")
+//                                        .resizable()
+//                                        .aspectRatio(contentMode: .fit)
+//                                        .frame(width: 80)
+//                                        .padding(8)
+//                                    
+//                                    VStack(alignment: .leading, spacing: 8){
+//                                        Text(self.name(for: selectedKidID) ?? "Select kid")
+//                                            .font(.title2)
+//                                        
+//                                        VStack(alignment: .leading, spacing: 8){
+//                                            LinearProgressBar(width: 220, height: 8, percent: 80, color1: .yellow, color2: .orange)
+//                                            HStack{
+//                                                Text("Daily progress")
+//                                                Spacer()
+//                                                Text("8/10")
+//                                            }
+//                                            .font(.caption)
+//                                            
+//                                        }
+//                                        .padding(.trailing)
+//                                    }
+//                                    
+//                                    Spacer()
+//                                    
+//                                }
+//                                .foregroundColor(.white)
+//                                .frame(height: 130)
+//                                .background(
+//                                    Color.customNavyBlue
+//                                        .cornerRadius(20))
+//                                
+//                            }
+//                        }
+                        QuestViewKidSelector(kidVM: kidVM, selectedKidID: $selectedKidID)
+                        
+                        // END
                         
                     } else {
                         PublicTaskLeaderBoard()
@@ -270,3 +272,35 @@ struct PublicTaskLeaderBoard: View {
     }
 }
     
+
+
+// MARK: Quest view kid selector
+struct QuestViewKidSelector: View {
+    @ObservedObject var kidVM: KidViewModel
+    @Binding var selectedKidID: String
+    var body: some View{
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                ForEach(kidVM.kids) {
+                    kid in
+                    Button(action: {
+                        self.selectedKidID = kid.id
+
+                    }) {
+                        VStack(spacing: 10) {
+                            Image(kid.avatarImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 80)
+                            Text(kid.name)
+                                .foregroundColor(.white)
+                        }
+                        .frame(width: 130, height: 160)
+                        .background(selectedKidID == kid.id ? Color.customGreen : Color.black.opacity(0.6))
+                        .cornerRadius(10)                        }
+                }
+            }
+            .padding(.horizontal, 10)
+        }
+    }
+}

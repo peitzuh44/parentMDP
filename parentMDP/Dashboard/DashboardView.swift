@@ -21,7 +21,6 @@ struct DashboardView: View {
         NavigationStack{
             ZStack{
                 Color.customDarkBlue.ignoresSafeArea(.all)
-                
                 List{
                     // MARK: Kid Section
                     Section{
@@ -90,7 +89,48 @@ struct DashboardView: View {
                 .navigationDestination(for: KidModel.self) { kid in
                     KidProfileView(kid: kid)
                 }
+                
             }
+            .navigationTitle("Dashboard")
+                .foregroundStyle(.white)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar{
+                ToolbarItem(placement: .topBarLeading) {
+                    NavigationLink {
+                        SettingsView()
+                    } label: {
+                        Image(systemName: "line.3.horizontal")
+
+                    }
+
+                }
+                
+                ToolbarItem(placement: .principal) {
+                    Text("Dashboard")
+                        .foregroundStyle(.white)
+                        .bold()
+                }
+//                ToolbarItem(placement: .principal) {
+//                    HStack(spacing: 24){
+//                        // login streak
+//                    }
+//                }
+//                ToolbarItem(placement: .topBarTrailing) {
+//                    NavigationLink {
+//                        MessageView()
+//                    } label: {
+//                        Image("mail")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 32)
+//                    }
+//
+//                }
+            }
+            .foregroundStyle(Color.white)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+            
+
         }
     }
 }

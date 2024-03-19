@@ -456,7 +456,7 @@ extension TaskViewModel {
     }
 
 // MARK: Mark private task as complete
-private func markPrivateTaskAsComplete(taskID: String, completion: @escaping () -> Void) {
+func markPrivateTaskAsComplete(taskID: String, completion: @escaping () -> Void) {
         let taskRef = db.collection("taskInstances").document(taskID)
         taskRef.updateData(["status": "complete"]) { error in
             if let error = error {
@@ -469,7 +469,7 @@ private func markPrivateTaskAsComplete(taskID: String, completion: @escaping () 
     }
     
 // MARK: Mark public task as complete
-private func markPublicTaskAsComplete(taskID: String, selectedKidID: String, completion: @escaping () -> Void) {
+func markPublicTaskAsComplete(taskID: String, selectedKidID: String, completion: @escaping () -> Void) {
     
     let taskRef = db.collection("taskInstances").document(taskID)
     taskRef.updateData(
