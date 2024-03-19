@@ -12,6 +12,7 @@ import FirebaseFirestore
 
 class RewardViewModel: ObservableObject {
     @Published var rewards: [RewardModel] = []
+    @Published var purchasedReward: [RewardPurchaseModel] = []
     private let db = Firestore.firestore()
     
     
@@ -42,6 +43,24 @@ class RewardViewModel: ObservableObject {
                 }
             }
     }
+    
+    func fetchPurchaseRecord(forUserID userID: String){
+        db.collection("purchaseRewards")
+            .whereField("createdBy", isEqualTo: userID)
+            .whereField("status", isEqualTo: "not yet redeem")
+            .order(by: "timePurchased", descending: false)
+            .addSnapshotListener { [weak self] querySnapshot, error in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error fetching documents: \(String(describing: error?.localizedDescription))")
+                    return
+                }
+
+                self?.purchasedReward = documents.compactMap { doc -> RewardPurchaseModel? in
+                    try? doc.data(as: RewardPurchaseModel.self)
+                }
+            }
+    }
+    
     
     //MARK: Delete Reward
     func deleteReward(rewardID: String) {
@@ -93,7 +112,6 @@ class RewardViewModel: ObservableObject {
 
 
 extension RewardViewModel {
-    
     // MARK: Purchase Reward
     func purchaseRewardAndUpdateKidGold(reward: RewardModel, purchasedBy: String) {
         
@@ -145,6 +163,21 @@ extension RewardViewModel {
         }
     }
     
+    // MARK: Mark reward as redeemed
+    func markRewardAsRedeemed(purchasedReward: RewardPurchaseModel){
+        let purchasedRewardID = purchasedReward.id
+        let purchaseRewardRef = db.collection("purchaseRewards").document(purchasedRewardID)
+        purchaseRewardRef.updateData(["status":"redeemed"]){ error in
+            if let error = error {
+                print("Error updating challenge status: \(error)")
+            } else {
+                print("Challenge marked as complete")
+            }
+        }
+    }
+    
+    
+    
 // MARK: Balance Calculation
 private func deductKidGemBalance(kidID: String, gemToDeduct: Int) {
         let kidRef = db.collection("kids").document(kidID)
@@ -174,4 +207,3 @@ private func deductKidGemBalance(kidID: String, gemToDeduct: Int) {
         }
     }
 }
-

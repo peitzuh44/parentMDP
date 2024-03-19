@@ -30,7 +30,7 @@ struct CompletedByKidPicker: View {
                             kid in
                             Button(action: {
                                 self.completedBy = kid.id
-                                taskVM.completeTaskAndUpdateKidGold(task: task, completedBy: completedBy)
+                                taskVM.completeTaskAndUpdateKidCoin(task: task, completedBy: completedBy)
                                 presentationMode.wrappedValue.dismiss()
 
                             }) {

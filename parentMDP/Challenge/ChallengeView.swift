@@ -50,54 +50,9 @@ struct ChallengeView: View {
                 CustomSegmentedControl(segments: ["assigned", "self-selected"], selectedSegment: $assignedOrSelfSelected)
                 
                 // MARK: Kid Picker
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                    showKidSelector = true
-                }){
-                    HStack{
-                        Spacer()
-                        // Name + Image
-                        VStack(spacing: 8){
-                            //avatar image
-                            Image("avatar1")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 60)
-                                .padding(.horizontal, 8)
-                            Text(self.name(for: selectedKidID) ?? "Select kid")
-                                .font(.callout)
-                        }
-                        Spacer()
-                        HStack(spacing: 24) {
-                            // Ongoing Challenge
-                            VStack(alignment: .center, spacing: 2) {
-                                Text("7")
-                                    .font(.title)
-                                    .bold()
-                                Text("ongoing")
-                            }
-                            // Completed Challenge
-                            VStack(alignment: .center, spacing: 2) {
-                                Text("7")
-                                    .font(.title)
-                                    .bold()
-                                Text("completed")
-                            }
-                        }
-                        
-                        Spacer()
-                    }
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 130)
-                    .background(
-                        Color.customNavyBlue
-                            .cornerRadius(20)
-                    )
-                    .padding(.horizontal)
-                    
-                }
-                .padding()
+                KidSelector(kidVM: kidVM, selectedKidID: $selectedKidID)
+                    .padding(.vertical)
+
                 
                 // MARK: Return View By Case
                 if assignedOrSelfSelected == "assigned" {

@@ -15,7 +15,7 @@ struct PublicTaskView: View {
     @Binding var showActionSheet: Bool
     @State private var showEditTaskSheet = false
     @State private var showDeleteTaskAlert = false
-    @State private var showCompletePicker = false
+    @Binding var showCompleteByPicker: Bool
     // MARK: Body
     var body: some View {
         VStack{
@@ -26,15 +26,29 @@ struct PublicTaskView: View {
                                     Text(task.name)
                                         .foregroundColor(.white)
                                     Spacer()
-                                    Button(action: {}) {
-                                        Image("whiteCheck")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
+                                    if task.status == "todo"{
+                                        Button(action: {
+                                            selectedTask = task
+                                            if selectedTask?.status == "todo" {
+                                                showCompleteByPicker = true
+                                            }
+                                        }) {
+                                            Image(systemName: "checkmark")
+                                                .font(.title3)
+                                                .bold()
+                                                .foregroundStyle(.white)
+                                        }
+                                        .foregroundStyle(.green)
+                                        .frame(width: 30, height: 30)
+                                        .buttonStyle(ThreeD(backgroundColor: .green, shadowColor: .black))
+                                    }
+                                    else{
+                                        Image(systemName: "checkmark.square.fill")
+                                            .bold()
+                                            .font(.title3)
+                                            .foregroundStyle(.white)
                                             .frame(width: 30, height: 30)
                                     }
-                                    .foregroundStyle(.green)
-                                    .frame(width: 30, height: 30)
-                                    .buttonStyle(ThreeD(backgroundColor: .green, shadowColor: .black))
                                 }
                                 .padding(.vertical, 8)
                                 .onTapGesture {

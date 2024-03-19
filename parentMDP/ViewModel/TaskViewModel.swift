@@ -436,7 +436,7 @@ func shouldContinueGeneratingTaskInstances(startingFrom date: Date) -> Bool {
 extension TaskViewModel {
     
     // MARK: Reward Calculation
-    func goldAmount(difficulty: String) -> Int {
+    func coinAmount(difficulty: String) -> Int {
         // Example difficulty mapping, adjust as necessary
         switch difficulty {
         case "Easy": return 10
@@ -446,16 +446,16 @@ extension TaskViewModel {
         }
     }
     
-    func completeTaskAndUpdateKidGold(task: TaskInstancesModel, completedBy: String?) {
+    func completeTaskAndUpdateKidCoin(task: TaskInstancesModel, completedBy: String?) {
         // First, mark the challenge as complete.
         if task.privateOrPublic == "private" {
             markPrivateTaskAsComplete(taskID: task.id) { [self] in
-                self.updateKidGoldBalance(kidID: task.assignTo!, goldToAdd: goldAmount(difficulty: task.difficulty))
+                self.updateKidCoinBalance(kidID: task.assignTo!, coinToAdd: coinAmount(difficulty: task.difficulty))
             }
         }
         if task.privateOrPublic == "public" {
             markPublicTaskAsComplete(taskID: task.id, selectedKidID: completedBy!) { [self] in
-                self.updateKidGoldBalance(kidID: completedBy!, goldToAdd: goldAmount(difficulty: task.difficulty))
+                self.updateKidCoinBalance(kidID: completedBy!, coinToAdd: coinAmount(difficulty: task.difficulty))
             }
         }
 
@@ -493,7 +493,7 @@ func markPublicTaskAsComplete(taskID: String, selectedKidID: String, completion:
 }
 
 // MARK: Update kid coinBalance
-private func updateKidGoldBalance(kidID: String, goldToAdd: Int) {
+private func updateKidCoinBalance(kidID: String, coinToAdd: Int) {
         let kidRef = db.collection("kids").document(kidID)
         db.runTransaction({ (transaction, errorPointer) -> Any? in
             let kidDocument: DocumentSnapshot
@@ -503,14 +503,14 @@ private func updateKidGoldBalance(kidID: String, goldToAdd: Int) {
                 errorPointer?.pointee = fetchError
                 return nil
             }
-            guard let oldGoldBalance = kidDocument.data()?["goldBalance"] as? Int else {
+            guard let oldCoinBalance = kidDocument.data()?["coinBalance"] as? Int else {
                 let error = NSError(domain: "AppErrorDomain", code: -1, userInfo: [
-                    NSLocalizedDescriptionKey: "Unable to retrieve gem balance from snapshot \(kidDocument)"
+                    NSLocalizedDescriptionKey: "Unable to retrieve coin balance from snapshot \(kidDocument)"
                 ])
                 errorPointer?.pointee = error
                 return nil
             }
-            transaction.updateData(["goldBalance": oldGoldBalance + goldToAdd], forDocument: kidRef)
+            transaction.updateData(["coinBalance": oldCoinBalance + coinToAdd], forDocument: kidRef)
             return nil
         }) { (object, error) in
             if let error = error {

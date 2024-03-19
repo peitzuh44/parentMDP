@@ -30,7 +30,7 @@ struct PrivateTaskView: View {
                                 Spacer()
                                 if task.status == "todo" {
                                     Button(action: {
-                                        taskVM.completeTaskAndUpdateKidGold(task: task, completedBy: selectedKidID)
+                                        taskVM.completeTaskAndUpdateKidCoin(task: task, completedBy: selectedKidID)
                                     }) {
                                         Image(systemName: "checkmark")
                                             .font(.title3)
@@ -72,16 +72,22 @@ struct PrivateTaskView: View {
                             Spacer()
                             if task.status == "todo" {
                                 Button(action: {
-                                    taskVM.completeTaskAndUpdateKidGold(task: task, completedBy: selectedKidID)
+                                    taskVM.completeTaskAndUpdateKidCoin(task: task, completedBy: selectedKidID)
                                 }) {
-                                    Image("whiteCheck")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 30, height: 30)
+                                    Image(systemName: "checkmark")
+                                        .font(.title3)
+                                        .bold()
+                                        .foregroundStyle(.white)
                                 }
                                 .foregroundStyle(.green)
                                 .frame(width: 30, height: 30)
                                 .buttonStyle(ThreeD(backgroundColor: .green, shadowColor: .black))
+                            } else {
+                                Image(systemName: "checkmark.square.fill")
+                                    .bold()
+                                    .font(.title3)
+                                    .foregroundStyle(.white)
+                                    .frame(width: 30, height: 30)
                             }
                         }
                         .padding(.vertical, 8)
@@ -108,18 +114,23 @@ struct PrivateTaskView: View {
                             Spacer()
                             if task.status == "todo" {
                                 Button(action: {
-                                    taskVM.completeTaskAndUpdateKidGold(task: task, completedBy: selectedKidID)
+                                    taskVM.completeTaskAndUpdateKidCoin(task: task, completedBy: selectedKidID)
                                 }) {
-                                    Image("whiteCheck")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 30, height: 30)
+                                    Image(systemName: "checkmark")
+                                        .font(.title3)
+                                        .bold()
+                                        .foregroundStyle(.white)
                                 }
                                 .foregroundStyle(.green)
                                 .frame(width: 30, height: 30)
                                 .buttonStyle(ThreeD(backgroundColor: .green, shadowColor: .black))
+                            } else {
+                                Image(systemName: "checkmark.square.fill")
+                                    .bold()
+                                    .font(.title3)
+                                    .foregroundStyle(.white)
+                                    .frame(width: 30, height: 30)
                             }
-
                         }
                         .padding(.vertical, 8)
                         .onTapGesture {
@@ -148,31 +159,3 @@ struct PrivateTaskView: View {
     }
 }
 
-//
-//// MARK: Private Quest List Item
-//struct PrivateQuestListItem: View{
-//    @ObservedObject var questVM: TaskViewModel
-//    let quest: TaskInstancesModel
-//    @Binding var showActionSheet: Bool
-//    @State var selectedKidID: String? = ""
-//    @State var selectedTask: TaskInstancesModel?
-//
-//    
-//    var body: some View{
-//        HStack {
-//            Text("\(quest.name)").foregroundColor(.white)
-//            Spacer()
-//            Button(action: {
-//                questVM.completeTaskAndUpdateKidGold(task: task, completedBy: $selectedKidID)}){
-//                Image("whiteCheck")
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fit)
-//                    .frame(width: 30, height: 30)
-//            }
-//            .foregroundStyle(.green)
-//            .frame(width: 30, height: 30)
-//            .buttonStyle(ThreeD(backgroundColor: .green, shadowColor: .black))
-//        }
-//        .padding(.vertical, 8)
-//    }
-//}

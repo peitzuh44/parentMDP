@@ -251,7 +251,6 @@
 				AF2B767D2B7585F400B9535F /* ContentView.swift */,
 				AF2B767F2B7585F600B9535F /* Assets.xcassets */,
 				AF2B76812B7585F600B9535F /* Preview Content */,
-				AFDBDC932B8E723B00155ED7 /* SkillViewModel.swift */,
 			);
 			path = parentMDP;
 			sourceTree = "<group>";
@@ -271,6 +270,7 @@
 				AFDBDC762B89772300155ED7 /* TaskViewModel.swift */,
 				AFDBDC8D2B8C5FA800155ED7 /* ChallengeViewModel.swift */,
 				AFDBDC8B2B8C066F00155ED7 /* RewardViewModel.swift */,
+				AFDBDC932B8E723B00155ED7 /* SkillViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

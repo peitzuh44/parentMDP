@@ -33,7 +33,7 @@ struct AssignedChallengeView: View {
     // MARK: Boduy
     var body: some View {
         List {
-            Section {
+            Section(header: Text("Assigned Challenge").foregroundColor(.white)){
                 ForEach(challengeVM.challenges) { challenge in
                     ChallengeItem(challenge: challenge)
                         .onTapGesture {

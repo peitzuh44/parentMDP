@@ -88,7 +88,7 @@ struct TaskActionSheet: View {
         HStack(spacing: 24) {
             ActionSheetButton(image: "edit", text: "edit", color: Color.customNavyBlue, size: 50, isPresenting: $showEditTaskSheet)
             ActionSheetButton(image: "check", text: "complete", color: Color.customPurple, size: 50, isPresenting: $showCompleteAlert) {
-                taskVM.completeTaskAndUpdateKidGold(task: task, completedBy: selectedKidID)
+                taskVM.completeTaskAndUpdateKidCoin(task: task, completedBy: selectedKidID)
             }
             ActionSheetButton(image: "trash", text: "delete", color: Color.customNavyBlue, size: 50, isPresenting: $showDeleteAlert)
             

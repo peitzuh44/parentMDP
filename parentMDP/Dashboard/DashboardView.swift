@@ -14,6 +14,8 @@ struct DashboardView: View {
     //MARK: Properties
     @ObservedObject var kidVM = KidViewModel()
     @ObservedObject var taskVM = TaskViewModel()
+    @ObservedObject var rewardVM = RewardViewModel()
+
     @State private var selectedKid: KidModel?
     @State private var showKidDetail = false
     
@@ -57,15 +59,13 @@ struct DashboardView: View {
                         }
                         .padding(.vertical)                        
                         //review gift navigation link
-                        Button(action:
-                                {
-                            
-                        }){
+                        NavigationLink {
+                            RedeemRewardView(rewardVM: rewardVM)
+                        } label: {
                             HStack{
                                 Image(systemName: "gift")
                                 Text("2 rewards redeemed")
                                 Spacer()
-                                Image(systemName: "arrow.right")
                             }
                             .foregroundColor(.white)
                         }

@@ -20,7 +20,7 @@ struct SelfSelectedChallengeView: View {
     // MARK: Body
     var body: some View {
         List {
-            Section {
+            Section (header: Text("self selected").foregroundColor(.white)){
                 ForEach(challengeVM.challenges) { challenge in
                     ChallengeItem(challenge: challenge)
                         .onTapGesture {

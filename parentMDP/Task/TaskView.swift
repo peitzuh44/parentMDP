@@ -59,49 +59,7 @@ struct TaskView: View {
                     
                     // MARK: Return View By Case
                     if privateOrPublic == "private" {
-                        
-                        // Kid Selector Button
-//                        VStack{
-//                            Button(action:{
-//                                self.showKidSelector = true
-//                            }){
-//                                HStack(spacing: 2){
-//                                    Spacer()
-//                                    Image("avatar1")
-//                                        .resizable()
-//                                        .aspectRatio(contentMode: .fit)
-//                                        .frame(width: 80)
-//                                        .padding(8)
-//                                    
-//                                    VStack(alignment: .leading, spacing: 8){
-//                                        Text(self.name(for: selectedKidID) ?? "Select kid")
-//                                            .font(.title2)
-//                                        
-//                                        VStack(alignment: .leading, spacing: 8){
-//                                            LinearProgressBar(width: 220, height: 8, percent: 80, color1: .yellow, color2: .orange)
-//                                            HStack{
-//                                                Text("Daily progress")
-//                                                Spacer()
-//                                                Text("8/10")
-//                                            }
-//                                            .font(.caption)
-//                                            
-//                                        }
-//                                        .padding(.trailing)
-//                                    }
-//                                    
-//                                    Spacer()
-//                                    
-//                                }
-//                                .foregroundColor(.white)
-//                                .frame(height: 130)
-//                                .background(
-//                                    Color.customNavyBlue
-//                                        .cornerRadius(20))
-//                                
-//                            }
-//                        }
-                        QuestViewKidSelector(kidVM: kidVM, selectedKidID: $selectedKidID)
+                        KidSelector(kidVM: kidVM, selectedKidID: $selectedKidID)
                         
                         // END
                         
@@ -115,7 +73,7 @@ struct TaskView: View {
                 if privateOrPublic == "private" {
                     PrivateTaskView(taskVM: taskVM, kidVM: kidVM, selectedTask: $selectedTask, showActionSheet: $showActionSheet)
                 } else if privateOrPublic == "public" {
-                    PublicTaskView(kidVM: kidVM, taskVM: taskVM, selectedTask: $selectedTask, showActionSheet: $showActionSheet)
+                    PublicTaskView(kidVM: kidVM, taskVM: taskVM, selectedTask: $selectedTask, showActionSheet: $showActionSheet, showCompleteByPicker: $showCompleteBySelector)
 
                 }
             }
@@ -148,8 +106,15 @@ struct TaskView: View {
                 }
             }
             
-            .sheet(isPresented: $showCompleteBySelector) {
-                CompletedByKidPicker(kidVM: kidVM, taskVM: taskVM, task: selectedTask!)
+            .sheet(isPresented: Binding(
+                get: { showCompleteBySelector },
+                set: { showCompleteBySelector = $0 }
+            )) {
+                if let task = selectedTask {
+                    CompletedByKidPicker(kidVM: kidVM, taskVM: taskVM, task: selectedTask!)
+                        .presentationDetents([.height(250)])
+                        .presentationDragIndicator(.hidden)
+                }
                 
             }
             
@@ -275,7 +240,7 @@ struct PublicTaskLeaderBoard: View {
 
 
 // MARK: Quest view kid selector
-struct QuestViewKidSelector: View {
+struct KidSelector: View {
     @ObservedObject var kidVM: KidViewModel
     @Binding var selectedKidID: String
     var body: some View{
