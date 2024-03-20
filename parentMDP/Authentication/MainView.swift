@@ -11,9 +11,10 @@ struct MainView: View {
     @Binding var authFlow: AuthFlow
     @State private var selection: TabBarItem = .home
 
+
     var body: some View {
         CustomTabBarContainerView(selection: $selection) {
-            DashboardView()
+            DashboardView(authFlow: $authFlow)
                 .tabBarItem(tab: .home, selection: $selection)
             TaskView()
                 .tabBarItem(tab: .quest, selection: $selection)
@@ -26,8 +27,3 @@ struct MainView: View {
            }
     }
 
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView(authFlow: .constant(.authenticated))
-    }
-}

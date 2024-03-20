@@ -15,7 +15,6 @@ struct AssignedChallengeView: View {
     @Binding var showActionSheet: Bool
     @State private var showEditTaskSheet = false
     @State private var showDeleteAlert = false
-    
     // MARK: Functions
     func difficultyColor(for difficulty: String) -> Color {
            switch difficulty {
@@ -29,7 +28,6 @@ struct AssignedChallengeView: View {
                return Color.gray.opacity(0.6)
            }
        }
-    
     // MARK: Boduy
     var body: some View {
         List {
@@ -53,15 +51,8 @@ struct AssignedChallengeView: View {
         }
         .scrollContentBackground(.hidden)
         .scrollIndicators(.hidden)
-
-        .scrollContentBackground(.hidden)
-        .scrollIndicators(.hidden)
     }
 }
-
-
-
-
 // MARK: Challenge Item
 struct ChallengeItem: View {
     let challenge: ChallengeModel
@@ -84,16 +75,9 @@ struct ChallengeItem: View {
                     .frame(width: 24)
                 Text(challenge.difficulty)
                     .foregroundColor(.white)
-                
             }
-//            .padding(8)
-//            .padding(.horizontal, 10)
-//                .background(difficultyColor(for: challenge.difficulty).opacity(0.6))
-//                .cornerRadius(50)
         }
         .foregroundStyle(Color.white)
-
-
     }
 }
 

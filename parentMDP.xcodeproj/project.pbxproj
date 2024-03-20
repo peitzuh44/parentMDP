@@ -67,6 +67,7 @@
 		AF75D72E2B7C3E7C009CBF30 /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D72D2B7C3E7C009CBF30 /* RewardView.swift */; };
 		AF75D7362B7C431B009CBF30 /* TaskViewDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D7352B7C431B009CBF30 /* TaskViewDatePicker.swift */; };
 		AF85569E2BAABE80009B7489 /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF85569D2BAABE80009B7489 /* KeyboardResponder.swift */; };
+		AF8556A02BAB5142009B7489 /* EditKidSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF85569F2BAB5141009B7489 /* EditKidSheet.swift */; };
 		AFC432A82BA7BAF60053494F /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A72BA7BAF60053494F /* TabBarItem.swift */; };
 		AFC432AA2BA7BB2A0053494F /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */; };
 		AFC432AC2BA7BB4B0053494F /* CustomTabBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */; };
@@ -151,6 +152,7 @@
 		AF75D72D2B7C3E7C009CBF30 /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
 		AF75D7352B7C431B009CBF30 /* TaskViewDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewDatePicker.swift; sourceTree = "<group>"; };
 		AF85569D2BAABE80009B7489 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
+		AF85569F2BAB5141009B7489 /* EditKidSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditKidSheet.swift; sourceTree = "<group>"; };
 		AFC432A72BA7BAF60053494F /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarContainerView.swift; sourceTree = "<group>"; };
@@ -211,15 +213,16 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		7C3B11C62B9A6DD30058368E /* AddingKids */ = {
+		7C3B11C62B9A6DD30058368E /* Manage Kids */ = {
 			isa = PBXGroup;
 			children = (
 				AF2B76D92B758F3800B9535F /* AddKidView.swift */,
 				AF2B76DC2B758F4A00B9535F /* AddKidSheet.swift */,
 				AF2B76DE2B758F5C00B9535F /* InviteKidView.swift */,
 				AF66DC362BAA77CA00875D7B /* ManageKidView.swift */,
+				AF85569F2BAB5141009B7489 /* EditKidSheet.swift */,
 			);
-			path = AddingKids;
+			path = "Manage Kids";
 			sourceTree = "<group>";
 		};
 		AF2B766F2B7585F400B9535F = {
@@ -242,8 +245,8 @@
 		AF2B767A2B7585F400B9535F /* parentMDP */ = {
 			isa = PBXGroup;
 			children = (
-				7C3B11C62B9A6DD30058368E /* AddingKids */,
 				AF5573A62B7E886200A8724A /* Extensions */,
+				7C3B11C62B9A6DD30058368E /* Manage Kids */,
 				AF2B76B02B758D3300B9535F /* Model */,
 				AF2B76942B75899300B9535F /* Utilities */,
 				AF2B76912B7588D700B9535F /* Authentication */,
@@ -358,9 +361,9 @@
 			children = (
 				AF2B769D2B758B0400B9535F /* TaskView.swift */,
 				AF2B76C12B758DEC00B9535F /* AddTaskSheet.swift */,
+				AF2B76BD2B758DBA00B9535F /* PrivateTaskView.swift */,
 				AF2B76BF2B758DC600B9535F /* PublicTaskView.swift */,
 				AFDBDC7C2B8A7D6C00155ED7 /* EditTaskSheet.swift */,
-				AF2B76BD2B758DBA00B9535F /* PrivateTaskView.swift */,
 				AFDBDC7E2B8A7D7700155ED7 /* TaskActionSheet.swift */,
 				AFDBDC802B8AA65800155ED7 /* CreatePrivateTaskSheet.swift */,
 				AFDBDC822B8AA90200155ED7 /* CreatePublicTaskSheet.swift */,
@@ -528,6 +531,7 @@
 				AF5573852B7D3A8000A8724A /* ProgressBar.swift in Sources */,
 				AF5573AC2B7EB28100A8724A /* RarityPicker.swift in Sources */,
 				AFC6ECA02B83F081000CFB9B /* KidViewModel.swift in Sources */,
+				AF8556A02BAB5142009B7489 /* EditKidSheet.swift in Sources */,
 				AFC432AA2BA7BB2A0053494F /* CustomTabBarView.swift in Sources */,
 				AF2B76D82B758F2A00B9535F /* LoginView.swift in Sources */,
 				AF2B76BE2B758DBA00B9535F /* PrivateTaskView.swift in Sources */,

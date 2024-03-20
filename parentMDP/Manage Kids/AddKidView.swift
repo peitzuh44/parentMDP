@@ -11,7 +11,7 @@ import SwiftUI
 
 struct AddKidView: View {
     // MARK: Properties
-    @StateObject var viewModel = KidViewModel()
+    @StateObject var kidVM = KidViewModel()
     @Binding var authFlow: AuthFlow
     @State private var navigateToInviteKidView = false
     @State var showAddKidSheet = true
@@ -32,7 +32,7 @@ struct AddKidView: View {
                     
                     // List of Kids that have been added START
                     List{
-                        ForEach(viewModel.kids) {
+                        ForEach(kidVM.kids) {
                             kid in
                             HStack{
                                 Image("\(kid.gender)")
@@ -45,7 +45,7 @@ struct AddKidView: View {
                                 
                                 Spacer()
                                 
-                                Text("\(viewModel.calculateAge(birthday: kid.birthdate)) years old")
+                                Text("\(kidVM.calculateAge(birthday: kid.birthdate)) years old")
                                     .foregroundStyle(Color.white)
                             }
                             .padding(.vertical, 8)
@@ -62,7 +62,7 @@ struct AddKidView: View {
                     // MARK: Fetching
                     .onAppear() {
                         // This fetches the kids from the database when we first load the add kids view
-                        viewModel.fetchKids()
+                        kidVM.fetchKids()
                     }
                     .scrollContentBackground(.hidden)
                     .scrollIndicators(.hidden)
@@ -81,7 +81,7 @@ struct AddKidView: View {
                     }
                     .padding(.horizontal)
                     .sheet(isPresented: $showAddKidSheet) {
-                        AddKidSheet(viewModel: viewModel)
+                        AddKidSheet(kidVM: kidVM)
                             .presentationDetents([.height(750)])
                             .presentationDragIndicator(.hidden)
                     }

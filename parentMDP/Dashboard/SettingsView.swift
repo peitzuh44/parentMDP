@@ -6,9 +6,25 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct SettingsView: View {
+
+    @Binding var authFlow: AuthFlow
     
+    // MARK: Signout Function
+    func signOut(){
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            withAnimation {
+                authFlow = .notAuthenticated
+            }
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+    }
+
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
@@ -21,9 +37,12 @@ struct SettingsView: View {
                     // Help - Navigation Link
                     MenuNavigationLinkItem(text: "Help", image: "challenge") {
                         ManageKidView()
+
                     }
                     // Logout - Button
-                    MenuActionButton(text: "Logout", image: "challenge", textColor: .red)
+                    MenuActionButton(text: "Logout", image: "challenge", textColor: .red) {
+                        signOut()
+                    }
                 }
 
                 
@@ -32,10 +51,6 @@ struct SettingsView: View {
         }
         .toolbarColorScheme(.dark, for: .navigationBar)
     }
-}
-
-#Preview {
-    SettingsView()
 }
 
 
@@ -65,14 +80,15 @@ struct MenuNavigationLinkItem<Destination: View>: View {
     }
 }
 
+
 struct MenuActionButton: View {
     let text: String
     let image: String
     let textColor: Color
+    let action: () -> Void
+
     var body: some View {
-        Button(action:{
-            // signout function
-        }){
+        Button(action: action){
             HStack{
                 Image(image)
                     .resizable()
@@ -81,14 +97,13 @@ struct MenuActionButton: View {
                 Text(text)
                     .foregroundStyle(textColor)
                 Spacer()
-
             }
             .padding()
             .frame(maxWidth: .infinity)
             .frame(height: 60)
             .background(.white)
-
             .clipShape(RoundedRectangle(cornerRadius: 20))
         }
     }
 }
+

@@ -7,36 +7,114 @@
 import FirebaseAuth
 import FirebaseFirestore
 
+//MARK: Challenge Fetching Configurations
 
+struct FetchChallengesConfig {
+    let userID: String
+    let selectedKidID: String
+    let criteria: [Criteria]
+    let sortOptions: [SortOption]
+    let limit: Int?
+    
+    enum Criteria {
+        case createdBy(String)
+        case assignTo(String)
+        case assignedOrSelfSelected(String)
+        case dueDateNotPassed
+        case dateCompleted
+    }
+    
+    enum SortOption {
+        case dueDate(ascending: Bool)
+        case timeCreated(ascending: Bool)
+        case dateCompleted(ascending: Bool)
+    }
+    
+}
 class ChallengeViewModel: ObservableObject {
     // MARK: Properties
     @Published var challenges: [ChallengeModel] = []
     private let db = Firestore.firestore()
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
+    
 
     
     // MARK: Fetch Challenges
-    func fetchChallenges(forUserID userID: String, selectedKidID: String, assignedOrSelfSelected: String) {
+    func fetchChallenges(withConfig config: FetchChallengesConfig) {
+        var query: Query = db.collection("challenges")
         
-        db.collection("challenges")
-            .whereField("createdBy", isEqualTo: userID)
-            .whereField("assignTo", isEqualTo: selectedKidID)
-            .whereField("assignedOrSelfSelected", isEqualTo: assignedOrSelfSelected)
-            .order(by: "due", descending: false)
-            .order(by: "timeCreated", descending: false)
-            .addSnapshotListener { [weak self] querySnapshot, error in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error fetching documents: \(String(describing: error?.localizedDescription))")
-                    return
-                }
-
-                self?.challenges = documents.compactMap { doc -> ChallengeModel? in
-                    try? doc.data(as: ChallengeModel.self)
-                }
+        // Apply criteria
+        for criterion in config.criteria {
+            switch criterion {
+            case .createdBy(let userID):
+                query = query.whereField("createdBy", isEqualTo: userID)
+            case .assignTo(let kidID):
+                query = query.whereField("assignTo", isEqualTo: kidID)
+            case .assignedOrSelfSelected(let value):
+                query = query.whereField("assignedOrSelfSelected", isEqualTo: value)
+            case .dueDateNotPassed:
+                query = query.whereField("due", isGreaterThan: Date())
+            case .dateCompleted:
+                query = query.whereField("dateCompleted", isGreaterThan: Date(timeIntervalSince1970: 0))
+            }
+        }
+        
+        // Apply sorting
+        for sortOption in config.sortOptions {
+            switch sortOption {
+            case .dueDate(let ascending):
+                query = query.order(by: "due", descending: !ascending)
+            case .timeCreated(let ascending):
+                query = query.order(by: "timeCreated", descending: !ascending)
+            case .dateCompleted(let ascending):
+                query = query.order(by: "dateCompleted", descending: !ascending)
+            }
+        }
+        
+        // Apply limit
+        if let limit = config.limit {
+            query = query.limit(to: limit)
+        }
+        
+        // Execute query
+        query.addSnapshotListener { [weak self] querySnapshot, error in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(String(describing: error?.localizedDescription))")
+                return
             }
 
-        
+            self?.challenges = documents.compactMap { doc -> ChallengeModel? in
+                try? doc.data(as: ChallengeModel.self)
+            }
+        }
     }
+
+    
+    
+
+    
+    // MARK: Fetch Challenges OLD
+//    func fetchChallenges(forUserID userID: String, selectedKidID: String, assignedOrSelfSelected: String) {
+//        
+//        db.collection("challenges")
+//            .whereField("createdBy", isEqualTo: userID)
+//            .whereField("assignTo", isEqualTo: selectedKidID)
+//            .whereField("assignedOrSelfSelected", isEqualTo: assignedOrSelfSelected)
+//            .order(by: "due", descending: false)
+//            .order(by: "timeCreated", descending: false)
+//            .addSnapshotListener { [weak self] querySnapshot, error in
+//                guard let documents = querySnapshot?.documents else {
+//                    print("Error fetching documents: \(String(describing: error?.localizedDescription))")
+//                    return
+//                }
+//
+//                self?.challenges = documents.compactMap { doc -> ChallengeModel? in
+//                    try? doc.data(as: ChallengeModel.self)
+//                }
+//            }
+//
+//        
+//    }
     
     // MARK: Create Challenges
     func createChallenge(name: String, description: String, createdBy: String, assignTo: String, difficulty: String, due: Date, assignedOrSelfSelected: String, reward: Int, skills: [String], dateCompleted: Date?){
@@ -157,3 +235,9 @@ private func updateKidGemBalance(kidID: String, gemToAdd: Int) {
             }
         }
 }
+
+
+// MARK: TODOs
+/*
+ 1. refractor fetch challenge function - for different fetching conditions
+ */

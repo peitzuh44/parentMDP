@@ -13,9 +13,9 @@ import SwiftUI
 struct AddKidSheet: View {
     // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
-    var viewModel: KidViewModel
+    var kidVM: KidViewModel
     @State private var name: String = ""
-    @State private var selectedGender: GenderOptions?
+    @State private var selectedGender: GenderOptions = .male
     @State private var selectedBirthdate = Date()
     @AppStorage("kidID") var kidID: String = ""
     @State private var showBirthdatePicker = false
@@ -74,12 +74,10 @@ struct AddKidSheet: View {
                 // Add Kid Button START
                 Button(action:{
                     // If the user has selected the gender and given a name, proceed!
-                    if let selectedGender = selectedGender {
                         if !name.isEmpty {
-                            viewModel.addKids(name: name, gender: selectedGender.rawValue, birthdate: selectedBirthdate)
+                            kidVM.addKids(name: name, gender: selectedGender.rawValue, birthdate: selectedBirthdate)
                             presentationMode.wrappedValue.dismiss()
                         }
-                    }
                 }){
                     Text("Add")
                         .foregroundStyle(Color.white)

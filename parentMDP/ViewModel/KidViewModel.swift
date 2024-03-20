@@ -14,6 +14,8 @@ class KidViewModel: ObservableObject {
     @Published var kids: [KidModel] = []
     private let db = Firestore.firestore()
 
+    
+    // MARK: Fetch Kids
     // function that fetches kids from the database (only the user's kid)
     func fetchKids() {
         guard let userID = Auth.auth().currentUser?.uid else {
@@ -43,6 +45,8 @@ class KidViewModel: ObservableObject {
     }
 
     
+    
+    // MARK: Add kids
     // function that adds kids to your database given a name, gender, and birthdate
     func addKids(name: String, gender: String, birthdate: Date) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
@@ -81,9 +85,35 @@ class KidViewModel: ObservableObject {
     }
 
     
-    //update kids
+    // MARK: Update Kids
+    func updateKid(updatedKid: KidModel) {
+        let docRef = db.collection("kids").document(updatedKid.id)
+        
+        let updateData: [String: Any] = [
+            "name": updatedKid.name,
+            "gender": updatedKid.gender, // rarity is already a String
+            "birthdate": updatedKid.birthdate
+        ]
+        docRef.updateData(updateData) { error in
+            if let error = error {
+                print("Error updating reward: \(error)")
+            } else {
+                print("Reward successfully updated")
+                // You could perform additional tasks here, like notifying the user of the success
+            }
+        }
+    }
     
-    //delete kids
+    // MARK: Delete Kids
+    func deleteKid(kidID: String) {
+        db.collection("kids").document(kidID).delete { error in
+            if let error = error {
+                print("Error removing kid document: \(error)")
+            } else {
+                print("One-off kid document successfully removed!")
+            }
+        }
+    }
     
     // Calculate Age
     func calculateAge(birthday: Date) -> Int {

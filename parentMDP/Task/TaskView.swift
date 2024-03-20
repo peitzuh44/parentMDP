@@ -133,6 +133,7 @@ struct TaskView: View {
                 if let task = selectedTask {
                     TaskActionSheet(taskVM: taskVM, kidVM: kidVM, task: selectedTask!, showEditTaskSheet: $showEditSheet, showDeleteAlert: $showDeleteAlert, showCompleteAlert: $showCompleteAlert, showCompleteByPicker: $showCompleteBySelector)
                         .presentationDetents([.medium
+                                             
                                              ])
                         .presentationDragIndicator(.hidden)
                         

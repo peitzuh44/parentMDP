@@ -18,7 +18,8 @@ struct DashboardView: View {
 
     @State private var selectedKid: KidModel?
     @State private var showKidDetail = false
-    
+    @Binding var authFlow: AuthFlow
+
     // MARK: Body
     var body: some View {
         NavigationStack{
@@ -81,9 +82,11 @@ struct DashboardView: View {
                     
                 }
                 .scrollContentBackground(.hidden)
+                // MARK: Fetching
                 .onAppear {
                     kidVM.fetchKids()
                 }
+                // MARK: Navigation Destinations
                 .navigationDestination(for: KidModel.self) { kid in
                     KidProfileView(kid: kid)
                 }
@@ -95,7 +98,7 @@ struct DashboardView: View {
             .toolbar{
                 ToolbarItem(placement: .topBarLeading) {
                     NavigationLink {
-                        SettingsView()
+                        SettingsView(authFlow: $authFlow)
                     } label: {
                         Image(systemName: "line.3.horizontal")
 
@@ -159,3 +162,8 @@ struct KidListItem: View {
     }
 }
 
+// MARK: TODOs
+/*
+ 1. func calculating # of quest needed review
+ 2. func calculating # of gift needed to redeem
+ */

@@ -6,12 +6,33 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 
 struct KidProfileView: View {
-    
     // MARK: Properties
+    @ObservedObject var challengeVM = ChallengeViewModel()
+    let currentUserID = Auth.auth().currentUser?.uid ?? ""
     var kid: KidModel
+    
+    
+    func fetchChallengesForRecentChallengeBoard() {
+        let config = FetchChallengesConfig(
+            userID: currentUserID,
+            selectedKidID: kid.id,
+            criteria: [
+                .assignTo(kid.id),
+            ],
+            sortOptions: [
+                .dateCompleted(ascending: true)
+            ],
+            limit: 3 // or specify a limit for cases like recent completions
+        )
+        
+        challengeVM.fetchChallenges(withConfig: config)
+    }
+    
+    
     // MARK: Body
     var body: some View {
         ZStack{
@@ -27,11 +48,16 @@ struct KidProfileView: View {
                     KidInfoItem(kid: kid)
                     AvatarAttribute(kid: kid)
                     SkillBoard(kid: kid)
+                    RecentChallengeBoard(challengeVM: challengeVM)
                     
                 }
             }
             .scrollContentBackground(.hidden)
             .scrollIndicators(.hidden)
+        }
+        .onAppear{
+            fetchChallengesForRecentChallengeBoard()
+
         }
     }
 }
@@ -263,3 +289,56 @@ struct AvatarAttribute: View {
     }
 }
 
+// MARK: Recent Challenge
+struct RecentChallengeBoard: View {
+    @ObservedObject var challengeVM: ChallengeViewModel
+    
+    var body: some View {
+        VStack(alignment: .leading){
+            Text("Recent Challenge")
+                .font(.headline)
+                .padding(.top)
+                .padding(.horizontal)
+            ForEach(challengeVM.challenges){challenge in
+                RecentChallengeBoardItem(challenge: challenge)
+                
+            }
+        }
+        .background(Color.customNavyBlue)
+
+    }
+}
+
+struct RecentChallengeBoardItem: View {
+    
+    let challenge: ChallengeModel
+    let name: String = "Challenge name"
+    let dateComplete: String = "02/11/2024"
+    
+    var body: some View {
+        HStack{
+            HStack{
+                Image("challenge")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 36)
+                VStack{
+                    Text(challenge.name)
+                    Text("Completed on \(dateComplete)")
+                }
+            }
+            Spacer()
+        }
+        .foregroundStyle(.white)
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(Color.customNavyBlue)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+
+    }
+}
+
+// MARK: TODOs
+/*
+ 1. Board displaying recent chllange and past challenge view
+ */

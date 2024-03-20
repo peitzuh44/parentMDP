@@ -41,6 +41,25 @@ struct ChallengeView: View {
         return kidVM.kids.first { $0.id == selectedKidID }?.name
     }
     
+    func fetchChallengesForChallengeView() {
+        let config = FetchChallengesConfig(
+            userID: currentUserID,
+            selectedKidID: selectedKidID,
+            criteria: [
+                .assignTo(selectedKidID),
+                .assignedOrSelfSelected(assignedOrSelfSelected)
+                // Add more criteria as needed
+            ],
+            sortOptions: [
+                // Define sort options based on `assignedOrSelfSelected`
+                assignedOrSelfSelected == "assigned" ? .dueDate(ascending: true) : .dateCompleted(ascending: false)
+            ],
+            limit: nil // or specify a limit for cases like recent completions
+        )
+        
+        challengeVM.fetchChallenges(withConfig: config)
+    }
+
     
     // MARK: Body
     var body: some View {
@@ -91,14 +110,15 @@ struct ChallengeView: View {
                 kidVM.fetchKids()
             }
             .onReceive(kidVM.$kids) { kids in
-                if selectedKidID == "", let firstKid = kids.first {
+                if selectedKidID.isEmpty, let firstKid = kids.first {
                     selectedKidID = firstKid.id
-                    challengeVM.fetchChallenges(forUserID: currentUserID, selectedKidID: selectedKidID, assignedOrSelfSelected: assignedOrSelfSelected)
-                    
+                    fetchChallengesForChallengeView()
                 }
             }
-            .onChange(of: selectedKidID) {challengeVM.fetchChallenges(forUserID: currentUserID, selectedKidID: selectedKidID, assignedOrSelfSelected: assignedOrSelfSelected)}
-            .onChange(of: assignedOrSelfSelected) {challengeVM.fetchChallenges(forUserID: currentUserID, selectedKidID: selectedKidID, assignedOrSelfSelected: assignedOrSelfSelected)}
+            .onChange(of: selectedKidID) { _ in                     fetchChallengesForChallengeView()
+ }
+            .onChange(of: assignedOrSelfSelected) { _ in                     fetchChallengesForChallengeView()
+ }
             
             // MARK: Add Challenge Button
             Button(action:{
@@ -118,5 +138,4 @@ struct ChallengeView: View {
         }
     }
 }
-
 

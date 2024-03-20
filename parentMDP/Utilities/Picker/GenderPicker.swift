@@ -8,7 +8,7 @@ import SwiftUI
 
 struct GenderPicker: View {
     // MARK: Properties
-    @Binding var selectedGender: GenderOptions?
+    @Binding var selectedGender: GenderOptions
 
     // MARK: Body
     var body: some View {
