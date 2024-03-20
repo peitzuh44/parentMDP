@@ -68,7 +68,7 @@ struct TaskView: View {
                     }
                 }
                 .padding(.horizontal)
-                Spacer()
+
                 // MARK: Return View By Case
                 if privateOrPublic == "private" {
                     PrivateTaskView(taskVM: taskVM, kidVM: kidVM, selectedTask: $selectedTask, showActionSheet: $showActionSheet)
@@ -80,20 +80,20 @@ struct TaskView: View {
             // MARK: Sheets and Alerts
             .sheet(isPresented: $showAddView) {
                 AddTaskSheet(showAddPrivateTaskSheet: $showAddPrivateTask, showAddPublicTaskSheet: $showAddPublicTask)
-                    .presentationDetents([.height(250)])
+                    .presentationDetents([.medium])
                     .presentationDragIndicator(.hidden)
                 
             }
             
             .sheet(isPresented: $showAddPrivateTask) {
                 CreatePrivateTaskSheet()
-                    .presentationDetents([.height(750)])
+                    .presentationDetents([.large])
                     .presentationDragIndicator(.hidden)
                 
             }
             .sheet(isPresented: $showAddPublicTask) {
                 CreatePublicTaskSheet()
-                    .presentationDetents([.height(750)])
+                    .presentationDetents([.large])
                     .presentationDragIndicator(.hidden)
                 
             }
@@ -101,7 +101,7 @@ struct TaskView: View {
             .sheet(isPresented: $showEditSheet) {
                 if let task = selectedTask {
                     EditTaskSheet(selectedTask: task, taskVM: taskVM, kidVM: kidVM)
-                        .presentationDetents([.height(750)])
+                        .presentationDetents([.large])
                         .presentationDragIndicator(.hidden)
                 }
             }
@@ -112,7 +112,7 @@ struct TaskView: View {
             )) {
                 if let task = selectedTask {
                     CompletedByKidPicker(kidVM: kidVM, taskVM: taskVM, task: selectedTask!)
-                        .presentationDetents([.height(250)])
+                        .presentationDetents([.medium])
                         .presentationDragIndicator(.hidden)
                 }
                 
@@ -121,8 +121,9 @@ struct TaskView: View {
             
             .sheet(isPresented: $showKidSelector) {
                 TaskViewKidSelectorSheet(kidVM: kidVM, selectedKidID: $selectedKidID)
-                    .presentationDetents([.height(250)])
+                    .presentationDetents([.medium])
                     .presentationDragIndicator(.hidden)
+                    
             }
             
             .sheet(isPresented: Binding(
@@ -131,8 +132,10 @@ struct TaskView: View {
             )) {
                 if let task = selectedTask {
                     TaskActionSheet(taskVM: taskVM, kidVM: kidVM, task: selectedTask!, showEditTaskSheet: $showEditSheet, showDeleteAlert: $showDeleteAlert, showCompleteAlert: $showCompleteAlert, showCompleteByPicker: $showCompleteBySelector)
-                        .presentationDetents([.height(300)])
+                        .presentationDetents([.medium
+                                             ])
                         .presentationDragIndicator(.hidden)
+                        
                     
                 }
                 

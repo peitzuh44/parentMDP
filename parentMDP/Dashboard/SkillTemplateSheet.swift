@@ -20,45 +20,49 @@ struct SkillTemplateSheet: View {
     var body: some View {
         ZStack {
             Color.customDarkBlue.ignoresSafeArea(.all)
-            VStack {
-                // search
-                CustomTextfield(text: $searchTerm, placeholder: "search for skill", icon: "", background: Color.customNavyBlue, color: Color.white)
-                
-                // MARK: CHANGE TO "HScrollPicker"
-                SkillCategoryPicker(selectedCategory: $selectedCategory)
+            if #available(iOS 17.0, *) {
                 VStack {
-                    List{
-                        ForEach(skillVM.skillTemplates) {
-                            template in
-                            HStack {
-                                Text(template.name).foregroundColor(.white)
-                                Spacer()
-                                Image("add")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 24, height: 24)
+                    // search
+                    CustomTextfield(text: $searchTerm, placeholder: "search for skill", icon: "", background: Color.customNavyBlue, color: Color.white)
+                    
+                    // MARK: CHANGE TO "HScrollPicker"
+                    SkillCategoryPicker(selectedCategory: $selectedCategory)
+                    VStack {
+                        List{
+                            ForEach(skillVM.skillTemplates) {
+                                template in
+                                HStack {
+                                    Text(template.name).foregroundColor(.white)
+                                    Spacer()
+                                    Image("add")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 24, height: 24)
+                                }
+                                .padding(.vertical, 8)
+                                .onTapGesture {
+                                    selectedSkillTemplate = template
+                                    skillVM.addSkillFromTemplate(selectedKidID: kidID, template: template)
+                                }
+                                
                             }
-                            .padding(.vertical, 8)
-                            .onTapGesture {
-                                selectedSkillTemplate = template
-                                skillVM.addSkillFromTemplate(selectedKidID: kidID, template: template)
-                            }
-
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.customNavyBlue)
+                                    .padding(.vertical, 2)
+                            )
                         }
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.customNavyBlue)
-                                .padding(.vertical, 2)
-                        )
+                        .scrollContentBackground(.hidden)
+                        .scrollIndicators(.hidden)
                     }
-                    .scrollContentBackground(.hidden)
-                    .scrollIndicators(.hidden)
                 }
+                // MARK: Fetching
+                .onChange(of: selectedCategory) {
+                    skillVM.fetchSkillTemplates(category: selectedCategory.rawValue)
                 }
-            // MARK: Fetching
-            .onChange(of: selectedCategory) {
-                skillVM.fetchSkillTemplates(category: selectedCategory.rawValue)
+            } else {
+                // Fallback on earlier versions
             }
                 
                 

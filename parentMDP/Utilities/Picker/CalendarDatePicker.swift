@@ -22,7 +22,7 @@ struct CalendarDatePicker: View {
                 .padding()
             
             // MARK: Fetching
-                .onChange(of: localSelectedDate) { newDate in
+            .onChange(of: localSelectedDate) { newDate in
                     onDateSelected?(newDate)
                     presentationMode.wrappedValue.dismiss()
                 }

@@ -61,10 +61,12 @@
 		AF5573B82B7EE5F700A8724A /* ChallengeActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5573B72B7EE5F700A8724A /* ChallengeActionSheet.swift */; };
 		AF5573BA2B7FCA9D00A8724A /* AssignedChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5573B92B7FCA9D00A8724A /* AssignedChallengeView.swift */; };
 		AF5573BC2B7FCAAD00A8724A /* SelfSelectedChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5573BB2B7FCAAD00A8724A /* SelfSelectedChallengeView.swift */; };
+		AF66DC372BAA77CA00875D7B /* ManageKidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF66DC362BAA77CA00875D7B /* ManageKidView.swift */; };
 		AF75D72A2B7C3D62009CBF30 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D7292B7C3D62009CBF30 /* AuthViewModel.swift */; };
 		AF75D72C2B7C3E5A009CBF30 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D72B2B7C3E5A009CBF30 /* MainView.swift */; };
 		AF75D72E2B7C3E7C009CBF30 /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D72D2B7C3E7C009CBF30 /* RewardView.swift */; };
 		AF75D7362B7C431B009CBF30 /* TaskViewDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D7352B7C431B009CBF30 /* TaskViewDatePicker.swift */; };
+		AF85569E2BAABE80009B7489 /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF85569D2BAABE80009B7489 /* KeyboardResponder.swift */; };
 		AFC432A82BA7BAF60053494F /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A72BA7BAF60053494F /* TabBarItem.swift */; };
 		AFC432AA2BA7BB2A0053494F /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */; };
 		AFC432AC2BA7BB4B0053494F /* CustomTabBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */; };
@@ -143,10 +145,12 @@
 		AF5573B72B7EE5F700A8724A /* ChallengeActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeActionSheet.swift; sourceTree = "<group>"; };
 		AF5573B92B7FCA9D00A8724A /* AssignedChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignedChallengeView.swift; sourceTree = "<group>"; };
 		AF5573BB2B7FCAAD00A8724A /* SelfSelectedChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSelectedChallengeView.swift; sourceTree = "<group>"; };
+		AF66DC362BAA77CA00875D7B /* ManageKidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageKidView.swift; sourceTree = "<group>"; };
 		AF75D7292B7C3D62009CBF30 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		AF75D72B2B7C3E5A009CBF30 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		AF75D72D2B7C3E7C009CBF30 /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
 		AF75D7352B7C431B009CBF30 /* TaskViewDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewDatePicker.swift; sourceTree = "<group>"; };
+		AF85569D2BAABE80009B7489 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
 		AFC432A72BA7BAF60053494F /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarContainerView.swift; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 				AF2B76D92B758F3800B9535F /* AddKidView.swift */,
 				AF2B76DC2B758F4A00B9535F /* AddKidSheet.swift */,
 				AF2B76DE2B758F5C00B9535F /* InviteKidView.swift */,
+				AF66DC362BAA77CA00875D7B /* ManageKidView.swift */,
 			);
 			path = AddingKids;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 				7C3B11BC2B9A3FB20058368E /* Custom Colors */,
 				AF2B769F2B758B2300B9535F /* Components */,
 				AF2B76922B7588E000B9535F /* Picker */,
+				AF85569D2BAABE80009B7489 /* KeyboardResponder.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -542,6 +548,7 @@
 				7C3B11C22B9A40E90058368E /* EmailComponent.swift in Sources */,
 				AF2B769E2B758B0400B9535F /* TaskView.swift in Sources */,
 				AF2B76D22B758ED300B9535F /* RedeemRewardView.swift in Sources */,
+				AF66DC372BAA77CA00875D7B /* ManageKidView.swift in Sources */,
 				AF5573B82B7EE5F700A8724A /* ChallengeActionSheet.swift in Sources */,
 				AF2B76AB2B758BE400B9535F /* CompletedByKidPicker.swift in Sources */,
 				AFC6EC8E2B8186AD000CFB9B /* RewardActionSheet.swift in Sources */,
@@ -557,6 +564,7 @@
 				AFC6EC9E2B83EF13000CFB9B /* KidSelectorSheet.swift in Sources */,
 				AFC432A82BA7BAF60053494F /* TabBarItem.swift in Sources */,
 				AF2B76A52B758B9700B9535F /* RepeatPicker.swift in Sources */,
+				AF85569E2BAABE80009B7489 /* KeyboardResponder.swift in Sources */,
 				AFDBDC902B8C651900155ED7 /* AddChallengeSheet.swift in Sources */,
 				AFC6EC902B819035000CFB9B /* PurchasedByPicker.swift in Sources */,
 				AFDBDC772B89772300155ED7 /* TaskViewModel.swift in Sources */,
@@ -722,6 +730,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -751,6 +760,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

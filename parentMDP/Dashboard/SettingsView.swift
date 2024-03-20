@@ -15,9 +15,13 @@ struct SettingsView: View {
             ScrollView{
                 VStack{
                     // Manage kid - Navigation Link
-                    MenuNavigationLinkItem(text: "Manage Kid", image: "challenge")
+                    MenuNavigationLinkItem(text: "Manage Kid", image: "challenge") {
+                        ManageKidView()
+                    }
                     // Help - Navigation Link
-                    MenuNavigationLinkItem(text: "Help", image: "challenge")
+                    MenuNavigationLinkItem(text: "Help", image: "challenge") {
+                        ManageKidView()
+                    }
                     // Logout - Button
                     MenuActionButton(text: "Logout", image: "challenge", textColor: .red)
                 }
@@ -36,16 +40,14 @@ struct SettingsView: View {
 
 
 
-struct MenuNavigationLinkItem: View {
-    
+struct MenuNavigationLinkItem<Destination: View>: View {
     let text: String
     let image: String
+    let destinationView: () -> Destination
     
-    var body: some View{
-        NavigationLink {
-            // Logout action
-        } label: {
-            HStack{
+    var body: some View {
+        NavigationLink(destination: destinationView()) {
+            HStack {
                 Image(image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -53,13 +55,11 @@ struct MenuNavigationLinkItem: View {
                 Text(text)
                     .foregroundStyle(.black)
                 Spacer()
-
             }
             .padding()
             .frame(maxWidth: .infinity)
             .frame(height: 60)
             .background(.white)
-
             .clipShape(RoundedRectangle(cornerRadius: 20))
         }
     }

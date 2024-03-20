@@ -33,22 +33,27 @@ struct AssignedChallengeView: View {
     // MARK: Boduy
     var body: some View {
         List {
-            Section(header: Text("Assigned Challenge").foregroundColor(.white)){
+            Section(header: Text("Assigned Challenge").foregroundColor(.white)) {
                 ForEach(challengeVM.challenges) { challenge in
                     ChallengeItem(challenge: challenge)
                         .onTapGesture {
-                            self.selectedChallenge = challenge
-                            self.showActionSheet = true
+                            selectedChallenge = challenge
+                            if selectedChallenge?.status == "ongoing" {
+                                self.showActionSheet = true
+                            }
                         }
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(challenge.status == "complete" ? Color.customGreen.opacity(0.5) : Color.customNavyBlue)
+                                .padding(.vertical, 2)
+                        )
                 }
-                .listRowSeparator(.hidden)
-                .listRowBackground(
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.customNavyBlue)
-                        .padding(.vertical, 2)
-                )
             }
         }
+        .scrollContentBackground(.hidden)
+        .scrollIndicators(.hidden)
+
         .scrollContentBackground(.hidden)
         .scrollIndicators(.hidden)
     }
@@ -81,13 +86,14 @@ struct ChallengeItem: View {
                     .foregroundColor(.white)
                 
             }
-            .padding(8)
-            .padding(.horizontal, 10)
-                .background(difficultyColor(for: challenge.difficulty).opacity(0.6))
-                .cornerRadius(50)
+//            .padding(8)
+//            .padding(.horizontal, 10)
+//                .background(difficultyColor(for: challenge.difficulty).opacity(0.6))
+//                .cornerRadius(50)
         }
-
         .foregroundStyle(Color.white)
+
+
     }
 }
 
