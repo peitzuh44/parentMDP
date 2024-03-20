@@ -28,7 +28,7 @@ struct AssignedChallengeView: View {
                return Color.gray.opacity(0.6)
            }
        }
-    // MARK: Boduy
+    // MARK: Body
     var body: some View {
         List {
             Section(header: Text("Assigned Challenge").foregroundColor(.white)) {

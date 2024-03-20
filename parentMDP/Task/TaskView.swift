@@ -118,7 +118,6 @@ struct TaskView: View {
                 
             }
             
-            
             .sheet(isPresented: $showKidSelector) {
                 TaskViewKidSelectorSheet(kidVM: kidVM, selectedKidID: $selectedKidID)
                     .presentationDetents([.medium])

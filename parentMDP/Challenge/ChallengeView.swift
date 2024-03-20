@@ -104,6 +104,21 @@ struct ChallengeView: View {
                     .presentationDragIndicator(.hidden)
                 
             }
+            .sheet(isPresented: $showEditSheet, content: {
+                
+            })
+            .alert(isPresented: $showDeleteAlert) {
+                Alert(
+                    title: Text("Delete Challenge"),
+                    message: Text("Are you sure you want to delete this challenge?"),
+                    primaryButton: .destructive(Text("Delete"), action: {
+                        if let challengeID = selectedChallenge?.id {
+                            challengeVM.deleteChallenge(challengeID: challengeID)
+                        }
+                    }),
+                    secondaryButton: .cancel()
+                )
+            }
             
             // MARK: Fetching Conditions
             .onAppear {

@@ -310,11 +310,9 @@ struct RecentChallengeBoard: View {
 }
 
 struct RecentChallengeBoardItem: View {
-    
     let challenge: ChallengeModel
     let name: String = "Challenge name"
     let dateComplete: String = "02/11/2024"
-    
     var body: some View {
         HStack{
             HStack{

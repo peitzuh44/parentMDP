@@ -31,6 +31,7 @@ struct FetchChallengesConfig {
     }
     
 }
+
 class ChallengeViewModel: ObservableObject {
     // MARK: Properties
     @Published var challenges: [ChallengeModel] = []
