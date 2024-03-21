@@ -105,7 +105,7 @@ struct ChallengeView: View {
                 
             }
             .sheet(isPresented: $showEditSheet, content: {
-                
+                EditChallengeSheet(selectedChallenge: selectedChallenge!, challengeVM: challengeVM, kidVM: kidVM)
             })
             .alert(isPresented: $showDeleteAlert) {
                 Alert(

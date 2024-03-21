@@ -86,10 +86,7 @@ struct AddChallengeSheet: View {
                             .presentationDetents([.height(250)])
                             .presentationDragIndicator(.hidden)
                     }
-//                    GenericPickerButton(pickerText: "Skill", selectionText: self.name(for: selectedKidID) ?? "Select skill", isPresenting: $showKidPicker) {
-////                        SkillPicker()
-//          
-//                    }
+
                     // date picker
                     GenericPickerButton(pickerText: "Date", selectionText: selectedDate.formattedDate(), isPresenting: $showDatePicker) {
                         CalendarDatePicker(onDateSelected: { selectedDate in
@@ -161,3 +158,9 @@ struct ChallengeTypePicker: View {
     }
 }
 
+
+
+//                    GenericPickerButton(pickerText: "Skill", selectionText: self.name(for: selectedKidID) ?? "Select skill", isPresenting: $showKidPicker) {
+////                        SkillPicker()
+//
+//                    }

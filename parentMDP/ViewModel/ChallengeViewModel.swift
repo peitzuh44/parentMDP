@@ -143,6 +143,29 @@ class ChallengeViewModel: ObservableObject {
     }
     
     
+    // MARK: Update Challenge
+    func updateChallenge(updatedChallenge: ChallengeModel) {
+        let docRef = db.collection("challenges").document(updatedChallenge.id)
+        
+        let updateData: [String: Any] = [
+            "name": updatedChallenge.name,
+            "difficulty": updatedChallenge.difficulty, // rarity is already a String
+            "assignTo": updatedChallenge.assignTo,
+            "reward": updatedChallenge.reward,
+            "due": updatedChallenge.due
+        ]
+        
+        docRef.updateData(updateData) { error in
+            if let error = error {
+                print("Error updating reward: \(error)")
+            } else {
+                print("Reward successfully updated")
+                // You could perform additional tasks here, like notifying the user of the success
+            }
+        }
+    }
+    
+    
     
     
 }
