@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EditChallengeSheet: View {
     //MARK: Properties
-
     @Environment(\.presentationMode) var presentationMode
     var selectedChallenge: ChallengeModel
     @ObservedObject var challengeVM: ChallengeViewModel
@@ -106,6 +105,8 @@ struct EditChallengeSheet: View {
 
                     Spacer()
                     Button(action:{
+                        
+                        //MARK: Call Update Function
                         presentationMode.wrappedValue.dismiss()
                         var updatedChallenge = selectedChallenge
                         updatedChallenge.name = name

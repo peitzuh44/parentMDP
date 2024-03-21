@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 struct FetchChallengesConfig {
     let userID: String
+    let status: String
     let selectedKidID: String
     let criteria: [Criteria]
     let sortOptions: [SortOption]
@@ -21,6 +22,7 @@ struct FetchChallengesConfig {
         case assignTo(String)
         case assignedOrSelfSelected(String)
         case dueDateNotPassed
+        case status(String)
         case dateCompleted
     }
     
@@ -38,12 +40,9 @@ class ChallengeViewModel: ObservableObject {
     private let db = Firestore.firestore()
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
     
-
-    
     // MARK: Fetch Challenges
     func fetchChallenges(withConfig config: FetchChallengesConfig) {
         var query: Query = db.collection("challenges")
-        
         // Apply criteria
         for criterion in config.criteria {
             switch criterion {
@@ -55,6 +54,8 @@ class ChallengeViewModel: ObservableObject {
                 query = query.whereField("assignedOrSelfSelected", isEqualTo: value)
             case .dueDateNotPassed:
                 query = query.whereField("due", isGreaterThan: Date())
+            case .status(let status):
+                query = query.whereField("status", isEqualTo: status)
             case .dateCompleted:
                 query = query.whereField("dateCompleted", isGreaterThan: Date(timeIntervalSince1970: 0))
             }
@@ -89,33 +90,6 @@ class ChallengeViewModel: ObservableObject {
             }
         }
     }
-
-    
-    
-
-    
-    // MARK: Fetch Challenges OLD
-//    func fetchChallenges(forUserID userID: String, selectedKidID: String, assignedOrSelfSelected: String) {
-//        
-//        db.collection("challenges")
-//            .whereField("createdBy", isEqualTo: userID)
-//            .whereField("assignTo", isEqualTo: selectedKidID)
-//            .whereField("assignedOrSelfSelected", isEqualTo: assignedOrSelfSelected)
-//            .order(by: "due", descending: false)
-//            .order(by: "timeCreated", descending: false)
-//            .addSnapshotListener { [weak self] querySnapshot, error in
-//                guard let documents = querySnapshot?.documents else {
-//                    print("Error fetching documents: \(String(describing: error?.localizedDescription))")
-//                    return
-//                }
-//
-//                self?.challenges = documents.compactMap { doc -> ChallengeModel? in
-//                    try? doc.data(as: ChallengeModel.self)
-//                }
-//            }
-//
-//        
-//    }
     
     // MARK: Create Challenges
     func createChallenge(name: String, description: String, createdBy: String, assignTo: String, difficulty: String, due: Date, assignedOrSelfSelected: String, reward: Int, skills: [String], dateCompleted: Date?){
@@ -123,7 +97,7 @@ class ChallengeViewModel: ObservableObject {
         let newChallengeRef = db.collection("challenges").document()
         let challengeID = newChallengeRef.documentID
         let challenge =
-        ChallengeModel(id: challengeID, name: name, description: description, timeCreated: Date(), createdBy: createdBy, assignTo: assignTo, difficulty: difficulty, reward: reward, due: due, assignedOrSelfSelected: assignedOrSelfSelected, relatedSkills: skills, status: "ongoing")
+        ChallengeModel(id: challengeID, name: name, description: description, comment: "no comment", timeCreated: Date(), createdBy: createdBy, assignTo: assignTo, difficulty: difficulty, reward: reward, due: due, assignedOrSelfSelected: assignedOrSelfSelected, relatedSkills: skills, status: "ongoing", dateCompleted: Date())
         do {
             try db.collection("challenges").document(challengeID).setData(from: challenge)
         } catch let error {
@@ -165,42 +139,43 @@ class ChallengeViewModel: ObservableObject {
         }
     }
     
-    
-    
-    
 }
 
 
 extension ChallengeViewModel {
     
 // MARK: Mark Complete / Update Reward
-func completeChallengeAndUpdateKidGem(challenge: ChallengeModel) {
-    // First, mark the challenge as complete.
-    let amountToAdd = challenge.reward
-    
-    
-    markChallengeAsComplete(challengeID: challenge.id) { [self] in
-        if challenge.assignedOrSelfSelected == "assigned" {
-            self.updateKidGemBalance(kidID: challenge.assignTo, gemToAdd: amountToAdd)
+    func completeChallengeAndUpdateKidGem(challenge: ChallengeModel, comment: String? = nil, dateComplete: Date) {
+            // First, mark the challenge as complete.
+            let amountToAdd = challenge.reward
 
-        }
-        if challenge.assignedOrSelfSelected == "self-selected" {
-            self.updateKidGoldBalance(kidID: challenge.assignTo, goldToAdd: amountToAdd)
-        }
-    }
-}
-// MARK: Mark As Complete
-private func markChallengeAsComplete(challengeID: String, completion: @escaping () -> Void) {
-        let challengeRef = db.collection("challenges").document(challengeID)
-        challengeRef.updateData(["status": "complete"]) { error in
-            if let error = error {
-                print("Error updating challenge status: \(error)")
-            } else {
-                print("Challenge marked as complete")
-                completion()
+            // Pass the comment parameter to the markChallengeAsComplete function
+            markChallengeAsComplete(challengeID: challenge.id, comment: comment, dateCompleted: dateComplete) { [self] in
+                if challenge.assignedOrSelfSelected == "assigned" {
+                    self.updateKidGemBalance(kidID: challenge.assignTo, gemToAdd: amountToAdd)
+                } else if challenge.assignedOrSelfSelected == "self-selected" {
+                    self.updateKidGoldBalance(kidID: challenge.assignTo, goldToAdd: amountToAdd)
+                }
             }
         }
-    }
+
+        // No changes needed here, but included for context
+    private func markChallengeAsComplete(challengeID: String, comment: String?, dateCompleted: Date, completion: @escaping () -> Void) {
+            let challengeRef = db.collection("challenges").document(challengeID)
+            challengeRef.updateData(
+                ["status": "complete",
+                 "comment": comment ?? "testing",
+                 "dateCompleted": dateCompleted
+                ]
+            ) { error in
+                if let error = error {
+                    print("Error updating challenge status: \(error)")
+                } else {
+                    print("Challenge marked as complete")
+                    completion()
+                }
+            }
+        }
 
 // MARK: Update Gem Balance
 private func updateKidGemBalance(kidID: String, gemToAdd: Int) {

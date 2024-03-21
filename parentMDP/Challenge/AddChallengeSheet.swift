@@ -120,6 +120,7 @@ struct AddChallengeSheet: View {
 }
 
 
+
 // MARK: Challenge Type Picker
 enum ChallengeTypeOptions: String, CaseIterable {
     case assigned = "assigned"

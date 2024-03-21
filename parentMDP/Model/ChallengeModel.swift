@@ -13,6 +13,7 @@ struct ChallengeModel: Identifiable, Codable {
     var id: String
     var name: String
     var description: String
+    var comment: String?
     let timeCreated: Date
     let createdBy: String
     var assignTo: String
@@ -26,7 +27,7 @@ struct ChallengeModel: Identifiable, Codable {
 
 
     enum CodingKeys: String, CodingKey {
-        case id, name, description, createdBy, timeCreated, assignTo, difficulty, reward, due,  assignedOrSelfSelected, relatedSkills, status, dateCompleted
+        case id, name, description, comment, createdBy, timeCreated, assignTo, difficulty, reward, due,  assignedOrSelfSelected, relatedSkills, status, dateCompleted
     }
    
 }

@@ -45,3 +45,38 @@ struct CustomTextfield: View {
         .padding(.horizontal)
     }
 }
+
+
+struct CustomTextEditor: View {
+    @Binding var text: String
+    let placeholder: String
+    let background: Color
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            if text.isEmpty {
+                Text(placeholder)
+                    .foregroundColor(.gray)
+                    .padding(.leading, 4)
+                    .padding(.top, 8)
+            }
+            TextEditor(text: $text)
+                .foregroundColor(.white)
+                .background(background)
+                .frame(height: 250)
+                .onChange(of: text) { newValue in
+                    let words = newValue.split { $0.isWhitespace || $0.isNewline }
+                    if words.count > 100 {
+                        text = words.prefix(100).joined(separator: " ")
+                    }
+                }
+                .autocorrectionDisabled()
+                .autocapitalization(.none)
+                .padding(.top, 8)
+        }
+        .padding(20)
+        .background(background)
+        .cornerRadius(10)
+        .padding(.horizontal)
+    }
+}

@@ -19,9 +19,12 @@ struct KidProfileView: View {
     func fetchChallengesForRecentChallengeBoard() {
         let config = FetchChallengesConfig(
             userID: currentUserID,
+            status: "complete",
             selectedKidID: kid.id,
             criteria: [
                 .assignTo(kid.id),
+                .createdBy(currentUserID),
+                .status("complete")
             ],
             sortOptions: [
                 .dateCompleted(ascending: true)

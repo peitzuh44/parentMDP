@@ -18,6 +18,8 @@ struct ChallengeActionSheet: View {
     @ObservedObject var challengeVM: ChallengeViewModel
     @ObservedObject var kidVM: KidViewModel
     @State var challenge: ChallengeModel
+    @Binding var showReviewSheet: Bool
+
     
     // MARK: Body
     var body: some View {
@@ -74,8 +76,11 @@ struct ChallengeActionSheet: View {
                         }
                     }
                     Button(action:{
+
                     presentationMode.wrappedValue.dismiss()
-                        challengeVM.completeChallengeAndUpdateKidGem(challenge: challenge)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            showReviewSheet = true
+                        }
                     }){
                         VStack(spacing: 16){
                             Image("check")

@@ -21,6 +21,7 @@ struct ChallengeView: View {
     @State private var showAddChallengeSheet = false
     //pickers for fetching data
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
+    let status: String = "ongoing"
     @State private var showKidSelector = false
     @State private var selectedKidID: String = ""
     @State private var assignedOrSelfSelected: String = "assigned"
@@ -35,6 +36,8 @@ struct ChallengeView: View {
     @State private var showDeleteAlert = false
     @State private var showCompleteAlert = false
     @State private var showGiveUpAlert = false
+    @State private var showReviewSheet = false
+
     
     func name(for selectedKidID: String?) -> String? {
         guard let selectedKidID = selectedKidID else { return nil }
@@ -44,19 +47,19 @@ struct ChallengeView: View {
     func fetchChallengesForChallengeView() {
         let config = FetchChallengesConfig(
             userID: currentUserID,
+            status: status,
             selectedKidID: selectedKidID,
             criteria: [
+                .createdBy(currentUserID),
+                .status(status),
                 .assignTo(selectedKidID),
                 .assignedOrSelfSelected(assignedOrSelfSelected)
-                // Add more criteria as needed
             ],
             sortOptions: [
-                // Define sort options based on `assignedOrSelfSelected`
-                assignedOrSelfSelected == "assigned" ? .dueDate(ascending: true) : .dateCompleted(ascending: false)
+                .dueDate(ascending: true)
             ],
             limit: nil // or specify a limit for cases like recent completions
         )
-        
         challengeVM.fetchChallenges(withConfig: config)
     }
 
@@ -87,7 +90,7 @@ struct ChallengeView: View {
                 set: { showActionSheet = $0 }
             )) {
                 if let challengeDetail = selectedChallenge {
-                    ChallengeActionSheet(showEditSheet: $showEditSheet, showDeleteAlert: $showDeleteAlert, showGiveupAlert: $showGiveUpAlert, showCompleteAlert: $showCompleteAlert, challengeVM: challengeVM, kidVM: kidVM, challenge: challengeDetail)
+                    ChallengeActionSheet(showEditSheet: $showEditSheet, showDeleteAlert: $showDeleteAlert, showGiveupAlert: $showGiveUpAlert, showCompleteAlert: $showCompleteAlert, challengeVM: challengeVM, kidVM: kidVM, challenge: challengeDetail, showReviewSheet: $showReviewSheet)
                         .presentationDetents([.height(350)])
                         .presentationDragIndicator(.hidden)
                 }
@@ -106,6 +109,12 @@ struct ChallengeView: View {
             }
             .sheet(isPresented: $showEditSheet, content: {
                 EditChallengeSheet(selectedChallenge: selectedChallenge!, challengeVM: challengeVM, kidVM: kidVM)
+            })
+            .sheet(isPresented: $showReviewSheet, content: {
+                ReviewChallengeView(selectedChallenge: selectedChallenge!)
+                    .presentationDetents([.height(750)])
+                    .presentationDragIndicator(.hidden)
+
             })
             .alert(isPresented: $showDeleteAlert) {
                 Alert(
