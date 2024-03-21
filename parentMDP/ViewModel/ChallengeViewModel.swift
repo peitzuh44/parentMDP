@@ -30,6 +30,7 @@ struct FetchChallengesConfig {
         case dueDate(ascending: Bool)
         case timeCreated(ascending: Bool)
         case dateCompleted(ascending: Bool)
+        
     }
     
 }

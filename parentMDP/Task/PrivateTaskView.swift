@@ -56,13 +56,14 @@ struct PrivateTaskView: View {
                                     print("action sheet appears")
                                 }
                             }
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(task.status == "complete" ? Color.customGreen.opacity(0.5) : Color.customNavyBlue)
+                                    .padding(.vertical, 2)
+                            )
                         }
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.customNavyBlue)
-                                .padding(.vertical, 2)
-                        )
+
                     }
                 // MARK: Evening Section
                 Section(header: Text("Evening").foregroundColor(.white)) {
@@ -82,12 +83,6 @@ struct PrivateTaskView: View {
                                 .foregroundStyle(.green)
                                 .frame(width: 30, height: 30)
                                 .buttonStyle(ThreeD(backgroundColor: .green, shadowColor: .black))
-                            } else {
-                                Image(systemName: "checkmark.square.fill")
-                                    .bold()
-                                    .font(.title3)
-                                    .foregroundStyle(.white)
-                                    .frame(width: 30, height: 30)
                             }
                         }
                         .padding(.vertical, 8)
@@ -97,14 +92,17 @@ struct PrivateTaskView: View {
                                 showActionSheet = true
                                 print("action sheet appears")
                             }
+                        
                         }
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(task.status == "complete" ? Color.customGreen.opacity(0.5) : Color.customNavyBlue)
+                                .padding(.vertical, 2)
+                        )
+    
                     }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.customNavyBlue)
-                            .padding(.vertical, 2)
-                    )
+
                 }
                 // MARK: Anytime Section
                 Section(header: Text("Anytime").foregroundColor(.white)) {
@@ -140,13 +138,13 @@ struct PrivateTaskView: View {
                                 print("action sheet appears")
                             }
                         }
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(task.status == "complete" ? Color.customGreen.opacity(0.5) : Color.customNavyBlue)
+                                .padding(.vertical, 2)
+                        )
                     }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.customNavyBlue)
-                            .padding(.vertical, 2)
-                    )
                 }
                
 

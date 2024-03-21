@@ -27,9 +27,9 @@ struct KidProfileView: View {
                 .status("complete")
             ],
             sortOptions: [
-                .dateCompleted(ascending: true)
+                .dateCompleted(ascending: false)
             ],
-            limit: 3 // or specify a limit for cases like recent completions
+            limit: 3
         )
         
         challengeVM.fetchChallenges(withConfig: config)
@@ -50,14 +50,16 @@ struct KidProfileView: View {
                     }
                     KidInfoItem(kid: kid)
                     AvatarAttribute(kid: kid)
-                    SkillBoard(kid: kid)
-                    RecentChallengeBoard(challengeVM: challengeVM)
+                    NewSkillBoard(kid: kid)
+                    RecentChallengeBoard(challengeVM: challengeVM, kid: kid)
                     
                 }
             }
             .scrollContentBackground(.hidden)
             .scrollIndicators(.hidden)
         }
+        
+        // MARK: Fetching
         .onAppear{
             fetchChallengesForRecentChallengeBoard()
 
@@ -148,6 +150,39 @@ struct SkillItem: View{
         
     }
 }
+
+struct SkillBoardItem: View {
+    let text: String
+    let level: Int
+    var body: some View {
+        HStack{
+            Image("attack")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 40)
+            VStack(alignment: .leading){
+                HStack(spacing: 8){
+                    Text(text)
+                    Spacer()
+                    Text("Lv\(level)")
+                }
+                LinearProgressBar(width: 270, height: 10, percent: 50, color1: .blue, color2: .purple)
+                    .onAppear()
+                    .animation(.linear, value: 1)
+
+            }
+            Spacer()
+        }
+        .foregroundStyle(Color.white)
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(Color.customNavyBlue)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+    }
+    
+}
+
+
 struct SkillBoard: View {
     var kid: KidModel
     var body: some View {
@@ -180,6 +215,25 @@ struct SkillBoard: View {
     
 }
 
+struct NewSkillBoard: View {
+    var kid: KidModel
+    var body: some View {
+        NavigationLink(destination: ManageSkillsView(kidID: kid.id)) {
+            VStack (alignment: .leading, spacing: 8){
+                Text("Top 3 Skills")
+                    .font(.system(size: 24))
+                    .foregroundStyle(Color.white)
+                    .bold()
+                SkillBoardItem(text: "coding", level: 10)
+                SkillBoardItem(text: "basketball", level: 10)
+                SkillBoardItem(text: "piano", level: 10)
+
+            }
+            .padding()
+        }
+    
+    }
+}
 
 // MARK: Currency Tags
 struct GoldTag: View {
@@ -295,24 +349,43 @@ struct AvatarAttribute: View {
 // MARK: Recent Challenge
 struct RecentChallengeBoard: View {
     @ObservedObject var challengeVM: ChallengeViewModel
-    
-    var body: some View {
-        VStack(alignment: .leading){
-            Text("Recent Challenge")
-                .font(.headline)
-                .padding(.top)
-                .padding(.horizontal)
-            ForEach(challengeVM.challenges){challenge in
-                RecentChallengeBoardItem(challenge: challenge)
-                
-            }
-        }
-        .background(Color.customNavyBlue)
+    var kid: KidModel
 
+    var body: some View {
+        NavigationLink(destination: PastChallengeView(challengeVM: challengeVM, kid: kid)){
+            VStack(alignment: .leading){
+                Text("Recent Challenge")
+                    .foregroundStyle(.white)
+                    .font(.headline)
+                    .padding(.top)
+                    .padding(.horizontal)
+                if challengeVM.challenges.isEmpty {
+                    // Display message when no tasks are available
+                    VStack {
+                        Spacer()
+                        Text("No challenge completed yet!")
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.customNavyBlue)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        Spacer()
+                    }
+                } else{
+                    ForEach(challengeVM.challenges){challenge in
+                        CompleteChallengeListItem(challenge: challenge)
+                        
+                    }
+                }
+
+            }
+            .padding()
+            
+        }
     }
 }
 
-struct RecentChallengeBoardItem: View {
+struct CompleteChallengeListItem: View {
     let challenge: ChallengeModel
     let name: String = "Challenge name"
     let dateComplete: String = "02/11/2024"
@@ -323,9 +396,10 @@ struct RecentChallengeBoardItem: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 36)
-                VStack{
+                VStack(alignment: .leading){
                     Text(challenge.name)
                     Text("Completed on \(dateComplete)")
+                        .font(.caption)
                 }
             }
             Spacer()
@@ -342,4 +416,5 @@ struct RecentChallengeBoardItem: View {
 // MARK: TODOs
 /*
  1. Board displaying recent chllange and past challenge view
+ 2. Display recent jornal entry of the kids
  */

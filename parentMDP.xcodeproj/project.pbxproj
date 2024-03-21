@@ -70,6 +70,9 @@
 		AF8556A02BAB5142009B7489 /* EditKidSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF85569F2BAB5141009B7489 /* EditKidSheet.swift */; };
 		AF8556A22BABF704009B7489 /* ReviewChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556A12BABF704009B7489 /* ReviewChallengeView.swift */; };
 		AF8556A42BAC031D009B7489 /* DynamicHeightTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556A32BAC031D009B7489 /* DynamicHeightTextEditor.swift */; };
+		AF8556A62BAC2262009B7489 /* PastChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556A52BAC2262009B7489 /* PastChallengeView.swift */; };
+		AF8556A82BACA050009B7489 /* PastChallengeDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556A72BACA050009B7489 /* PastChallengeDetailSheet.swift */; };
+		AF8556AA2BACA111009B7489 /* SheetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556A92BACA111009B7489 /* SheetHeaderView.swift */; };
 		AFC432A82BA7BAF60053494F /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A72BA7BAF60053494F /* TabBarItem.swift */; };
 		AFC432AA2BA7BB2A0053494F /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */; };
 		AFC432AC2BA7BB4B0053494F /* CustomTabBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */; };
@@ -157,6 +160,9 @@
 		AF85569F2BAB5141009B7489 /* EditKidSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditKidSheet.swift; sourceTree = "<group>"; };
 		AF8556A12BABF704009B7489 /* ReviewChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewChallengeView.swift; sourceTree = "<group>"; };
 		AF8556A32BAC031D009B7489 /* DynamicHeightTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightTextEditor.swift; sourceTree = "<group>"; };
+		AF8556A52BAC2262009B7489 /* PastChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastChallengeView.swift; sourceTree = "<group>"; };
+		AF8556A72BACA050009B7489 /* PastChallengeDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastChallengeDetailSheet.swift; sourceTree = "<group>"; };
+		AF8556A92BACA111009B7489 /* SheetHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetHeaderView.swift; sourceTree = "<group>"; };
 		AFC432A72BA7BAF60053494F /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarContainerView.swift; sourceTree = "<group>"; };
@@ -297,6 +303,7 @@
 				AF2B76D32B758EE300B9535F /* SettingsView.swift */,
 				AFDBDC952B8E973800155ED7 /* ManageSkillsView.swift */,
 				AFDBDC972B8E9BF700155ED7 /* SkillTemplateSheet.swift */,
+				AF8556A52BAC2262009B7489 /* PastChallengeView.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -346,6 +353,7 @@
 				AF5573BB2B7FCAAD00A8724A /* SelfSelectedChallengeView.swift */,
 				AFDBDC8F2B8C651900155ED7 /* AddChallengeSheet.swift */,
 				AF8556A12BABF704009B7489 /* ReviewChallengeView.swift */,
+				AF8556A72BACA050009B7489 /* PastChallengeDetailSheet.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -353,10 +361,10 @@
 		AF2B76942B75899300B9535F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				AF85569D2BAABE80009B7489 /* KeyboardResponder.swift */,
 				7C3B11BC2B9A3FB20058368E /* Custom Colors */,
 				AF2B769F2B758B2300B9535F /* Components */,
 				AF2B76922B7588E000B9535F /* Picker */,
-				AF85569D2BAABE80009B7489 /* KeyboardResponder.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -396,6 +404,7 @@
 				AF2B76A02B758B4700B9535F /* CustomSegmentedControl.swift */,
 				AF5573842B7D3A8000A8724A /* ProgressBar.swift */,
 				AF8556A32BAC031D009B7489 /* DynamicHeightTextEditor.swift */,
+				AF8556A92BACA111009B7489 /* SheetHeaderView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -540,6 +549,7 @@
 				AFC6ECA02B83F081000CFB9B /* KidViewModel.swift in Sources */,
 				AF8556A02BAB5142009B7489 /* EditKidSheet.swift in Sources */,
 				AF8556A42BAC031D009B7489 /* DynamicHeightTextEditor.swift in Sources */,
+				AF8556A62BAC2262009B7489 /* PastChallengeView.swift in Sources */,
 				AFC432AA2BA7BB2A0053494F /* CustomTabBarView.swift in Sources */,
 				AF2B76D82B758F2A00B9535F /* LoginView.swift in Sources */,
 				AF2B76BE2B758DBA00B9535F /* PrivateTaskView.swift in Sources */,
@@ -558,7 +568,9 @@
 				AF2B76CC2B758E8E00B9535F /* DashboardView.swift in Sources */,
 				AFDBDC8C2B8C067000155ED7 /* RewardViewModel.swift in Sources */,
 				7C3B11C22B9A40E90058368E /* EmailComponent.swift in Sources */,
+				AF8556A82BACA050009B7489 /* PastChallengeDetailSheet.swift in Sources */,
 				AF2B769E2B758B0400B9535F /* TaskView.swift in Sources */,
+				AF8556AA2BACA111009B7489 /* SheetHeaderView.swift in Sources */,
 				AF2B76D22B758ED300B9535F /* RedeemRewardView.swift in Sources */,
 				AF66DC372BAA77CA00875D7B /* ManageKidView.swift in Sources */,
 				AF5573B82B7EE5F700A8724A /* ChallengeActionSheet.swift in Sources */,

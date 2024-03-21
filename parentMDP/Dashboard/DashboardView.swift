@@ -61,7 +61,7 @@ struct DashboardView: View {
                         .padding(.vertical)                        
                         //review gift navigation link
                         NavigationLink {
-                            RedeemRewardView(rewardVM: rewardVM)
+                            RedeemRewardView(rewardVM: rewardVM, kidVM: kidVM)
                         } label: {
                             HStack{
                                 Image(systemName: "gift")
@@ -166,4 +166,5 @@ struct KidListItem: View {
 /*
  1. func calculating # of quest needed review
  2. func calculating # of gift needed to redeem
+ 3. display the skills of thre kids
  */

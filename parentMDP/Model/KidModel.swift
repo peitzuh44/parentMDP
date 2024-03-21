@@ -26,6 +26,8 @@ struct KidModel: Identifiable, Codable, Hashable{
     // currency
     var coinBalance: Int
     var gemBalance: Int
+    // subcollection
+    var skills: [SkillModel]
     
     enum CodingKeys: String, CodingKey {
         case id, timeCreated, name, gender, birthdate, parentID, myParent, avatarImage, health, mental, social, intelligence, coinBalance, gemBalance
@@ -37,11 +39,11 @@ struct KidModel: Identifiable, Codable, Hashable{
 struct SkillModel: Identifiable, Codable, Hashable{
     var id: String
     var name: String
+    var category: String
     let createdBy: String
     let kid: String
-    var category: String
     var exp: Int
-    var level: Int
+    var relatedChallenges: [String]
     
     
     enum CodingKeys: String, CodingKey {

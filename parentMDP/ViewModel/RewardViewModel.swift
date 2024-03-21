@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 class RewardViewModel: ObservableObject {
     @Published var rewards: [RewardModel] = []
-    @Published var purchasedReward: [RewardPurchaseModel] = []
+    @Published var purchasedRewards: [RewardPurchaseModel] = []
     private let db = Firestore.firestore()
     
     
@@ -55,7 +55,7 @@ class RewardViewModel: ObservableObject {
                     return
                 }
 
-                self?.purchasedReward = documents.compactMap { doc -> RewardPurchaseModel? in
+                self?.purchasedRewards = documents.compactMap { doc -> RewardPurchaseModel? in
                     try? doc.data(as: RewardPurchaseModel.self)
                 }
             }

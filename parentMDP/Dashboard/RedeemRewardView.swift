@@ -11,13 +11,21 @@ struct RedeemRewardView: View{
     
     @ObservedObject var rewardVM: RewardViewModel
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
+    @ObservedObject var kidVM: KidViewModel
+
+    
+    func name(for purchaseBy: String?) -> String? {
+           guard let purchaseBy = purchaseBy else { return "any" } // Return "Unknown" or any placeholder if nil
+           return kidVM.kids.first { $0.id == purchaseBy }?.name ?? "Unknown" // Again, handling nil names
+       }
+    
     
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
             VStack{
                 // Approve all button
-                if rewardVM.purchasedReward.isEmpty {
+                if rewardVM.purchasedRewards.isEmpty {
                     // Display message when no tasks are available
                     VStack {
                         Spacer()
@@ -29,9 +37,19 @@ struct RedeemRewardView: View{
                 }
                 else{
                     List{
-                        ForEach(rewardVM.purchasedReward){ reward in
+                        ForEach(rewardVM.purchasedRewards){ reward in
                             HStack {
-                                Text(reward.name).foregroundColor(.white)
+                                HStack(spacing: 4){
+                                    Image("gift")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 30)
+                                    VStack(alignment: .leading, spacing: 4){
+                                        Text(reward.name).foregroundColor(.white)
+                                        Text(name(for: reward.purchasedBy)!)
+                                    }
+                                    .foregroundStyle(.white)
+                                }
                                 Spacer()
                                 Button(action: {
                                     rewardVM.markRewardAsRedeemed(purchasedReward: reward)
@@ -45,6 +63,7 @@ struct RedeemRewardView: View{
                                 .padding(.vertical, 8)
                                 
                             }
+                            .padding()
                         }
                         .listRowSeparator(.hidden)
                         .listRowBackground(

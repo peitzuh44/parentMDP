@@ -88,25 +88,3 @@ struct ManageSkillsView: View {
         
       
 
-
-
-
-
-
-
-//
-//Button {
-//    showSkillTemplateSheet = true
-//} label: {
-//    Image("add")
-//        .resizable()
-//        .aspectRatio(contentMode: .fit)
-//        .frame(width: 24, height: 24)
-//}
-//
-//
-//.sheet(isPresented: $showSkillTemplateSheet) {
-//        SkillTemplateSheet(skillVM: skillVM)
-//            .presentationDetents([.height(750)])
-//            .presentationDragIndicator(.hidden)
-//    }
