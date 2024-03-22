@@ -33,6 +33,55 @@ struct FetchTaskConfig {
 class TaskViewModel: ObservableObject {
     @Published var tasks: [TaskInstancesModel] = []
     private let db = Firestore.firestore()
+        @Published var totalReviewTasksCount: Int = 0
+        @Published var privateReviewTasksCount: Int = 0
+        @Published var publicReviewTasksCount: Int = 0
+        @Published var reviewTasksCountPerKid: [String: Int] = [:] // Kid ID to review task count mapping
+
+        // Fetch and update counts for review tasks
+        func updateReviewTasksCounts(userID: String, kids: [KidModel]) {
+            fetchReviewTasksCount(userID: userID, privateOrPublic: nil, kidID: nil) { count in
+                self.totalReviewTasksCount = count
+            }
+
+            fetchReviewTasksCount(userID: userID, privateOrPublic: "private", kidID: nil) { count in
+                self.privateReviewTasksCount = count
+            }
+
+            fetchReviewTasksCount(userID: userID, privateOrPublic: "public", kidID: nil) { count in
+                self.publicReviewTasksCount = count
+            }
+
+            for kid in kids {
+                fetchReviewTasksCount(userID: userID, privateOrPublic: "private", kidID: kid.id) { count in
+                    self.reviewTasksCountPerKid[kid.id] = count
+                }
+            }
+        }
+
+        private func fetchReviewTasksCount(userID: String, privateOrPublic: String?, kidID: String?, completion: @escaping (Int) -> Void) {
+            var query: Query = db.collection("taskInstances")
+                .whereField("createdBy", isEqualTo: userID)
+                .whereField("status", isEqualTo: "reviewing")
+            
+            if let privateOrPublic = privateOrPublic {
+                query = query.whereField("privateOrPublic", isEqualTo: privateOrPublic)
+            }
+
+            if let kidID = kidID {
+                query = query.whereField("assignTo", isEqualTo: kidID)
+            }
+
+            query.getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("Error fetching review tasks count: \(error.localizedDescription)")
+                    completion(0)
+                } else {
+                    let count = querySnapshot?.documents.count ?? 0
+                    completion(count)
+                }
+            }
+        }
     
     func tasks(forRoutine routine: String, withStatus status: String) -> [TaskInstancesModel] {
         return tasks.filter { $0.routine!.lowercased() == routine.lowercased() && $0.status == status }
@@ -44,11 +93,10 @@ class TaskViewModel: ObservableObject {
        }
     // MARK: Fetch Tasks
     
-    func fetchTasks(withConfig config: FetchTaskConfig) {
+    func fetchTasks(withConfig config: FetchTaskConfig, privateOrPublic: String) {
         var query: Query = db.collection("taskInstances")
         let calendar = Calendar.current
         var orderByDueDateApplied = false
-        var isPublicTask: Bool?
 
 
         print("Debug: Fetching tasks with configuration:")
@@ -64,16 +112,18 @@ class TaskViewModel: ObservableObject {
             case .createdBy(let userID):
                 query = query.whereField("createdBy", isEqualTo: userID)
                 print("Debug: Applying 'createdBy' filter for userID: \(userID)")
+                
             case .assignTo(let kidID):
                 // Apply the assignTo filter conditionally based on isPublicTask flag
-                if let isPublic = isPublicTask, !isPublic {
+                if privateOrPublic == "private" {
                     print("Debug: Applying 'assignTo' filter for kidID: \(kidID)")
                     query = query.whereField("assignTo", isEqualTo: kidID)
                 }
+
+
             case .privateOrPublic(let value):
                 print("Debug: Applying 'privateOrPublic' filter for value: \(value)")
                 query = query.whereField("privateOrPublic", isEqualTo: value)
-                isPublicTask = (value == "public")
                 print("Debug: Applying 'privateOrPublic' filter for value: \(value)")
             case .dueDate(let dueDate):
                 let startOfDay = calendar.startOfDay(for: dueDate)

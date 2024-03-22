@@ -58,7 +58,7 @@ struct TaskView: View {
                 .timeCreated(ascending: false)
             ]
         )
-        taskVM.fetchTasks(withConfig: config)
+        taskVM.fetchTasks(withConfig: config, privateOrPublic: privateOrPublic)
     }
     
     // MARK: Functions

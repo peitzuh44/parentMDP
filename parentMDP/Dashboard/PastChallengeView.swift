@@ -39,9 +39,15 @@ struct PastChallengeView: View {
             if challengeVM.challenges.isEmpty {
                 VStack{
                     Spacer()
-                    Text("You have redeemed all the rewards!")
-                        .foregroundColor(.white)
-                        .font(.title2)
+                    VStack{
+                        Image("sad")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 64)
+                        Text("No challenge completed")
+                            .foregroundColor(.white)
+                            .font(.title2)
+                    }
                     Spacer()
                 }
                 

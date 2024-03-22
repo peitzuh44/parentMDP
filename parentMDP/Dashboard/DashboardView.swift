@@ -20,6 +20,12 @@ struct DashboardView: View {
     @State private var showKidDetail = false
     @Binding var authFlow: AuthFlow
 
+    // Fetching Conditions
+    let currentUserID = Auth.auth().currentUser?.uid ?? ""
+    let status: String = "reviewing"
+
+    
+ 
     // MARK: Body
     var body: some View {
         NavigationStack{
@@ -53,7 +59,7 @@ struct DashboardView: View {
                         } label: {
                             HStack{
                                 Image(systemName: "checkmark.square.fill")
-                                Text("2 tasks to review")
+                                Text("\(taskVM.totalReviewTasksCount) tasks to review") // MARK: Pass in the calculation
                                 Spacer()
                             }
                             .foregroundColor(.white)
@@ -65,7 +71,7 @@ struct DashboardView: View {
                         } label: {
                             HStack{
                                 Image(systemName: "gift")
-                                Text("2 rewards redeemed")
+                                Text("2 rewards redeemed") // MARK: Pass in the calculation
                                 Spacer()
                             }
                             .foregroundColor(.white)
@@ -83,6 +89,9 @@ struct DashboardView: View {
                 }
                 .scrollContentBackground(.hidden)
                 // MARK: Fetching
+                .onAppear {
+                    taskVM.updateReviewTasksCounts(userID: currentUserID, kids: kidVM.kids)
+                 }
                 .onAppear {
                     kidVM.fetchKids()
                 }
