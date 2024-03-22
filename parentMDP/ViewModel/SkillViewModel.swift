@@ -58,7 +58,7 @@ class SkillViewModel: ObservableObject {
         
         let newSkillRef = db.collection("skills").document()
         let skillID = newSkillRef.documentID
-        let skill = SkillModel(id: skillID, name: template.name, createdBy: currentUserID, kid: selectedKidID, category: template.category, exp: 0, level: 0)
+        let skill = SkillModel(id: skillID, name: template.name, category: template.category, createdBy: currentUserID, kid: selectedKidID, exp: 0, relatedChallenges: [""], completedChallenges: [""])
   
         do {
             try db.collection("skills").document(skillID).setData(from: skill)
@@ -72,7 +72,7 @@ class SkillViewModel: ObservableObject {
     func createCustomizeSkill(forUserID userID: String, selectedKidID: String, name: String, category: String){
         let newSkillRef = db.collection("skills").document()
         let skillID = newSkillRef.documentID
-        let skill = SkillModel(id: skillID, name: name, createdBy: userID, kid: selectedKidID, category: category, exp: 0, level: 0)
+        let skill = SkillModel(id: skillID, name: name, category: category, createdBy: currentUserID, kid: selectedKidID, exp: 0, relatedChallenges: [""], completedChallenges: [""])
         do {
             try db.collection("skills").document(skillID).setData(from: skill)
         } catch let error {

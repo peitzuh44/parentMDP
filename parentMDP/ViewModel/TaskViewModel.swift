@@ -7,60 +7,160 @@
 import FirebaseAuth
 import FirebaseFirestore
 
+//MARK: Task Fetching Configurations
 
-
+struct FetchTaskConfig {
+    let userID: String
+    let status: String
+    let selectedKidID: String
+    let criteria: [Criteria]
+    let sortOptions: [SortOption]
+    
+    enum Criteria {
+        case createdBy(String)
+        case assignTo(String)
+        case privateOrPublic(String)
+        case dueDate(Date)
+    }
+    
+    enum SortOption {
+        case timeCreated(ascending: Bool)
+        case dueDate(ascending: Bool)
+        
+    }
+    
+}
 class TaskViewModel: ObservableObject {
     @Published var tasks: [TaskInstancesModel] = []
     private let db = Firestore.firestore()
     
-    
-    func tasks(forRoutine routine: String) -> [TaskInstancesModel] {
-           print("Filtering tasks for routine: \(routine)")
-        return tasks.filter { $0.routine!.lowercased() == routine.lowercased() }
-       }
+    func tasks(forRoutine routine: String, withStatus status: String) -> [TaskInstancesModel] {
+        return tasks.filter { $0.routine!.lowercased() == routine.lowercased() && $0.status == status }
+        }
     
     func tasks(forStatus status: String) -> [TaskInstancesModel] {
            print("Filtering tasks for routine: \(status)")
         return tasks.filter { $0.status.lowercased() == status.lowercased() }
        }
+    // MARK: Fetch Tasks
     
+    func fetchTasks(withConfig config: FetchTaskConfig) {
+        var query: Query = db.collection("taskInstances")
+        let calendar = Calendar.current
+        var orderByDueDateApplied = false
+        var isPublicTask: Bool?
+
+
+        print("Debug: Fetching tasks with configuration:")
+                config.criteria.forEach { criterion in
+                    print("Debug: - Criterion: \(criterion)")
+                }
+                config.sortOptions.forEach { sortOption in
+                    print("Debug: - SortOption: \(sortOption)")
+                }
+
+        for criterion in config.criteria {
+            switch criterion {
+            case .createdBy(let userID):
+                query = query.whereField("createdBy", isEqualTo: userID)
+                print("Debug: Applying 'createdBy' filter for userID: \(userID)")
+            case .assignTo(let kidID):
+                // Apply the assignTo filter conditionally based on isPublicTask flag
+                if let isPublic = isPublicTask, !isPublic {
+                    print("Debug: Applying 'assignTo' filter for kidID: \(kidID)")
+                    query = query.whereField("assignTo", isEqualTo: kidID)
+                }
+            case .privateOrPublic(let value):
+                print("Debug: Applying 'privateOrPublic' filter for value: \(value)")
+                query = query.whereField("privateOrPublic", isEqualTo: value)
+                isPublicTask = (value == "public")
+                print("Debug: Applying 'privateOrPublic' filter for value: \(value)")
+            case .dueDate(let dueDate):
+                let startOfDay = calendar.startOfDay(for: dueDate)
+                let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay) ?? dueDate
+                query = query.whereField("due", isGreaterThanOrEqualTo: startOfDay)
+                             .whereField("due", isLessThan: endOfDay)
+                             .order(by: "due")
+                orderByDueDateApplied = true
+                print("Debug: Applying 'dueDate' filter from \(startOfDay) to \(endOfDay), ordering by 'due'")
+            }
+        }
+
+            // Apply sorting, ensuring dueDate's order is respected
+        for sortOption in config.sortOptions {
+               switch sortOption {
+               case .timeCreated(let ascending):
+                   if !orderByDueDateApplied {
+                       query = query.order(by: "timeCreated", descending: !ascending)
+                       print("Debug: Applying 'timeCreated' sort, ascending: \(ascending)")
+                   } else {
+                       print("Debug: Skipping 'timeCreated' sort due to prior 'dueDate' ordering")
+                   }
+               case .dueDate(let ascending):
+                   if !orderByDueDateApplied {
+                       query = query.order(by: "due", descending: !ascending)
+                       print("Debug: Applying secondary 'dueDate' sort, ascending: \(ascending)")
+                   } else {
+                       print("Debug: Skipping duplicate 'dueDate' sort")
+                   }
+               }
+           }
+        
+        // Execute query
+        query.addSnapshotListener { [weak self] querySnapshot, error in
+            if let error = error {
+                print("Debug: Error fetching documents: \(error.localizedDescription)")
+                return
+            }
+            guard let documents = querySnapshot?.documents else {
+                print("Debug: No documents found with the given criteria.")
+                return
+            }
+
+            print("Debug: Fetched \(documents.count) documents.")
+            self?.tasks = documents.compactMap { doc -> TaskInstancesModel? in
+                try? doc.data(as: TaskInstancesModel.self)
+            }
+        }
+    }
+
     
     
     // MARK: Fetch Review Task
-    func fetchReviewTask(forUserID userID: String) {
-        db.collection("taskInstances")
-            .whereField("createdBy", isEqualTo: userID)
-            .whereField("status", isEqualTo: "reviewing")
-            .order(by: "due", descending: false)
-            .order(by: "timeCreated", descending: false)
-            .addSnapshotListener { [weak self] querySnapshot, error in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error fetching documents: \(String(describing: error?.localizedDescription))")
-                    return
-                }
-
-                self?.tasks = documents.compactMap { doc -> TaskInstancesModel? in
-                    try? doc.data(as: TaskInstancesModel.self)
-                }
-            }
-        
-    }
+//    func fetchReviewTask(forUserID userID: String) {
+//        db.collection("taskInstances")
+//            .whereField("createdBy", isEqualTo: userID)
+//            .whereField("status", isEqualTo: "reviewing")
+//            .order(by: "due", descending: false)
+//            .order(by: "timeCreated", descending: false)
+//            .addSnapshotListener { [weak self] querySnapshot, error in
+//                guard let documents = querySnapshot?.documents else {
+//                    print("Error fetching documents: \(String(describing: error?.localizedDescription))")
+//                    return
+//                }
+//
+//                self?.tasks = documents.compactMap { doc -> TaskInstancesModel? in
+//                    try? doc.data(as: TaskInstancesModel.self)
+//                }
+//            }
+//        
+//    }
     
     // MARK: Fetch Tasks
-    func fetchTasks(forUserID userID: String, dateToFetch: Date, selectedKidID: String, privateOrPublic: String){
-        
-        if privateOrPublic == "private"  {
-            fetchPrivateTasks(forUserID: userID, dateToFetch: dateToFetch, selectedKidID: selectedKidID)
-            print("Fetching private tasks...")
-        }
-        if privateOrPublic == "public" {
-            fetchPublicTasks(forUserID: userID, dateToFetch: dateToFetch)
-            print("Fetching public tasks...")
-        }
-
-        
-        
-    }
+//    func fetchTasks(forUserID userID: String, dateToFetch: Date, selectedKidID: String, privateOrPublic: String){
+//        
+//        if privateOrPublic == "private"  {
+//            fetchPrivateTasks(forUserID: userID, dateToFetch: dateToFetch, selectedKidID: selectedKidID)
+//            print("Fetching private tasks...")
+//        }
+//        if privateOrPublic == "public" {
+//            fetchPublicTasks(forUserID: userID, dateToFetch: dateToFetch)
+//            print("Fetching public tasks...")
+//        }
+//
+//        
+//        
+//    }
     
     // MARK: Fetch Private Task
     func fetchPrivateTasks(forUserID userID: String, dateToFetch: Date, selectedKidID: String){
@@ -450,6 +550,7 @@ extension TaskViewModel {
     
     func completeTaskAndUpdateKidCoin(task: TaskInstancesModel, completedBy: String?) {
         // First, mark the challenge as complete.
+        
         if task.privateOrPublic == "private" {
             markPrivateTaskAsComplete(taskID: task.id) { [self] in
                 self.updateKidCoinBalance(kidID: task.assignTo!, coinToAdd: coinAmount(difficulty: task.difficulty))

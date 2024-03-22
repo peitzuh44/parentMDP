@@ -296,13 +296,12 @@
 		AF2B768F2B7588C000B9535F /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				AF8556AB2BADF0D5009B7489 /* Skills */,
 				AF2B76CB2B758E8E00B9535F /* DashboardView.swift */,
 				AF2B76CD2B758E9F00B9535F /* KidProfileView.swift */,
 				AF2B76CF2B758EC500B9535F /* ReviewTaskView.swift */,
 				AF2B76D12B758ED300B9535F /* RedeemRewardView.swift */,
 				AF2B76D32B758EE300B9535F /* SettingsView.swift */,
-				AFDBDC952B8E973800155ED7 /* ManageSkillsView.swift */,
-				AFDBDC972B8E9BF700155ED7 /* SkillTemplateSheet.swift */,
 				AF8556A52BAC2262009B7489 /* PastChallengeView.swift */,
 			);
 			path = Dashboard;
@@ -430,6 +429,15 @@
 				AF5573A72B7E887700A8724A /* DateExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		AF8556AB2BADF0D5009B7489 /* Skills */ = {
+			isa = PBXGroup;
+			children = (
+				AFDBDC952B8E973800155ED7 /* ManageSkillsView.swift */,
+				AFDBDC972B8E9BF700155ED7 /* SkillTemplateSheet.swift */,
+			);
+			path = Skills;
 			sourceTree = "<group>";
 		};
 		AFC432A62BA7BAD50053494F /* CustomTabBar */ = {

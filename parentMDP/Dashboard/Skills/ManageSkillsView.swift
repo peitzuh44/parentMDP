@@ -30,7 +30,7 @@ struct ManageSkillsView: View {
                         HStack{
                             Text(skill.name)
                             Spacer()
-                            Text("Level \(skill.level)")
+                            Text("Level \(skill.exp)")
                         }
                         .foregroundStyle(Color.white)
                         .padding(.vertical, 8)

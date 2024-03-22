@@ -10,41 +10,62 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct TaskView: View {
-    
     // MARK: Properties
-    //examples
+    
+    // Initializing ViewModel
     @ObservedObject var taskVM = TaskViewModel()
     @ObservedObject var kidVM = KidViewModel()
     @State private var selectedTask: TaskInstancesModel?
-    //add new tasks
-    @State private var showAddView = false
-    @State private var showAddPrivateTask = false
-    @State private var showAddPublicTask = false
-    //pickers for fetching data
-    @State private var dateToFetch: Date = Date()
-    @State private var showKidSelector = false
-    @State private var selectedKidID: String = ""
+    
     //customize selector
     @State private var privateOrPublic: String = "private"
     @Namespace private var namespace
     private var animationSlideInFromLeading: Bool {
         privateOrPublic == "private"
     }
+    //pickers for fetching data
+    @State private var dateToFetch: Date = Date()
+    @State private var showKidSelector = false
+    @State private var selectedKidID: String = ""
     //sheets
+    @State private var showAddView = false
+    @State private var showAddPrivateTask = false
+    @State private var showAddPublicTask = false
     @State private var showActionSheet = false
     @State private var showCompleteBySelector = false
     @State private var showEditSheet = false
     @State private var showDeleteAlert = false
     @State private var showCompleteAlert = false
     
+    // Fetching Conditions
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
+    let status: String = "todo"
 
     
+    func fetchTasksForTaskView() {
+        let config = FetchTaskConfig(
+            userID: currentUserID,
+            status: status,
+            selectedKidID: selectedKidID,
+            criteria: [
+                .createdBy(currentUserID),
+                .assignTo(selectedKidID),
+                .privateOrPublic(privateOrPublic),
+                .dueDate(dateToFetch)
+
+            ],
+            sortOptions: [
+                .timeCreated(ascending: false)
+            ]
+        )
+        taskVM.fetchTasks(withConfig: config)
+    }
+    
+    // MARK: Functions
     func name(for selectedKidID: String?) -> String? {
         guard let selectedKidID = selectedKidID else { return nil }
         return kidVM.kids.first { $0.id == selectedKidID }?.name
     }
-    
     
     // MARK: Body
     var body: some View {
@@ -69,7 +90,7 @@ struct TaskView: View {
                 }
                 .padding(.horizontal)
 
-                // MARK: Return View By Case
+                // MARK: Return View By Private/Public
                 if privateOrPublic == "private" {
                     PrivateTaskView(taskVM: taskVM, kidVM: kidVM, selectedTask: $selectedTask, showActionSheet: $showActionSheet)
                 } else if privateOrPublic == "public" {
@@ -155,19 +176,39 @@ struct TaskView: View {
             }
             
             // MARK: Fetching Conditions
+//            .onAppear {
+//                kidVM.fetchKids()
+//            }
+//            .onReceive(kidVM.$kids) { kids in
+//                if selectedKidID == "", let firstKid = kids.first {
+//                    selectedKidID = firstKid.id
+//                    taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)
+//                }
+//            }
+//            .onChange(of: privateOrPublic) {taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)}
+//            .onChange(of: dateToFetch) {taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)}
+//            .onChange(of: selectedKidID) {taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)}
+            // MARK: Fetching Conditions
             .onAppear {
                 kidVM.fetchKids()
             }
             .onReceive(kidVM.$kids) { kids in
-                if selectedKidID == "", let firstKid = kids.first {
+                if selectedKidID.isEmpty, let firstKid = kids.first {
                     selectedKidID = firstKid.id
-                    taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)
+                    fetchTasksForTaskView()
                 }
             }
-            .onChange(of: privateOrPublic) {taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)}
-            .onChange(of: dateToFetch) {taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)}
-            .onChange(of: selectedKidID) {taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)}
-                    
+            .onChange(of: selectedKidID) { _ in
+                fetchTasksForTaskView()
+            }
+            .onChange(of: privateOrPublic) { newValue in
+                fetchTasksForTaskView()
+            }
+
+            .onChange(of: dateToFetch) { _ in
+                fetchTasksForTaskView()
+            }
+            
                 
                     // Add Task Button
                     Button(action:{

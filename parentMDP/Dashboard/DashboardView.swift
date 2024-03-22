@@ -49,7 +49,7 @@ struct DashboardView: View {
                     Section{
                         //review task navigation link
                         NavigationLink {
-                            ReviewTaskView(taskVM: taskVM)
+                            ReviewTaskView(taskVM: taskVM, kidVM: kidVM)
                         } label: {
                             HStack{
                                 Image(systemName: "checkmark.square.fill")

@@ -11,12 +11,48 @@ import FirebaseAuth
 
 struct ReviewTaskView: View {
     @ObservedObject var taskVM: TaskViewModel
-    @State var selectedKidID: String? = ""
+    @ObservedObject var kidVM: KidViewModel
+    //customize selector
+    @State private var privateOrPublic: String = "private"
+    @Namespace private var namespace
+    private var animationSlideInFromLeading: Bool {
+        privateOrPublic == "private"
+    }
+    // Fetching conditions
+    @State private var selectedKidID: String = ""
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
+    let status: String = "reviewing"
+    
+    func fetchTasksForTaskView() {
+        let config = FetchTaskConfig(
+            userID: currentUserID,
+            status: status,
+            selectedKidID: selectedKidID,
+            criteria: [
+                .createdBy(currentUserID),
+                .assignTo(selectedKidID),
+                .privateOrPublic(privateOrPublic),
+
+            ],
+            sortOptions: [
+                .dueDate(ascending: false)
+            ]
+        )
+        taskVM.fetchTasks(withConfig: config)
+    }
     
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
+            VStack(spacing: 20){
+                //header - private/public task picker and date picker
+                CustomSegmentedControl(segments: ["private", "public"], selectedSegment: $privateOrPublic)                
+                // MARK: Return View By Case
+                if privateOrPublic == "private" {
+                    KidSelector(kidVM: kidVM, selectedKidID: $selectedKidID)
+                }
+            }
+            .padding(.horizontal)
             VStack{
                 // Approve all button
                 if taskVM.tasks(forStatus: "reviewing").isEmpty {
@@ -60,8 +96,21 @@ struct ReviewTaskView: View {
                 }
             }
             .onAppear {
-                taskVM.fetchReviewTask(forUserID: currentUserID)
+                kidVM.fetchKids()
             }
+            .onReceive(kidVM.$kids) { kids in
+                if selectedKidID.isEmpty, let firstKid = kids.first {
+                    selectedKidID = firstKid.id
+                    fetchTasksForTaskView()
+                }
+            }
+            .onChange(of: selectedKidID) { _ in
+                fetchTasksForTaskView()
+            }
+            .onChange(of: privateOrPublic) { _ in
+                fetchTasksForTaskView()
+            }
+
         }
         
     }

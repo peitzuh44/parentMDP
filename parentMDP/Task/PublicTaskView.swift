@@ -21,7 +21,53 @@ struct PublicTaskView: View {
         VStack{
             List{
                 Section(header: Text("For every player").foregroundColor(.white)) {
-                    ForEach(taskVM.tasks) { task in
+                    ForEach(taskVM.tasks(forStatus: "todo")) { task in
+                                HStack(alignment: .center) {
+                                    Text(task.name)
+                                        .foregroundColor(.white)
+                                    Spacer()
+                                    if task.status == "todo"{
+                                        Button(action: {
+                                            selectedTask = task
+                                            if selectedTask?.status == "todo" {
+                                                showCompleteByPicker = true
+                                            }
+                                        }) {
+                                            Image(systemName: "checkmark")
+                                                .font(.title3)
+                                                .bold()
+                                                .foregroundStyle(.white)
+                                        }
+                                        .foregroundStyle(.green)
+                                        .frame(width: 30, height: 30)
+                                        .buttonStyle(ThreeD(backgroundColor: .green, shadowColor: .black))
+                                    }
+                                    else{
+                                        Image(systemName: "checkmark.square.fill")
+                                            .bold()
+                                            .font(.title3)
+                                            .foregroundStyle(.white)
+                                            .frame(width: 30, height: 30)
+                                    }
+                                }
+                                .padding(.vertical, 8)
+                                .onTapGesture {
+                                    selectedTask = task
+                                    if selectedTask?.status == "todo" {
+                                        showActionSheet = true
+                                    }
+                                }
+
+                    }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.customNavyBlue)
+                            .padding(.vertical, 2)
+                    )
+                }
+                Section(header: Text("Completed").foregroundColor(.white)) {
+                    ForEach(taskVM.tasks(forStatus: "complete")) { task in
                                 HStack(alignment: .center) {
                                     Text(task.name)
                                         .foregroundColor(.white)

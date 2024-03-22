@@ -11,19 +11,21 @@ import FirebaseFirestore
 
 
 struct ChallengeView: View {
-    
     // MARK: Properties
+    
+    // Initializing View Model
     @ObservedObject var challengeVM = ChallengeViewModel()
     @ObservedObject var kidVM = KidViewModel()
     @State private var selectedChallenge: ChallengeModel?
-    @Environment(\.presentationMode) var presentationMode
 
-    @State private var showAddChallengeSheet = false
     //pickers for fetching data
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
     let status: String = "ongoing"
     @State private var showKidSelector = false
     @State private var selectedKidID: String = ""
+    
+
+    // Customize Picker
     @State private var assignedOrSelfSelected: String = "assigned"
     @Namespace private var namespace
     private var animationSlideInFromLeading: Bool {
@@ -31,19 +33,22 @@ struct ChallengeView: View {
     }
     
     //sheets
+    @Environment(\.presentationMode) var presentationMode
     @State private var showActionSheet = false
     @State private var showEditSheet = false
     @State private var showDeleteAlert = false
     @State private var showCompleteAlert = false
     @State private var showGiveUpAlert = false
     @State private var showReviewSheet = false
+    @State private var showAddChallengeSheet = false
 
-    
+    // MARK: Functions
     func name(for selectedKidID: String?) -> String? {
         guard let selectedKidID = selectedKidID else { return nil }
         return kidVM.kids.first { $0.id == selectedKidID }?.name
     }
     
+    // MARK: Fetching Configuration
     func fetchChallengesForChallengeView() {
         let config = FetchChallengesConfig(
             userID: currentUserID,
@@ -140,10 +145,9 @@ struct ChallengeView: View {
                 }
             }
             .onChange(of: selectedKidID) { _ in                     fetchChallengesForChallengeView()
- }
+            }
             .onChange(of: assignedOrSelfSelected) { _ in                     fetchChallengesForChallengeView()
- }
-            
+            }
             // MARK: Add Challenge Button
             Button(action:{
                 showAddChallengeSheet.toggle()
