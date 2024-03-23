@@ -36,18 +36,17 @@ class TaskViewModel: ObservableObject {
         @Published var totalReviewTasksCount: Int = 0
         @Published var privateReviewTasksCount: Int = 0
         @Published var publicReviewTasksCount: Int = 0
-        @Published var reviewTasksCountPerKid: [String: Int] = [:] // Kid ID to review task count mapping
+        @Published var reviewTasksCountPerKid: [String: Int] = [:]
 
+        // MARK: Task Fetching Count For Status
         // Fetch and update counts for review tasks
         func updateReviewTasksCounts(userID: String, kids: [KidModel]) {
             fetchReviewTasksCount(userID: userID, privateOrPublic: nil, kidID: nil) { count in
                 self.totalReviewTasksCount = count
             }
-
             fetchReviewTasksCount(userID: userID, privateOrPublic: "private", kidID: nil) { count in
                 self.privateReviewTasksCount = count
             }
-
             fetchReviewTasksCount(userID: userID, privateOrPublic: "public", kidID: nil) { count in
                 self.publicReviewTasksCount = count
             }
@@ -700,10 +699,6 @@ extension TaskViewModel {
                 // You could perform additional tasks here, like notifying the user of the success
             }
         }
-        
-    
-        
-        
     }
     
 }

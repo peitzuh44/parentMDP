@@ -36,21 +36,22 @@ struct InviteKidView: View {
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
-            VStack(alignment: .leading){
-                Text("Invite your kids")
-                    .foregroundStyle(Color.white)
-                    .font(.title2)
-                    .bold()
-                    .padding()
+            VStack{
+                VStack(alignment: .leading){
+                    Text("Invite your kids")
+                        .foregroundStyle(Color.white)
+                        .font(.title2)
+                        .bold()
+                        .padding()
+                }
                 Spacer()
                 
-                // MARK: REQUIRED - parent code
                 HStack{
                     Text(parentCode) // fetch the parent code
                         .foregroundStyle(Color.white)
                         .padding(.vertical)
                     Button(action:{
-                        
+                        // copy parent code
                     }){
                         Image(systemName: "doc.on.doc")
                             .foregroundStyle(Color.white)

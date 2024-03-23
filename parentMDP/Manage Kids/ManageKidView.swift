@@ -11,14 +11,11 @@ struct ManageKidView: View {
     
     // MARK: Properties
     @ObservedObject var kidVM = KidViewModel() 
-//    @ObservedObject var kidVM: KidViewModel
     @State private var selectedKid: KidModel?
     @State var showAddKidSheet = false
     @State private var showEditSheet = false
     @State private var showDeleteAlert = false
 
-
-    
     // MARK: Body
     var body: some View {
         ZStack{
@@ -35,7 +32,7 @@ struct ManageKidView: View {
                             Text(kid.name)
                                 .foregroundStyle(Color.white)
                             Spacer()
-                            Text("\(kidVM.calculateAge(birthday: kid.birthdate)) years old")
+                            Text("\(kidVM.calculateAge(birthdate: kid.birthdate)) years old")
                                 .foregroundStyle(Color.white)
                         }
                         .padding(.vertical, 8)
@@ -91,8 +88,8 @@ struct ManageKidView: View {
                     title: Text("Delete Kid"),
                     message: Text("Are you sure you want to delete this kid?"),
                     primaryButton: .destructive(Text("Delete"), action: {
-                        if let kid = selectedKid {
-                            kidVM.deleteKid(kidID: kid.id)
+                        if let kidID = selectedKid?.id {
+                            kidVM.deleteKid(kidID: kidID)
                         }
                     }),
                     secondaryButton: .cancel()

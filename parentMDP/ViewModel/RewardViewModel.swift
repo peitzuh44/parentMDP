@@ -14,8 +14,32 @@ class RewardViewModel: ObservableObject {
     @Published var rewards: [RewardModel] = []
     @Published var purchasedRewards: [RewardPurchaseModel] = []
     private let db = Firestore.firestore()
+    @Published var rewardNeedRedeemCount: Int = 0
     
+    // MARK: Fetch reward count need redeem
+    func updateRewardCount(userID: String) {
+        fetchNeedRedeemRewardCount(userID: userID) { count in
+            self.rewardNeedRedeemCount = count
+        }
+
+    }
     
+    private func fetchNeedRedeemRewardCount(userID: String, completion: @escaping (Int) -> Void) {
+        let query: Query = db.collection("purchaseRewards")
+            .whereField("createdBy", isEqualTo: userID)
+            .whereField("status", isEqualTo: "not yet redeem")
+        
+
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching review tasks count: \(error.localizedDescription)")
+                completion(0)
+            } else {
+                let count = querySnapshot?.documents.count ?? 0
+                completion(count)
+            }
+        }
+    }
     //MARK: Fetch Rewards
     func fetchRewards(){
         guard let userID = Auth.auth().currentUser?.uid else {

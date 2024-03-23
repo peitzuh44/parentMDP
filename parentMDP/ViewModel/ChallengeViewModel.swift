@@ -93,7 +93,7 @@ class ChallengeViewModel: ObservableObject {
     }
     
     // MARK: Create Challenges
-    func createChallenge(name: String, description: String, createdBy: String, assignTo: String, difficulty: String, due: Date, assignedOrSelfSelected: String, reward: Int, skills: [String], dateCompleted: Date?){
+    func createChallenge(name: String, description: String, createdBy: String, assignTo: String, difficulty: String, due: Date, assignedOrSelfSelected: String, reward: Int, skills: [String]?, dateCompleted: Date?){
         let db = Firestore.firestore()
         let newChallengeRef = db.collection("challenges").document()
         let challengeID = newChallengeRef.documentID
@@ -157,8 +157,67 @@ extension ChallengeViewModel {
                 } else if challenge.assignedOrSelfSelected == "self-selected" {
                     self.updateKidGoldBalance(kidID: challenge.assignTo, goldToAdd: amountToAdd)
                 }
+                let expToAdd = self.expForChallengeDifficulty(challenge.difficulty)
+
+                // Update the experience for each realted skill
+                if !challenge.relatedSkills!.isEmpty {
+                    for skillID in challenge.relatedSkills! {
+                        self.updateSkillExp(kidID: challenge.assignTo, skillID: skillID, expToAdd: expToAdd)
+                    }
+                }
+
             }
         }
+    // Helper function to determine exp based on difficulty
+    private func expForChallengeDifficulty(_ difficulty: String) -> Int {
+        switch difficulty {
+        case "Easy":
+            return 50
+        case "Medium":
+            return 100
+        case "Hard":
+            return 200
+        default:
+            return 0 // No exp for undefined difficulty
+        }
+    }
+
+    // MARK: Update Skill Experience
+    private func updateSkillExp(kidID: String, skillID: String, expToAdd: Int) {
+        // Adjusted reference to point to the skill within the kids collection
+        let skillRef = db.collection("kids").document(kidID).collection("skills").document(skillID)
+
+        db.runTransaction({ (transaction, errorPointer) -> Any? in
+            let skillDocument: DocumentSnapshot
+            do {
+                try skillDocument = transaction.getDocument(skillRef)
+            } catch let fetchError as NSError {
+                errorPointer?.pointee = fetchError
+                return nil
+            }
+
+            // Ensure the document contains the 'exp' field
+            guard let oldExp = skillDocument.data()?["exp"] as? Int else {
+                let error = NSError(domain: "AppErrorDomain", code: -1, userInfo: [
+                    NSLocalizedDescriptionKey: "Unable to retrieve exp from snapshot \(skillDocument)"
+                ])
+                errorPointer?.pointee = error
+                return nil
+            }
+
+            // Update the 'exp' field with the new value
+            transaction.updateData(["exp": oldExp + expToAdd], forDocument: skillRef)
+            return nil
+        }) { (object, error) in
+            if let error = error {
+                print("Transaction failed: \(error)")
+            } else {
+                print("Transaction successfully committed!")
+            }
+        }
+    }
+
+
 
         // No changes needed here, but included for context
     private func markChallengeAsComplete(challengeID: String, comment: String?, dateCompleted: Date, completion: @escaping () -> Void) {

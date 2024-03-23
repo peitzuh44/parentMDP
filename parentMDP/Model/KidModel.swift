@@ -13,8 +13,8 @@ struct KidModel: Identifiable, Codable, Hashable{
     var id: String
     let timeCreated: Date
     var name: String
-    let gender: String
-    let birthdate: Date
+    var gender: String
+    var birthdate: Date
     var parentID: String
     let myParent: String
     // avatar attributes
@@ -35,6 +35,7 @@ struct KidModel: Identifiable, Codable, Hashable{
 }
 
 
+// MARK: Skills Model
 struct SkillModel: Identifiable, Codable, Hashable {
     var id: String
     var name: String
@@ -42,10 +43,9 @@ struct SkillModel: Identifiable, Codable, Hashable {
     let createdBy: String
     let kid: String
     var exp: Int
-    var relatedChallenges: [String] // IDs of related challenges
     var completedChallenges: [String] // NEW: IDs of completed challenges related to this skill
 
     enum CodingKeys: String, CodingKey {
-        case id, name, category, createdBy, kid, exp, relatedChallenges, completedChallenges
+        case id, name, category, createdBy, kid, exp, completedChallenges
     }
 }

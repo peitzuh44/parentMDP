@@ -8,28 +8,39 @@
 import SwiftUI
 
 struct SkillTemplateSheet: View {
-    
+    @Environment(\.presentationMode) var presentationMode
+
     // MARK: Properties
     var kidID: String
-    @ObservedObject var skillVM = SkillViewModel()
+    @ObservedObject var kidVM = KidViewModel()
     @State private var selectedSkillTemplate: SkillTemplateModel?
     @State private var selectedCategory: SkillCategoryOption = .sports
     @State private var searchTerm: String = ""
+    
+    @Binding var showAddSkillSheet: Bool
 
     // MARK: Body
     var body: some View {
         ZStack {
             Color.customDarkBlue.ignoresSafeArea(.all)
-            if #available(iOS 17.0, *) {
                 VStack {
                     // search
                     CustomTextfield(text: $searchTerm, placeholder: "search for skill", icon: "", background: Color.customNavyBlue, color: Color.white)
                     
                     // MARK: CHANGE TO "HScrollPicker"
-                    SkillCategoryPicker(selectedCategory: $selectedCategory)
+
+                    HScrollPicker(selection: $selectedCategory) { category in
+                        HStack(spacing: 10) {
+                            Text(category.emoji()) // Use the closure to dynamically provide the content
+                            Text(category.description)
+                        }
+                        .padding()
+                        .background(selectedCategory == category ? Color.customPurple : Color.customNavyBlue)
+                        .cornerRadius(20)
+                    }
                     VStack {
                         List{
-                            ForEach(skillVM.skillTemplates) {
+                            ForEach(kidVM.skillTemplates) {
                                 template in
                                 HStack {
                                     Text(template.name).foregroundColor(.white)
@@ -42,7 +53,7 @@ struct SkillTemplateSheet: View {
                                 .padding(.vertical, 8)
                                 .onTapGesture {
                                     selectedSkillTemplate = template
-                                    skillVM.addSkillFromTemplate(selectedKidID: kidID, template: template)
+                                    kidVM.addSkillFromTemplate(selectedKidID: kidID, template: template)
                                 }
                                 
                             }
@@ -56,14 +67,27 @@ struct SkillTemplateSheet: View {
                         .scrollContentBackground(.hidden)
                         .scrollIndicators(.hidden)
                     }
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            showAddSkillSheet = true
+                        }
+                    } label: {
+                        Text("add new")
+                            .padding()
+                            .foregroundStyle(.white)
+                            .background(Color.customPurple)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                    }
+
+                        
+    
                 }
                 // MARK: Fetching
                 .onChange(of: selectedCategory) {
-                    skillVM.fetchSkillTemplates(category: selectedCategory.rawValue)
+                    kidVM.fetchSkillTemplates(category: selectedCategory.description)
+                
                 }
-            } else {
-                // Fallback on earlier versions
-            }
                 
                 
                 
@@ -78,63 +102,79 @@ struct SkillTemplateSheet: View {
 
 
 
-enum SkillCategoryOption: String, CaseIterable {
-    case sports = "sport"
-    case language = "language"
-    case music = "music"
-    case dance = "dance"
-    case stem = "stem"
-    case mathLogic = "math & logic"
-    case visualArt = "visual art"
-    
-    static func fromString(_ skill: String) -> SkillCategoryOption? {
-        return SkillCategoryOption(rawValue: skill.capitalized)
-    }
-}
 
-struct SkillCategoryPicker: View {
-    @Binding var selectedCategory: SkillCategoryOption
+enum SkillCategoryOption: CaseIterable, Hashable, CustomStringConvertible {
+    case sports, mathLogic, language, dance, music, stem, visualArt
 
-    var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
-                ForEach(SkillCategoryOption.allCases, id: \.self) {
-                    category in
-                    Button(action: {
-                        selectedCategory = category
-                    }) {
-                        HStack(spacing: 10) {
-                            Text(emoji(for: category))
-                            Text(category.rawValue)
-                                .foregroundColor(.white)
-                        }
-                        .padding()
-                        .background(selectedCategory == category ? Color.customPurple : Color.black.opacity(0.6))
-                        .cornerRadius(10)
-                    }
-                }
-            }
-            .padding(.horizontal, 10)
+    var description: String {
+        switch self {
+        case .sports: return "Sports"
+        case .mathLogic: return "Math & Logic"
+        case .language: return "Language"
+        case .dance: return "Dance"
+        case .music: return "Music"
+        case .stem: return "STEM"
+        case .visualArt: return "Visual Art"
         }
     }
-    private func emoji(for category: SkillCategoryOption) -> String {
-        switch category {
 
-        case .sports:
-            return "💪🏻"
-        case .mathLogic:
-            return "🧮"
-        case .language:
-            return "📝"
-        case .dance:
-            return "💃🏻"
-        case .music:
-            return "🎹"
-        case .stem:
-            return "🧪"
-        case .visualArt:
-            return "🎨"
+    func emoji() -> String {
+        switch self {
+        case .sports: return "💪🏻"
+        case .mathLogic: return "🧮"
+        case .language: return "📝"
+        case .dance: return "💃🏻"
+        case .music: return "🎹"
+        case .stem: return "🧪"
+        case .visualArt: return "🎨"
         }
     }
 }
 
+//struct SkillCategorySelector: View {
+//    @Binding var selectedCategory: SkillCategoryOption
+//
+//    var body: some View {
+//        ScrollView(.horizontal, showsIndicators: false) {
+//            HStack(spacing: 8) {
+//                ForEach(SkillCategoryOption.allCases, id: \.self) {
+//                    category in
+//                    Button(action: {
+//                        selectedCategory = category
+//                    }) {
+//                        HStack(spacing: 10) {
+//                            Text(emoji(for: category))
+//                            Text(category.rawValue)
+//                                .foregroundColor(.white)
+//                        }
+//                        .padding()
+//                        .background(selectedCategory == category ? Color.customPurple : Color.black.opacity(0.6))
+//                        .cornerRadius(10)
+//                    }
+//                }
+//            }
+//            .padding(.horizontal, 10)
+//        }
+//    }
+//    private func emoji(for category: SkillCategoryOption) -> String {
+//        switch category {
+//
+//        case .sports:
+//            return "💪🏻"
+//        case .mathLogic:
+//            return "🧮"
+//        case .language:
+//            return "📝"
+//        case .dance:
+//            return "💃🏻"
+//        case .music:
+//            return "🎹"
+//        case .stem:
+//            return "🧪"
+//        case .visualArt:
+//            return "🎨"
+//        }
+//    }
+//
+//}
+//

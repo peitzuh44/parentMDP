@@ -73,6 +73,13 @@
 		AF8556A62BAC2262009B7489 /* PastChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556A52BAC2262009B7489 /* PastChallengeView.swift */; };
 		AF8556A82BACA050009B7489 /* PastChallengeDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556A72BACA050009B7489 /* PastChallengeDetailSheet.swift */; };
 		AF8556AA2BACA111009B7489 /* SheetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556A92BACA111009B7489 /* SheetHeaderView.swift */; };
+		AF8556AD2BAF55E0009B7489 /* SkillPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556AC2BAF55E0009B7489 /* SkillPicker.swift */; };
+		AF8556AF2BAF5658009B7489 /* GenericPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556AE2BAF5658009B7489 /* GenericPickerButton.swift */; };
+		AF8556B12BAF56A9009B7489 /* GenericMultiSelectPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556B02BAF56A9009B7489 /* GenericMultiSelectPicker.swift */; };
+		AF8556B32BAF609C009B7489 /* AddSkillSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556B22BAF609C009B7489 /* AddSkillSheet.swift */; };
+		AF8556B52BAF647B009B7489 /* SkillCategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556B42BAF647B009B7489 /* SkillCategoryPicker.swift */; };
+		AF8556B72BAF7329009B7489 /* HScrollPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556B62BAF7329009B7489 /* HScrollPicker.swift */; };
+		AF8556B92BAF7373009B7489 /* CustomSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556B82BAF7373009B7489 /* CustomSegmentedPicker.swift */; };
 		AFC432A82BA7BAF60053494F /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A72BA7BAF60053494F /* TabBarItem.swift */; };
 		AFC432AA2BA7BB2A0053494F /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */; };
 		AFC432AC2BA7BB4B0053494F /* CustomTabBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */; };
@@ -163,6 +170,13 @@
 		AF8556A52BAC2262009B7489 /* PastChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastChallengeView.swift; sourceTree = "<group>"; };
 		AF8556A72BACA050009B7489 /* PastChallengeDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastChallengeDetailSheet.swift; sourceTree = "<group>"; };
 		AF8556A92BACA111009B7489 /* SheetHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetHeaderView.swift; sourceTree = "<group>"; };
+		AF8556AC2BAF55E0009B7489 /* SkillPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillPicker.swift; sourceTree = "<group>"; };
+		AF8556AE2BAF5658009B7489 /* GenericPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPickerButton.swift; sourceTree = "<group>"; };
+		AF8556B02BAF56A9009B7489 /* GenericMultiSelectPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericMultiSelectPicker.swift; sourceTree = "<group>"; };
+		AF8556B22BAF609C009B7489 /* AddSkillSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSkillSheet.swift; sourceTree = "<group>"; };
+		AF8556B42BAF647B009B7489 /* SkillCategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillCategoryPicker.swift; sourceTree = "<group>"; };
+		AF8556B62BAF7329009B7489 /* HScrollPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HScrollPicker.swift; sourceTree = "<group>"; };
+		AF8556B82BAF7373009B7489 /* CustomSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedPicker.swift; sourceTree = "<group>"; };
 		AFC432A72BA7BAF60053494F /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarContainerView.swift; sourceTree = "<group>"; };
@@ -338,6 +352,8 @@
 				AF5573822B7D39B000A8724A /* KidSelector.swift */,
 				7C3B11C72B9AE4760058368E /* GenderPicker.swift */,
 				AFC432AF2BA7F6810053494F /* EmojiPicker.swift */,
+				AF8556AC2BAF55E0009B7489 /* SkillPicker.swift */,
+				AF8556B42BAF647B009B7489 /* SkillCategoryPicker.swift */,
 			);
 			path = Picker;
 			sourceTree = "<group>";
@@ -404,6 +420,10 @@
 				AF5573842B7D3A8000A8724A /* ProgressBar.swift */,
 				AF8556A32BAC031D009B7489 /* DynamicHeightTextEditor.swift */,
 				AF8556A92BACA111009B7489 /* SheetHeaderView.swift */,
+				AF8556AE2BAF5658009B7489 /* GenericPickerButton.swift */,
+				AF8556B02BAF56A9009B7489 /* GenericMultiSelectPicker.swift */,
+				AF8556B62BAF7329009B7489 /* HScrollPicker.swift */,
+				AF8556B82BAF7373009B7489 /* CustomSegmentedPicker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -411,12 +431,12 @@
 		AF2B76B02B758D3300B9535F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AF2B76B32B758D5A00B9535F /* KidModel.swift */,
 				AF2B76B52B758D6A00B9535F /* UserModel.swift */,
-				AF2B76B72B758D7900B9535F /* InventoryModel.swift */,
-				AF2B76B92B758D8800B9535F /* ChallengeModel.swift */,
-				AF2B76BB2B758D9B00B9535F /* RewardModel.swift */,
+				AF2B76B32B758D5A00B9535F /* KidModel.swift */,
 				AFDBDC742B89741400155ED7 /* TaskModel.swift */,
+				AF2B76B92B758D8800B9535F /* ChallengeModel.swift */,
+				AF2B76B72B758D7900B9535F /* InventoryModel.swift */,
+				AF2B76BB2B758D9B00B9535F /* RewardModel.swift */,
 				AFC432B12BA7FA860053494F /* TemplateModel.swift */,
 				AFC432B32BA7FC920053494F /* JournalModel.swift */,
 			);
@@ -436,6 +456,7 @@
 			children = (
 				AFDBDC952B8E973800155ED7 /* ManageSkillsView.swift */,
 				AFDBDC972B8E9BF700155ED7 /* SkillTemplateSheet.swift */,
+				AF8556B22BAF609C009B7489 /* AddSkillSheet.swift */,
 			);
 			path = Skills;
 			sourceTree = "<group>";
@@ -535,6 +556,7 @@
 				AF75D72E2B7C3E7C009CBF30 /* RewardView.swift in Sources */,
 				AF2B76C22B758DEC00B9535F /* AddTaskSheet.swift in Sources */,
 				AF2B76A12B758B4700B9535F /* CustomSegmentedControl.swift in Sources */,
+				AF8556B32BAF609C009B7489 /* AddSkillSheet.swift in Sources */,
 				AF2B76DD2B758F4A00B9535F /* AddKidSheet.swift in Sources */,
 				AF2B769A2B758A3100B9535F /* Button.swift in Sources */,
 				AF8556A22BABF704009B7489 /* ReviewChallengeView.swift in Sources */,
@@ -546,6 +568,7 @@
 				AFDBDC982B8E9BF700155ED7 /* SkillTemplateSheet.swift in Sources */,
 				AF2B76A32B758B8000B9535F /* RoutinePicker.swift in Sources */,
 				AF2B76D62B758F1F00B9535F /* SignupView.swift in Sources */,
+				AF8556B52BAF647B009B7489 /* SkillCategoryPicker.swift in Sources */,
 				AF75D72A2B7C3D62009CBF30 /* AuthViewModel.swift in Sources */,
 				AF5573B02B7EE47D00A8724A /* EditRewardSheet.swift in Sources */,
 				AFC432AE2BA7BB6B0053494F /* TabBarItemsPreferenceKey.swift in Sources */,
@@ -569,6 +592,7 @@
 				AF2B76A72B758BB300B9535F /* WeekdayPicker.swift in Sources */,
 				AF2B767E2B7585F400B9535F /* ContentView.swift in Sources */,
 				AF2B76CE2B758E9F00B9535F /* KidProfileView.swift in Sources */,
+				AF8556B12BAF56A9009B7489 /* GenericMultiSelectPicker.swift in Sources */,
 				AFC432B42BA7FC920053494F /* JournalModel.swift in Sources */,
 				AF2B76B62B758D6A00B9535F /* UserModel.swift in Sources */,
 				AFDBDC7D2B8A7D6C00155ED7 /* EditTaskSheet.swift in Sources */,
@@ -576,6 +600,7 @@
 				AF2B76CC2B758E8E00B9535F /* DashboardView.swift in Sources */,
 				AFDBDC8C2B8C067000155ED7 /* RewardViewModel.swift in Sources */,
 				7C3B11C22B9A40E90058368E /* EmailComponent.swift in Sources */,
+				AF8556B92BAF7373009B7489 /* CustomSegmentedPicker.swift in Sources */,
 				AF8556A82BACA050009B7489 /* PastChallengeDetailSheet.swift in Sources */,
 				AF2B769E2B758B0400B9535F /* TaskView.swift in Sources */,
 				AF8556AA2BACA111009B7489 /* SheetHeaderView.swift in Sources */,
@@ -597,14 +622,17 @@
 				AFC432A82BA7BAF60053494F /* TabBarItem.swift in Sources */,
 				AF2B76A52B758B9700B9535F /* RepeatPicker.swift in Sources */,
 				AF85569E2BAABE80009B7489 /* KeyboardResponder.swift in Sources */,
+				AF8556AF2BAF5658009B7489 /* GenericPickerButton.swift in Sources */,
 				AFDBDC902B8C651900155ED7 /* AddChallengeSheet.swift in Sources */,
 				AFC6EC902B819035000CFB9B /* PurchasedByPicker.swift in Sources */,
 				AFDBDC772B89772300155ED7 /* TaskViewModel.swift in Sources */,
 				AFDBDC8E2B8C5FA800155ED7 /* ChallengeViewModel.swift in Sources */,
+				AF8556B72BAF7329009B7489 /* HScrollPicker.swift in Sources */,
 				AF5573AA2B7EB10500A8724A /* AddRewardSheet.swift in Sources */,
 				AF2B76AF2B758C6300B9535F /* DifficultyPicker.swift in Sources */,
 				AFC432B02BA7F6810053494F /* EmojiPicker.swift in Sources */,
 				AFDBDC962B8E973800155ED7 /* ManageSkillsView.swift in Sources */,
+				AF8556AD2BAF55E0009B7489 /* SkillPicker.swift in Sources */,
 				AF2B76D02B758EC500B9535F /* ReviewTaskView.swift in Sources */,
 				AFDBDC752B89741500155ED7 /* TaskModel.swift in Sources */,
 				AF5573B62B7EE5EB00A8724A /* EditChallengeSheet.swift in Sources */,

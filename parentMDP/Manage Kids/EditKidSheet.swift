@@ -45,7 +45,7 @@ struct EditKidSheet: View {
                         Image(systemName: "xmark")
                     }
                     Spacer()
-                    Text("Add a new kid")
+                    Text("Update Kid Profile")
                     Spacer()
                     
                 }
@@ -84,13 +84,14 @@ struct EditKidSheet: View {
                 // Add Kid Button START
                 Button(action:{
                     // If the user has selected the gender and given a name, proceed!
-                        if !name.isEmpty {
-                            kidVM.updateKid(updatedKid: selectedKid)
-        
-                            presentationMode.wrappedValue.dismiss()
-                        }
+                        presentationMode.wrappedValue.dismiss()
+                        var updatedKid = selectedKid
+                        updatedKid.name = name
+                        updatedKid.gender = selectedGender.rawValue
+                        updatedKid.birthdate = selectedBirthdate
+                        kidVM.updateKid(updatedKid: updatedKid)
                 }){
-                    Text("Add")
+                    Text("Update Kid Profile")
                         .foregroundStyle(Color.white)
                 }
                 .frame(maxWidth: .infinity)

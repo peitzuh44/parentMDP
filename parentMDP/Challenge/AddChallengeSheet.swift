@@ -14,7 +14,7 @@ struct AddChallengeSheet: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var challengeVM = ChallengeViewModel()
     @ObservedObject var kidVM = KidViewModel()
-//    @ObservedObject var skillVM = SkillViewModel()
+    @ObservedObject var skillVM = SkillViewModel()
 
     
     //display pickers
@@ -34,10 +34,9 @@ struct AddChallengeSheet: View {
     @State private var selectedDifficulty: DifficultyOptions = .easy
     @State private var selectedType: ChallengeTypeOptions = .assigned
     @State private var selectedreward: Int = 0
-    @State private var selectedSkill: String? = nil
+    @State private var selectedSkills: [String]? = []
 
-
-    // MARK: Functions
+    // MARK: Functions - return kid name from ID
     func name(for selectedKidID: String?) -> String? {
         guard let selectedKidID = selectedKidID else { return nil }
         return kidVM.kids.first { $0.id == selectedKidID }?.name
@@ -64,54 +63,65 @@ struct AddChallengeSheet: View {
                 .foregroundColor(.white)
                 .padding()
                 .background(Color.customNavyBlue)
-                
-                VStack(spacing: 12) {
-                    // task name
-                    CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
+                ScrollView{
                     
-                    // difficulty picker
-                    GenericPickerButton(pickerText: "Difficulty", selectionText: selectedDifficulty.rawValue, isPresenting: $showDifficultyPicker) {
-                        DifficultyPicker(selectedDifficulty: $selectedDifficulty)
-                            .presentationDetents([.height(280)])
-                            .presentationDragIndicator(.hidden)
-                    }
-                    GenericPickerButton(pickerText: "Reward", selectionText: "\(selectedreward)", isPresenting: $showRewardPicker) {
-                        PricePicker(selectedPrice: $selectedreward)
+                    VStack(spacing: 12) {
+                        // task name
+                        CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
+                        
+                        // difficulty picker
+                        GenericPickerButton(pickerText: "Difficulty", selectionText: selectedDifficulty.rawValue, isPresenting: $showDifficultyPicker) {
+                            DifficultyPicker(selectedDifficulty: $selectedDifficulty)
+                                .presentationDetents([.height(280)])
+                                .presentationDragIndicator(.hidden)
+                        }
+                        GenericPickerButton(pickerText: "Reward", selectionText: "\(selectedreward)", isPresenting: $showRewardPicker) {
+                            PricePicker(selectedPrice: $selectedreward)
+                                .presentationDetents([.height(380)])
+                                .presentationDragIndicator(.hidden)
+                        }
+                        // assign to picker
+                        GenericPickerButton(pickerText: "Assign To", selectionText: self.name(for: selectedKidID) ?? "Select kid", isPresenting: $showKidPicker) {
+                            AssignToPicker(viewModel: kidVM, selectedKidID: $selectedKidID)
+                                .presentationDetents([.height(250)])
+                                .presentationDragIndicator(.hidden)
+                        }
+                        
+                        GenericPickerButton(pickerText: "Skills", selectionText: selectedKidID?.isEmpty ?? true ? "Select a kid first" : "", isPresenting: $showSkillPicker) {
+                            SkillPicker(kidVM: kidVM, selectedKidID: selectedKidID ?? "", selectedSkills: $selectedSkills)
+                                .presentationDetents([.medium, .large])
+                                .presentationDragIndicator(.hidden)
+                        }
+                        .disabled(selectedKidID?.isEmpty ?? true)
+   
+                        // date picker
+                        GenericPickerButton(pickerText: "Date", selectionText: selectedDate.formattedDate(), isPresenting: $showDatePicker) {
+                            CalendarDatePicker(onDateSelected: { selectedDate in
+                                self.selectedDate = selectedDate
+                            })
                             .presentationDetents([.height(380)])
                             .presentationDragIndicator(.hidden)
-                    }
-                    // assign to picker
-                    GenericPickerButton(pickerText: "Assign To", selectionText: self.name(for: selectedKidID) ?? "Select kid", isPresenting: $showKidPicker) {
-                        AssignToPicker(viewModel: kidVM, selectedKidID: $selectedKidID)
-                            .presentationDetents([.height(250)])
-                            .presentationDragIndicator(.hidden)
-                    }
+                        }
+                        ChallengeTypePicker(selectedType: $selectedType)
+                        
 
-                    // date picker
-                    GenericPickerButton(pickerText: "Date", selectionText: selectedDate.formattedDate(), isPresenting: $showDatePicker) {
-                        CalendarDatePicker(onDateSelected: { selectedDate in
-                            self.selectedDate = selectedDate
-                        })
-                        .presentationDetents([.height(380)])
-                        .presentationDragIndicator(.hidden)
-                    }
-                    ChallengeTypePicker(selectedType: $selectedType)
-                    
+                        Spacer()
+                        Button(action:{
+                            presentationMode.wrappedValue.dismiss()
+                            challengeVM.createChallenge(name: name, description: description, createdBy: currentUserID, assignTo: selectedKidID!, difficulty: selectedDifficulty.rawValue, due: selectedDate, assignedOrSelfSelected: selectedType.rawValue, reward: selectedreward, skills: selectedSkills, dateCompleted: Date())
 
-                    Spacer()
-                    Button(action:{
-                        presentationMode.wrappedValue.dismiss()
-                        challengeVM.createChallenge(name: name, description: description, createdBy: currentUserID, assignTo: selectedKidID!, difficulty: selectedDifficulty.rawValue, due: selectedDate, assignedOrSelfSelected: selectedType.rawValue, reward: selectedreward, skills: ["one", "two"], dateCompleted: Date())
-
-                      
-                    }){
-                        Text("Create challenge")
+                          
+                        }){
+                            Text("Create challenge")
+                        }
+                        .frame(width: 330, height: 50)
+                        .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))
+                        .foregroundColor(.white)
+                        
                     }
-                    .frame(width: 330, height: 50)
-                    .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))
-                    .foregroundColor(.white)
-                    
                 }
+                .scrollIndicators(.hidden)
+                .scrollContentBackground(.hidden)
                 
             }
         }
@@ -129,6 +139,7 @@ enum ChallengeTypeOptions: String, CaseIterable {
         return ChallengeTypeOptions(rawValue: type.capitalized)
     }
 }
+
 struct ChallengeTypePicker: View {
     @Binding var selectedType: ChallengeTypeOptions
 
@@ -158,10 +169,3 @@ struct ChallengeTypePicker: View {
         return type.rawValue
     }
 }
-
-
-
-//                    GenericPickerButton(pickerText: "Skill", selectionText: self.name(for: selectedKidID) ?? "Select skill", isPresenting: $showKidPicker) {
-////                        SkillPicker()
-//
-//                    }

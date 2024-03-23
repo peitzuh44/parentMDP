@@ -12,19 +12,17 @@ import FirebaseAuth
 struct DashboardView: View {
     
     //MARK: Properties
+    @ObservedObject var challengeVM = ChallengeViewModel()
+
     @ObservedObject var kidVM = KidViewModel()
     @ObservedObject var taskVM = TaskViewModel()
     @ObservedObject var rewardVM = RewardViewModel()
-
     @State private var selectedKid: KidModel?
     @State private var showKidDetail = false
     @Binding var authFlow: AuthFlow
-
     // Fetching Conditions
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
     let status: String = "reviewing"
-
-    
  
     // MARK: Body
     var body: some View {
@@ -71,7 +69,7 @@ struct DashboardView: View {
                         } label: {
                             HStack{
                                 Image(systemName: "gift")
-                                Text("2 rewards redeemed") // MARK: Pass in the calculation
+                                Text("\(rewardVM.rewardNeedRedeemCount) rewards redeemed") // MARK: Pass in the calculation
                                 Spacer()
                             }
                             .foregroundColor(.white)
@@ -95,9 +93,12 @@ struct DashboardView: View {
                 .onAppear {
                     kidVM.fetchKids()
                 }
+                .onAppear {
+                     rewardVM.updateRewardCount(userID: currentUserID)
+                 }
                 // MARK: Navigation Destinations
                 .navigationDestination(for: KidModel.self) { kid in
-                    KidProfileView(kid: kid)
+                    KidProfileView(challengeVM: challengeVM, kidVM: kidVM, kid: kid)
                 }
                 
             }

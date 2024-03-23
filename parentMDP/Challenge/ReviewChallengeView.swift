@@ -72,7 +72,7 @@ struct ReviewChallengeView: View {
                         challengeVM.completeChallengeAndUpdateKidGem(challenge: selectedChallenge, comment: comment, dateComplete: selectedDateCompleted)
                       
                     }){
-                        Text("Create challenge")
+                        Text("Approve challenge")
                     }
                     .frame(width: 330, height: 50)
                     .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))

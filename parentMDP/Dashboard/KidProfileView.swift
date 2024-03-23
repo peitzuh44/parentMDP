@@ -8,13 +8,12 @@
 import SwiftUI
 import FirebaseAuth
 
-
 struct KidProfileView: View {
     // MARK: Properties
-    @ObservedObject var challengeVM = ChallengeViewModel()
+    @ObservedObject var challengeVM: ChallengeViewModel
+    @ObservedObject var kidVM: KidViewModel
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
     var kid: KidModel
-    
     
     func fetchChallengesForRecentChallengeBoard() {
         let config = FetchChallengesConfig(
@@ -23,7 +22,6 @@ struct KidProfileView: View {
             selectedKidID: kid.id,
             criteria: [
                 .assignTo(kid.id),
-                .createdBy(currentUserID),
                 .status("complete")
             ],
             sortOptions: [
@@ -33,6 +31,20 @@ struct KidProfileView: View {
         )
         
         challengeVM.fetchChallenges(withConfig: config)
+    }
+    
+    func fetchTopSkills() {
+        let config = FetchSkillsConfig(
+            kidID: kid.id,
+            criteria: [
+                .createdBy(currentUserID)
+                
+            ],
+            sortOptions: [
+                .exp(ascending: false)
+            ],
+            limit: 3)
+        kidVM.fetchSkills(withConfig: config)
     }
     
     
@@ -50,7 +62,7 @@ struct KidProfileView: View {
                     }
                     KidInfoItem(kid: kid)
                     AvatarAttribute(kid: kid)
-                    NewSkillBoard(kid: kid)
+                    NewSkillBoard(kidVM: kidVM, kid: kid)
                     RecentChallengeBoard(challengeVM: challengeVM, kid: kid)
                     
                 }
@@ -58,12 +70,15 @@ struct KidProfileView: View {
             .scrollContentBackground(.hidden)
             .scrollIndicators(.hidden)
         }
+        .toolbarColorScheme(.dark, for: .navigationBar)
         
         // MARK: Fetching
         .onAppear{
             fetchChallengesForRecentChallengeBoard()
-
+            fetchTopSkills()
         }
+
+
     }
 }
 
@@ -131,29 +146,13 @@ struct AttributeItem: View {
 
 
 // MARK: Skills Board
-struct SkillItem: View{
-    @State var skills: String
-    @State var level: Int
-    @State var percentage: CGFloat
-    var body: some View {
-        VStack(alignment: .leading){
-            HStack(alignment: .bottom){
-                Text(skills)
-                Spacer()
-                Text("Lv. \(level)")
-            }
-            LinearProgressBar(width: 290, height:5, percent: percentage, color1: .blue, color2: .purple)
-        }
-        
-        .padding()
-        .foregroundColor(.white)
-        
-    }
-}
+
 
 struct SkillBoardItem: View {
+    let skill: SkillModel
     let text: String
     let level: Int
+    let progress: CGFloat
     var body: some View {
         HStack{
             Image("attack")
@@ -162,11 +161,11 @@ struct SkillBoardItem: View {
                 .frame(width: 40)
             VStack(alignment: .leading){
                 HStack(spacing: 8){
-                    Text(text)
+                    Text(skill.name)
                     Spacer()
                     Text("Lv\(level)")
                 }
-                LinearProgressBar(width: 270, height: 10, percent: 50, color1: .blue, color2: .purple)
+                LinearProgressBar(width: 270, height: 10, percent: calculateProgress(exp: skill.exp), color1: .blue, color2: .purple)
                     .onAppear()
                     .animation(.linear, value: 1)
 
@@ -182,40 +181,8 @@ struct SkillBoardItem: View {
     
 }
 
-
-struct SkillBoard: View {
-    var kid: KidModel
-    var body: some View {
-        NavigationLink(destination: ManageSkillsView(kidID: kid.id)) {
-            VStack(alignment: .leading){
-                VStack(alignment: .leading, spacing: 0){
-                    Text("Skills")
-                        .font(.headline)
-                        .padding(.top)
-                        .padding(.horizontal)
-                }
-                VStack(alignment: .leading, spacing: 8){
-                    SkillItem(skills: "Coding", level: 10, percentage: 20)
-                    SkillItem(skills: "Basketball", level: 3, percentage: 40)
-                    SkillItem(skills: "Writing", level: 2, percentage: 70)
-                    SkillItem(skills: "Piano", level: 6, percentage: 80)
-                    
-                    
-                }
-                
-            }
-            .padding()
-            .foregroundColor(.white)
-            .frame(width: 350)
-            .background(Color.customNavyBlue)
-            .cornerRadius(20)
-            
-        }
-    }
-    
-}
-
 struct NewSkillBoard: View {
+    @ObservedObject var kidVM: KidViewModel
     var kid: KidModel
     var body: some View {
         NavigationLink(destination: ManageSkillsView(kidID: kid.id)) {
@@ -224,9 +191,12 @@ struct NewSkillBoard: View {
                     .font(.system(size: 24))
                     .foregroundStyle(Color.white)
                     .bold()
-                SkillBoardItem(text: "coding", level: 10)
-                SkillBoardItem(text: "basketball", level: 10)
-                SkillBoardItem(text: "piano", level: 10)
+                ForEach(kidVM.skills) {
+                    skill in
+                    let (level, progress) = calculateLevelAndProgress(forExp: skill.exp)
+                    SkillBoardItem(skill: skill, text: skill.name, level: level, progress: CGFloat(progress))
+                }
+   
 
             }
             .padding()

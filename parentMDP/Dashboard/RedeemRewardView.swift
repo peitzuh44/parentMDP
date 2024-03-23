@@ -79,6 +79,7 @@ struct RedeemRewardView: View{
             .onAppear {
                 rewardVM.fetchPurchaseRecord(forUserID: currentUserID)
             }
+ 
         }
         
     }

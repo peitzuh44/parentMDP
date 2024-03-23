@@ -79,7 +79,7 @@ struct AddKidSheet: View {
                             presentationMode.wrappedValue.dismiss()
                         }
                 }){
-                    Text("Add")
+                    Text("Add a new kid")
                         .foregroundStyle(Color.white)
                 }
                 .frame(maxWidth: .infinity)

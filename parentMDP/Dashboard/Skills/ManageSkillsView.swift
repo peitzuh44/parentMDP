@@ -12,11 +12,23 @@ struct ManageSkillsView: View {
     // MARK: Properties
     var kidID: String
     
-    @ObservedObject var skillVM = SkillViewModel()
+    @ObservedObject var kidVM = KidViewModel()
     @State private var selectedSkill: SkillModel?
     @State private var showActionSheet = false
     @State private var showSkillTemplateSheet = false
-    @State private var showAddNewSkillSheet = false
+    @State private var showAddSkillSheet = false
+    func fetchAllSkills() {
+        let config = FetchSkillsConfig(
+            kidID: kidID,
+            criteria: [
+                
+            ],
+            sortOptions: [
+                .exp(ascending: false)
+            ],
+            limit: nil)
+        kidVM.fetchSkills(withConfig: config)
+    }
     
     
     // MARK: Body
@@ -26,14 +38,9 @@ struct ManageSkillsView: View {
                 Color.customDarkBlue.ignoresSafeArea(.all)
             VStack{
                 List{
-                    ForEach(skillVM.skills){ skill in
-                        HStack{
-                            Text(skill.name)
-                            Spacer()
-                            Text("Level \(skill.exp)")
-                        }
-                        .foregroundStyle(Color.white)
-                        .padding(.vertical, 8)
+                    ForEach(kidVM.skills){ skill in
+                        let (level, progress) = calculateLevelAndProgress(forExp: skill.exp)
+                        SkillBoardItem(skill: skill, text: skill.name, level: level, progress: CGFloat(progress))
                         .onTapGesture {
                             selectedSkill = skill
                             showActionSheet = true
@@ -42,22 +49,25 @@ struct ManageSkillsView: View {
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(
-                        RoundedRectangle(cornerRadius: 10)
+                        RoundedRectangle(cornerRadius: 20)
                             .fill(Color.customNavyBlue)
-                            .padding(.vertical, 2))
+                            .padding(.vertical, 4))
                 }
                 .scrollContentBackground(.hidden)
                 .scrollIndicators(.hidden)
             }
             .sheet(isPresented: $showSkillTemplateSheet) {
-                    SkillTemplateSheet(kidID: kidID, skillVM: skillVM)
+                SkillTemplateSheet(kidID: kidID, kidVM: kidVM, showAddSkillSheet: $showAddSkillSheet)
                             .presentationDetents([.height(750)])
                             .presentationDragIndicator(.hidden)
                     }
+            .sheet(isPresented: $showAddSkillSheet, content: {
+                AddSkillSheet(kidID: kidID)
+            })
                 
             // MARK: Fetching Factors
             .onAppear {
-                skillVM.fetchSkills(selectedKidID: kidID)
+                fetchAllSkills()
             }
             }
 

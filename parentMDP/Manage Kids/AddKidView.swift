@@ -21,13 +21,15 @@ struct AddKidView: View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
             VStack{
-                VStack(alignment: .leading){
+                VStack{
                     // HEADER START
-                    Text("Add your kids")
-                        .foregroundStyle(Color.white)
-                        .font(.title2)
-                        .bold()
-                        .padding()
+                    VStack(alignment: .leading){
+                        Text("Add your kids")
+                            .foregroundStyle(Color.white)
+                            .font(.title2)
+                            .bold()
+                            .padding()
+                    }
                     // HEADER END
                     
                     // List of Kids that have been added START
@@ -45,7 +47,7 @@ struct AddKidView: View {
                                 
                                 Spacer()
                                 
-                                Text("\(kidVM.calculateAge(birthday: kid.birthdate)) years old")
+                                Text("\(kidVM.calculateAge(birthdate: kid.birthdate)) years old")
                                     .foregroundStyle(Color.white)
                             }
                             .padding(.vertical, 8)
