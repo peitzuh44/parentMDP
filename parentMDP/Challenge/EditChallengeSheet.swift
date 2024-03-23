@@ -51,80 +51,83 @@ struct EditChallengeSheet: View {
     var body: some View {
         ZStack{
             Color.customDarkBlue.ignoresSafeArea(.all)
-            VStack{
-                //Header
-                HStack{
-                    //cancel button
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }){
-                        Image(systemName: "xmark")
+            ScrollView{
+                VStack{
+                    //Header
+                    HStack{
+                        //cancel button
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }){
+                            Image(systemName: "xmark")
+                        }
+                        Spacer()
+                        Text("Edit Challenge")
+                        Spacer()
+                        
                     }
-                    Spacer()
-                    Text("Edit Challenge")
-                    Spacer()
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.customNavyBlue)
                     
-                }
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.customNavyBlue)
-                
-                VStack(spacing: 12) {
-                    // task name
-                    CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
-                    
-                    // difficulty picker
-                    GenericPickerButton(pickerText: "Difficulty", selectionText: selectedDifficulty.rawValue, isPresenting: $showDifficultyPicker) {
-                        DifficultyPicker(selectedDifficulty: $selectedDifficulty)
-                            .presentationDetents([.height(280)])
-                            .presentationDragIndicator(.hidden)
-                    }
-                    GenericPickerButton(pickerText: "Reward", selectionText: "\(selectedreward)", isPresenting: $showRewardPicker) {
-                        PricePicker(selectedPrice: $selectedreward)
+                    VStack(spacing: 12) {
+                        // task name
+                        CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
+                        
+                        // difficulty picker
+                        GenericPickerButton(pickerText: "Difficulty", selectionText: selectedDifficulty.rawValue, isPresenting: $showDifficultyPicker) {
+                            DifficultyPicker(selectedDifficulty: $selectedDifficulty)
+                                .presentationDetents([.height(280)])
+                                .presentationDragIndicator(.hidden)
+                        }
+                        GenericPickerButton(pickerText: "Reward", selectionText: "\(selectedreward)", isPresenting: $showRewardPicker) {
+                            PricePicker(selectedPrice: $selectedreward)
+                                .presentationDetents([.height(380)])
+                                .presentationDragIndicator(.hidden)
+                        }
+                        // assign to picker
+
+                        GenericPickerButton(pickerText: "Assign To", selectionText: name(for: selectedKidID)!, isPresenting: $showKidPicker) {
+                            AssignToPicker(viewModel: kidVM, selectedKidID: $selectedKidID)
+                                .presentationDetents([.height(250)])
+                                .presentationDragIndicator(.hidden)
+                        }
+
+                        // date picker
+                        GenericPickerButton(pickerText: "Date", selectionText: selectedDate.formattedDate(), isPresenting: $showDatePicker) {
+                            CalendarDatePicker(onDateSelected: { selectedDate in
+                                self.selectedDate = selectedDate
+                            })
                             .presentationDetents([.height(380)])
                             .presentationDragIndicator(.hidden)
-                    }
-                    // assign to picker
-
-                    GenericPickerButton(pickerText: "Assign To", selectionText: name(for: selectedKidID)!, isPresenting: $showKidPicker) {
-                        AssignToPicker(viewModel: kidVM, selectedKidID: $selectedKidID)
-                            .presentationDetents([.height(250)])
-                            .presentationDragIndicator(.hidden)
-                    }
-
-                    // date picker
-                    GenericPickerButton(pickerText: "Date", selectionText: selectedDate.formattedDate(), isPresenting: $showDatePicker) {
-                        CalendarDatePicker(onDateSelected: { selectedDate in
-                            self.selectedDate = selectedDate
-                        })
-                        .presentationDetents([.height(380)])
-                        .presentationDragIndicator(.hidden)
-                    }
-                    ChallengeTypePicker(selectedType: $selectedType)
-                    
-
-                    Spacer()
-                    Button(action:{
+                        }
+                        ChallengeTypePicker(selectedType: $selectedType)
                         
-                        //MARK: Call Update Function
-                        presentationMode.wrappedValue.dismiss()
-                        var updatedChallenge = selectedChallenge
-                        updatedChallenge.name = name
-                        updatedChallenge.difficulty = selectedDifficulty.rawValue
-                        updatedChallenge.reward = selectedreward
-                        updatedChallenge.assignedOrSelfSelected = selectedType.rawValue
-                        challengeVM.updateChallenge(updatedChallenge: updatedChallenge)
+
+                        Spacer()
+                        Button(action:{
+                            
+                            //MARK: Call Update Function
+                            presentationMode.wrappedValue.dismiss()
+                            var updatedChallenge = selectedChallenge
+                            updatedChallenge.name = name
+                            updatedChallenge.difficulty = selectedDifficulty.rawValue
+                            updatedChallenge.reward = selectedreward
+                            updatedChallenge.assignedOrSelfSelected = selectedType.rawValue
+                            challengeVM.updateChallenge(updatedChallenge: updatedChallenge)
+                            
+                        }){
+                            Text("Create challenge")
+                        }
+                        .frame(width: 330, height: 50)
+                        .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))
+                        .foregroundColor(.white)
                         
-                    }){
-                        Text("Create challenge")
                     }
-                    .frame(width: 330, height: 50)
-                    .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))
-                    .foregroundColor(.white)
                     
                 }
-                
             }
+
         }
     }
 }

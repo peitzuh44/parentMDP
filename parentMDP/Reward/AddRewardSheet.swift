@@ -48,65 +48,68 @@ struct AddRewardSheet: View {
                 .foregroundColor(.white)
                 .padding()
                 .background(Color.customNavyBlue)
-                VStack(spacing: 12){
-                    CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
-                    // rarity picker
-                    Button(action: {
-                        self.showRarityPicker = true
-                    }) {
-                        HStack {
-                            Text("Rarity")
-                            Spacer()
-                            Text(selectedRarity.rawValue)
+                ScrollView{
+                    VStack(spacing: 12){
+                        CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
+                        // rarity picker
+                        Button(action: {
+                            self.showRarityPicker = true
+                        }) {
+                            HStack {
+                                Text("Rarity")
+                                Spacer()
+                                Text(selectedRarity.rawValue)
 
+                            }
+                            .frame(width: 330, height: 24)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.customNavyBlue)
+                            .cornerRadius(10)
                         }
-                        .frame(width: 330, height: 24)
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.customNavyBlue)
-                        .cornerRadius(10)
-                    }
-                    .sheet(isPresented: $showRarityPicker) {
-                        // Present KidPicker here
-                        RarityPicker(selectedRarity: $selectedRarity)
-                            .presentationDetents([.height(500)])
-                            .presentationDragIndicator(.hidden)
-                    }
-                    // price picker
-                    Button(action: {
-                        self.showPricePicker = true
-                    }) {
-                        HStack {
-                            Text("Price")
-                            Spacer()
-                            Text(selectedprice != 0 ? "\(selectedprice)" : "Select Price")
-
+                        .sheet(isPresented: $showRarityPicker) {
+                            // Present KidPicker here
+                            RarityPicker(selectedRarity: $selectedRarity)
+                                .presentationDetents([.large])
+                                .presentationDragIndicator(.hidden)
                         }
-                        .frame(width: 330, height: 24)
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.customNavyBlue)
-                        .cornerRadius(10)
-                    }
-                    .sheet(isPresented: $showPricePicker) {
-                        PricePicker(selectedPrice: $selectedprice)
-                            .presentationDetents([.height(300)])
-                            .presentationDragIndicator(.hidden)
-                    }
-                    
-                    Spacer()
-                    Button(action:{
-                        presentationMode.wrappedValue.dismiss()
-                        rewardVM.createReward(name: name, rarity: selectedRarity.rawValue, price: selectedprice, createdBy: currentUserID)
+                        // price picker
+                        Button(action: {
+                            self.showPricePicker = true
+                        }) {
+                            HStack {
+                                Text("Price")
+                                Spacer()
+                                Text(selectedprice != 0 ? "\(selectedprice)" : "Select Price")
 
-                    }){
-                        Text("Create reward")
+                            }
+                            .frame(width: 330, height: 24)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.customNavyBlue)
+                            .cornerRadius(10)
+                        }
+                        .sheet(isPresented: $showPricePicker) {
+                            PricePicker(selectedPrice: $selectedprice)
+                                .presentationDetents([.height(300)])
+                                .presentationDragIndicator(.hidden)
+                        }
+                        
+                        Spacer()
+                        Button(action:{
+                            presentationMode.wrappedValue.dismiss()
+                            rewardVM.createReward(name: name, rarity: selectedRarity.rawValue, price: selectedprice, createdBy: currentUserID)
+
+                        }){
+                            Text("Create reward")
+                        }
+                        .frame(width: 330, height: 50)
+                        .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))
+                        .foregroundColor(.white)
                     }
-                    .frame(width: 330, height: 50)
-                    .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))
-                    .foregroundColor(.white)
+                    .padding(.vertical)
                 }
-                .padding(.vertical)
+
             }
 
         }

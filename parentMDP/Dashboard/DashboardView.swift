@@ -13,7 +13,6 @@ struct DashboardView: View {
     
     //MARK: Properties
     @ObservedObject var challengeVM = ChallengeViewModel()
-
     @ObservedObject var kidVM = KidViewModel()
     @ObservedObject var taskVM = TaskViewModel()
     @ObservedObject var rewardVM = RewardViewModel()

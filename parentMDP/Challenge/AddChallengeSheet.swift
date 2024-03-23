@@ -64,7 +64,6 @@ struct AddChallengeSheet: View {
                 .padding()
                 .background(Color.customNavyBlue)
                 ScrollView{
-                    
                     VStack(spacing: 12) {
                         // task name
                         CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
@@ -72,18 +71,18 @@ struct AddChallengeSheet: View {
                         // difficulty picker
                         GenericPickerButton(pickerText: "Difficulty", selectionText: selectedDifficulty.rawValue, isPresenting: $showDifficultyPicker) {
                             DifficultyPicker(selectedDifficulty: $selectedDifficulty)
-                                .presentationDetents([.height(280)])
+                                .presentationDetents([.medium])
                                 .presentationDragIndicator(.hidden)
                         }
                         GenericPickerButton(pickerText: "Reward", selectionText: "\(selectedreward)", isPresenting: $showRewardPicker) {
                             PricePicker(selectedPrice: $selectedreward)
-                                .presentationDetents([.height(380)])
+                                .presentationDetents([.medium])
                                 .presentationDragIndicator(.hidden)
                         }
                         // assign to picker
                         GenericPickerButton(pickerText: "Assign To", selectionText: self.name(for: selectedKidID) ?? "Select kid", isPresenting: $showKidPicker) {
                             AssignToPicker(viewModel: kidVM, selectedKidID: $selectedKidID)
-                                .presentationDetents([.height(250)])
+                                .presentationDetents([.medium])
                                 .presentationDragIndicator(.hidden)
                         }
                         
@@ -99,7 +98,7 @@ struct AddChallengeSheet: View {
                             CalendarDatePicker(onDateSelected: { selectedDate in
                                 self.selectedDate = selectedDate
                             })
-                            .presentationDetents([.height(380)])
+                            .presentationDetents([.medium])
                             .presentationDragIndicator(.hidden)
                         }
                         ChallengeTypePicker(selectedType: $selectedType)

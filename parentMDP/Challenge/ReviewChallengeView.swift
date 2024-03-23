@@ -44,41 +44,45 @@ struct ReviewChallengeView: View {
                 // Header END
                 
                 // Form START
-                VStack(spacing: 12) {
-                    // Parent's Comment and feedback
-                    TextEditor(text: $comment)
-                        .frame(height: 250)
-                        .frame(maxWidth: .infinity)
-                        .foregroundStyle(Color.black)
-                        .background(Color.customNavyBlue)
-               
-                    // date completed picker
-                    GenericPickerButton(pickerText: "Date", selectionText: selectedDateCompleted.formattedDate(), isPresenting: $showDatePicker) {
-                        CalendarDatePicker(onDateSelected: { selectedDate in
-                            self.selectedDateCompleted = selectedDate
-                        })
-                        .presentationDetents([.height(380)])
-                        .presentationDragIndicator(.hidden)
-                    }
-                    
-
-                    Spacer()
-                    Button(action:{
-                        presentationMode.wrappedValue.dismiss()
-                        var updatedChallenge = selectedChallenge
-                        updatedChallenge.comment = comment
-                        updatedChallenge.dateCompleted = selectedDateCompleted
+                ScrollView{
+                    VStack(spacing: 12) {
+                        // Parent's Comment and feedback
+                        TextEditor(text: $comment)
+                            .frame(height: 250)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundStyle(Color.black)
+                            .background(Color.customNavyBlue)
+                   
+                        // date completed picker
+                        GenericPickerButton(pickerText: "Date", selectionText: selectedDateCompleted.formattedDate(), isPresenting: $showDatePicker) {
+                            CalendarDatePicker(onDateSelected: { selectedDate in
+                                self.selectedDateCompleted = selectedDate
+                            })
+                            .presentationDetents([.height(380)])
+                            .presentationDragIndicator(.hidden)
+                        }
                         
-                        challengeVM.completeChallengeAndUpdateKidGem(challenge: selectedChallenge, comment: comment, dateComplete: selectedDateCompleted)
-                      
-                    }){
-                        Text("Approve challenge")
+
+                        Spacer()
+                        Button(action:{
+                            presentationMode.wrappedValue.dismiss()
+                            var updatedChallenge = selectedChallenge
+                            updatedChallenge.comment = comment
+                            updatedChallenge.dateCompleted = selectedDateCompleted
+                            
+                            challengeVM.completeChallengeAndUpdateKidGem(challenge: selectedChallenge, comment: comment, dateComplete: selectedDateCompleted)
+                          
+                        }){
+                            Text("Approve challenge")
+                        }
+                        .frame(width: 330, height: 50)
+                        .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))
+                        .foregroundColor(.white)
+                        
                     }
-                    .frame(width: 330, height: 50)
-                    .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))
-                    .foregroundColor(.white)
-                    
                 }
+
                 
             }
         }

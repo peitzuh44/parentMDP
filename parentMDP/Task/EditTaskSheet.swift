@@ -73,7 +73,7 @@ struct EditTaskSheet: View {
                         Image(systemName: "xmark")
                     }
                     Spacer()
-                    Text("New Private Task")
+                    Text("Edit Task")
                     Spacer()
                     
                 }
@@ -82,68 +82,71 @@ struct EditTaskSheet: View {
                 .background(Color.customNavyBlue)
                 
                 // MARK: Forms
-                VStack(spacing: 12) {
-                    // task name
-                    CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
-                    
-                    // difficulty picker
-                    GenericPickerButton(pickerText: "Difficulty", selectionText: selectedDifficulty.rawValue, isPresenting: $showDifficultyPicker) {
-                        DifficultyPicker(selectedDifficulty: $selectedDifficulty)
-                            .presentationDetents([.height(280)])
-                            .presentationDragIndicator(.hidden)
-                    }
-                    
-                    if selectedTask.privateOrPublic == "private" {
-                        // assign to picker
-                        GenericPickerButton(pickerText: "Assign To", selectionText: name(for: selectedKidID)!, isPresenting: $showKidPicker) {
-                            AssignToPicker(viewModel: kidVM, selectedKidID: $selectedKidID)
-                                .presentationDetents([.height(250)])
+                ScrollView{
+                    VStack(spacing: 12) {
+                        // task name
+                        CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
+                        
+                        // difficulty picker
+                        GenericPickerButton(pickerText: "Difficulty", selectionText: selectedDifficulty.rawValue, isPresenting: $showDifficultyPicker) {
+                            DifficultyPicker(selectedDifficulty: $selectedDifficulty)
+                                .presentationDetents([.medium])
                                 .presentationDragIndicator(.hidden)
                         }
-                    }
-                    
-                    // repeat picker
-                    GenericPickerButton(pickerText: "Repeat", selectionText: selectedRepeat.rawValue, isPresenting: $showRepeatPicker) {
-                        RepeatPicker(selectedRepeat: $selectedRepeat)
-                            .presentationDetents([.height(600)])
-                            .presentationDragIndicator(.hidden)
-                    }
-                    
-                    if selectedTask.privateOrPublic == "private" {
+                        
+                        if selectedTask.privateOrPublic == "private" {
+                            // assign to picker
+                            GenericPickerButton(pickerText: "Assign To", selectionText: name(for: selectedKidID)!, isPresenting: $showKidPicker) {
+                                AssignToPicker(viewModel: kidVM, selectedKidID: $selectedKidID)
+                                    .presentationDetents([.medium])
+                                    .presentationDragIndicator(.hidden)
+                            }
+                        }
+                        
+                        // repeat picker
+                        GenericPickerButton(pickerText: "Repeat", selectionText: selectedRepeat.rawValue, isPresenting: $showRepeatPicker) {
+                            RepeatPicker(selectedRepeat: $selectedRepeat)
+                                .presentationDetents([.large])
+                                .presentationDragIndicator(.hidden)
+                        }
+                        
+                        if selectedTask.privateOrPublic == "private" {
+                            // routine picker
+                            GenericPickerButton(pickerText: "Routine", selectionText: selectedRoutine?.rawValue ?? "", isPresenting: $showRoutinePicker) {
+                                RoutinePicker(selectedRoutine: $selectedRoutine)
+                                    .presentationDetents([.medium])
+                                    .presentationDragIndicator(.hidden)
+                            }
+                        }
+                        
                         // routine picker
-                        GenericPickerButton(pickerText: "Routine", selectionText: selectedRoutine?.rawValue ?? "", isPresenting: $showRoutinePicker) {
-                            RoutinePicker(selectedRoutine: $selectedRoutine)
-                                .presentationDetents([.height(300)])
-                                .presentationDragIndicator(.hidden)
+                        GenericPickerButton(pickerText: "Date", selectionText: selectedDate.formattedDate(), isPresenting: $showDatePicker) {
+                            CalendarDatePicker(onDateSelected: { selectedDate in
+                                self.selectedDate = selectedDate
+                            })
+                            .presentationDetents([.height(380)])
+                            .presentationDragIndicator(.hidden)
                         }
+                        if selectedRepeat == .custom {
+                            WeekdayPicker(selectedDays: $selectedDays)
+                        }
+                        
+                        
+                        // MARK: Button
+                        Button(action:{
+                            presentationMode.wrappedValue.dismiss()
+                            let daysArray = selectedDays.isEmpty ? nil : Array(selectedDays)
+                            taskVM.updateTask(selectedTask, name: name, timeCreated: Date(), createdBy: currentUserID, assignTo: selectedKidID!, difficulty: selectedDifficulty.rawValue, routine: selectedRoutine!.rawValue, dueOrStartDate: selectedDate, repeatingPattern: selectedRepeat.rawValue, selectedDays: daysArray, privateOrPublic: selectedTask.privateOrPublic)
+                        }){
+                            Text("Edit task")
+                        }
+                        .frame(width: 330, height: 50)
+                        .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))
+                        .foregroundColor(.white)
+                        
                     }
-                    
-                    // routine picker
-                    GenericPickerButton(pickerText: "Date", selectionText: selectedDate.formattedDate(), isPresenting: $showDatePicker) {
-                        CalendarDatePicker(onDateSelected: { selectedDate in
-                            self.selectedDate = selectedDate
-                        })
-                        .presentationDetents([.height(380)])
-                        .presentationDragIndicator(.hidden)
-                    }
-                    if selectedRepeat == .custom {
-                        WeekdayPicker(selectedDays: $selectedDays)
-                    }
-                    
-                    
-                    // MARK: Button
-                    Button(action:{
-                        presentationMode.wrappedValue.dismiss()
-                        let daysArray = selectedDays.isEmpty ? nil : Array(selectedDays)
-                        taskVM.updateTask(selectedTask, name: name, timeCreated: Date(), createdBy: currentUserID, assignTo: selectedKidID!, difficulty: selectedDifficulty.rawValue, routine: selectedRoutine!.rawValue, dueOrStartDate: selectedDate, repeatingPattern: selectedRepeat.rawValue, selectedDays: daysArray, privateOrPublic: selectedTask.privateOrPublic)
-                    }){
-                        Text("Edit task")
-                    }
-                    .frame(width: 330, height: 50)
-                    .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))
-                    .foregroundColor(.white)
-                    
                 }
+
                 
             }
         }
