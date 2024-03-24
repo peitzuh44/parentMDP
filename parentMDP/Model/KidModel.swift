@@ -28,6 +28,7 @@ struct KidModel: Identifiable, Codable, Hashable{
     var gemBalance: Int
     // subcollection
     var skills: [SkillModel]?
+    var publicQuestsCompletedThisWeek: Int = 0 
     
     enum CodingKeys: String, CodingKey {
         case id, timeCreated, name, gender, birthdate, parentID, myParent, avatarImage, health, mental, social, intelligence, coinBalance, gemBalance, skills

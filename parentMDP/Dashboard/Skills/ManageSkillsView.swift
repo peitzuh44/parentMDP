@@ -40,7 +40,7 @@ struct ManageSkillsView: View {
                 List{
                     ForEach(kidVM.skills){ skill in
                         let (level, progress) = calculateLevelAndProgress(forExp: skill.exp)
-                        SkillBoardItem(skill: skill, text: skill.name, level: level, progress: CGFloat(progress))
+                        SkillItem(skill: skill, text: skill.name, level: level, progress: CGFloat(progress))
                         .onTapGesture {
                             selectedSkill = skill
                             showActionSheet = true

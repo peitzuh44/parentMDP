@@ -34,7 +34,7 @@ struct ReviewChallengeView: View {
                         Image(systemName: "xmark")
                     }
                     Spacer()
-                    Text("New Challenge")
+                    Text("review challenge")
                     Spacer()
                     
                 }
@@ -47,6 +47,8 @@ struct ReviewChallengeView: View {
                 ScrollView{
                     VStack(spacing: 12) {
                         // Parent's Comment and feedback
+                        
+                        // MARK: Customize text editor with placeholder required
                         TextEditor(text: $comment)
                             .frame(height: 250)
                             .frame(maxWidth: .infinity)
@@ -74,7 +76,7 @@ struct ReviewChallengeView: View {
                             challengeVM.completeChallengeAndUpdateKidGem(challenge: selectedChallenge, comment: comment, dateComplete: selectedDateCompleted)
                           
                         }){
-                            Text("Approve challenge")
+                            Text("approve challenge")
                         }
                         .frame(width: 330, height: 50)
                         .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))

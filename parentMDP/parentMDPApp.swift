@@ -10,6 +10,7 @@
 import SwiftUI
 import Firebase
 import FirebaseCore
+import Foundation
 
 @main
 struct parentMDPApp: App {

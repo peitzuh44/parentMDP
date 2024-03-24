@@ -24,83 +24,89 @@ struct LoginView: View {
     
     // MARK: Body
     var body: some View {
-        ZStack{
-            Color.customDarkBlue.ignoresSafeArea(.all)
-            
-            VStack {
-                // Header START
-                HStack {
-                    Text("Welcome Back!")
-                        .font(.largeTitle)
-                        .foregroundStyle(Color.white)
-                        .bold()
+        NavigationStack{
+            ZStack{
+                Color.customDarkBlue.ignoresSafeArea(.all)
+                VStack {
+                    // Header START
+                    HStack {
+                        Text("Welcome Back!")
+                            .font(.largeTitle)
+                            .foregroundStyle(Color.white)
+                            .bold()
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    .padding(.top)
+                    // Header END
                     
                     Spacer()
-                }
-                .padding()
-                .padding(.top)
-                // Header END
-                
-                Spacer()
-                
-                // Email TextField START
-                EmailComponent(email: $email)
-                // Email TextField END
-                
-                // Password TextField START
-                PasswordComponent(password: $password)
-                // Password TextField END
-                
-                // Button for switching between LoginView and SignupView START
-                Button(action: {
-                    withAnimation {
-                        self.currentShowingView = "signup"
-                    }
-                }) {
-                    Text("New to Kidoo?")
-                        .foregroundColor(.gray)
-                }
-                // Button for switching between LoginView and SignupView END
-                
-                Spacer()
-                
-                // Button to initiate the sign in process START
-                Button(action: {
-                    Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-                        if let error = error {
-                            print(error)
-                            return
-                        }
-                        if authResult != nil {
+                    VStack{
+                        // Email TextField START
+                        EmailComponent(email: $email)
+                        // Email TextField END
+                        
+                        // Password TextField START
+                        PasswordComponent(password: $password)
+                        // Password TextField END
+                        
+                        // Button for switching between LoginView and SignupView START
+                        Button(action: {
                             withAnimation {
-                                self.authFlow = .authenticated
+                                self.currentShowingView = "signup"
+                            }
+                        }) {
+                            Text("New to Kidoo?")
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    
+                    // Button for switching between LoginView and SignupView END
+                    
+                    Spacer()
+                    
+                    // Button to initiate the sign in process START
+                    Button(action: {
+                        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                            if let error = error {
+                                print(error)
+                                return
+                            }
+                            if authResult != nil {
+                                withAnimation {
+                                    self.authFlow = .authenticated
+                                }
                             }
                         }
+                    }){
+                        Text("Sign In")
+                            .foregroundColor(.white)
+                            .font(.title3)
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.customPurple)
+                            )
+                            .padding(.horizontal)
                     }
-                }){
-                    Text("Sign In")
-                        .foregroundColor(.white)
-                        .font(.title3)
-                        .bold()
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.customPurple)
-                        )
-                        .padding(.horizontal)
+                    // Button to initiate the sign in process END
+                    
+                    
                 }
-                // Button to initiate the sign in process END
-
-                
             }
         }
     }
+    
 }
-
 // MARK: Previews
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView(currentShowingView: .constant("login"), authFlow: Binding.constant(.notAuthenticated))
     }
 }
+
+//
+

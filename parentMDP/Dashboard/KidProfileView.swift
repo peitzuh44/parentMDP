@@ -62,7 +62,7 @@ struct KidProfileView: View {
                     }
                     KidInfoItem(kid: kid)
                     AvatarAttribute(kid: kid)
-                    NewSkillBoard(kidVM: kidVM, kid: kid)
+                    SkillBoard(kidVM: kidVM, kid: kid)
                     RecentChallengeBoard(challengeVM: challengeVM, kid: kid)
                     
                 }
@@ -148,7 +148,7 @@ struct AttributeItem: View {
 // MARK: Skills Board
 
 
-struct SkillBoardItem: View {
+struct SkillItem: View {
     let skill: SkillModel
     let text: String
     let level: Int
@@ -181,7 +181,7 @@ struct SkillBoardItem: View {
     
 }
 
-struct NewSkillBoard: View {
+struct SkillBoard: View {
     @ObservedObject var kidVM: KidViewModel
     var kid: KidModel
     var body: some View {
@@ -191,12 +191,27 @@ struct NewSkillBoard: View {
                     .font(.system(size: 24))
                     .foregroundStyle(Color.white)
                     .bold()
-                ForEach(kidVM.skills) {
-                    skill in
-                    let (level, progress) = calculateLevelAndProgress(forExp: skill.exp)
-                    SkillBoardItem(skill: skill, text: skill.name, level: level, progress: CGFloat(progress))
+                if kidVM.skills.isEmpty {
+                    VStack {
+                        Spacer()
+                        Text("No skills added yet")
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.customNavyBlue)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        Spacer()
+                    }
                 }
-   
+                else{
+                    
+                    ForEach(kidVM.skills) {
+                        skill in
+                        let (level, progress) = calculateLevelAndProgress(forExp: skill.exp)
+                        SkillItem(skill: skill, text: skill.name, level: level, progress: CGFloat(progress))
+                    }
+                    
+                }
 
             }
             .padding()
@@ -357,8 +372,7 @@ struct RecentChallengeBoard: View {
 
 struct CompleteChallengeListItem: View {
     let challenge: ChallengeModel
-    let name: String = "Challenge name"
-    let dateComplete: String = "02/11/2024"
+    
     var body: some View {
         HStack{
             HStack{
@@ -368,7 +382,7 @@ struct CompleteChallengeListItem: View {
                     .frame(width: 36)
                 VStack(alignment: .leading){
                     Text(challenge.name)
-                    Text("Completed on \(dateComplete)")
+                    Text("Completed on \(challenge.dateCompleted?.formattedDate() ?? "")")
                         .font(.caption)
                 }
             }

@@ -32,12 +32,47 @@ struct FetchTaskConfig {
 }
 class TaskViewModel: ObservableObject {
     @Published var tasks: [TaskInstancesModel] = []
+    @Published var completedTasksCountByKid: [String: Int] = [:]
     private let db = Firestore.firestore()
         @Published var totalReviewTasksCount: Int = 0
         @Published var privateReviewTasksCount: Int = 0
         @Published var publicReviewTasksCount: Int = 0
         @Published var reviewTasksCountPerKid: [String: Int] = [:]
 
+    func fetchCompletedPublicTasksForCurrentWeek() {
+        let startOfWeek = Date().startOfCurrentWeek()
+        let endOfWeek = Date().endOfCurrentWeek()
+
+        db.collection("taskInstances")
+            .whereField("status", isEqualTo: "complete")
+            .whereField("privateOrPublic", isEqualTo: "public")
+            .whereField("due", isGreaterThanOrEqualTo: startOfWeek)
+            .whereField("due", isLessThan: endOfWeek)
+            .addSnapshotListener { [weak self] (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting documents: \(error)")
+                    return
+                }
+                
+                // Make sure we're on the main thread since we're updating the UI
+                DispatchQueue.main.async {
+                    // Reset the counts for a fresh start
+                    self?.completedTasksCountByKid = [:]
+                    // Process documents
+                    querySnapshot?.documents.forEach { document in
+                        let task = try? document.data(as: TaskInstancesModel.self)
+                        if let completedBy = task?.completedBy {
+                            // Initialize if the key doesn't exist, increment if it does
+                            self?.completedTasksCountByKid[completedBy, default: 0] += 1
+                        }
+                    }
+                    // Notify the UI to update
+                    self?.objectWillChange.send()
+                }
+            }
+    }
+
+    
         // MARK: Task Fetching Count For Status
         // Fetch and update counts for review tasks
         func updateReviewTasksCounts(userID: String, kids: [KidModel]) {

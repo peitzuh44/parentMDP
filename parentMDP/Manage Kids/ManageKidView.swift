@@ -114,5 +114,7 @@ struct ManageKidView: View {
 
             }
         }
+        .toolbarColorScheme(.dark, for: .navigationBar)
+
     }
 }

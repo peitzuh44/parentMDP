@@ -9,7 +9,7 @@
 
 import SwiftUI
 import FirebaseAuth
-import FirebaseAuth
+import Foundation
 
 
 enum AuthFlow {

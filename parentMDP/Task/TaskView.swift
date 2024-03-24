@@ -85,7 +85,7 @@ struct TaskView: View {
                         // END
                         
                     } else {
-                        PublicTaskLeaderBoard()
+                        PublicTaskLeaderboard(kidVM: kidVM, taskVM: taskVM)
                     }
                 }
                 .padding(.horizontal)

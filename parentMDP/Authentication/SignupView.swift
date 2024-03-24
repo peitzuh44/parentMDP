@@ -95,25 +95,20 @@ struct SignupView: View {
                     
                     Spacer()
                     
-                    // Email Textfield START
-                    EmailComponent(email: $email)
-                    // Email Textfield END
                     
-                    // Password Textfield START
-                    PasswordComponent(password: $password)
-                    // Password Textfield END
-                    
-                    // Return to Login View button START
-                    Button(action: {
-                        withAnimation {
-                            self.currentShowingView = "login"
+                    VStack{
+                        EmailComponent(email: $email)
+                        PasswordComponent(password: $password)
+                        
+                        Button(action: {
+                            withAnimation {
+                                self.currentShowingView = "login"
+                            }
+                        }) {
+                            Text("Already have an account?")
+                                .foregroundColor(.white)
                         }
-                    }) {
-                        Text("Already have an account?")
-                            .foregroundColor(.white)
                     }
-                    // Return to Login View button END
-                    
                     Spacer()
                     Spacer()
                     

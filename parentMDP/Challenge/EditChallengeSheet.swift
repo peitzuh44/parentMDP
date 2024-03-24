@@ -72,7 +72,7 @@ struct EditChallengeSheet: View {
                     
                     VStack(spacing: 12) {
                         // task name
-                        CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
+                        CustomTextfield(text: $name, placeholder: "name your challenge...", icon: "", background: Color.customNavyBlue, color: Color.white)
                         
                         // difficulty picker
                         GenericPickerButton(pickerText: "Difficulty", selectionText: selectedDifficulty.rawValue, isPresenting: $showDifficultyPicker) {
@@ -117,7 +117,7 @@ struct EditChallengeSheet: View {
                             challengeVM.updateChallenge(updatedChallenge: updatedChallenge)
                             
                         }){
-                            Text("Create challenge")
+                            Text("update challenge")
                         }
                         .frame(width: 330, height: 50)
                         .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))

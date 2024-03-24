@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct MainView: View {
     @Binding var authFlow: AuthFlow

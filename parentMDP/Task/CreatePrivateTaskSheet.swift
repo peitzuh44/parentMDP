@@ -52,7 +52,7 @@ struct CreatePrivateTaskSheet: View {
                         Image(systemName: "xmark")
                     }
                     Spacer()
-                    Text("New Private Task")
+                    Text("new individual quest")
                     Spacer()
                     
                 }
@@ -64,7 +64,7 @@ struct CreatePrivateTaskSheet: View {
                 ScrollView{
                     VStack(spacing: 12) {
                         // task name
-                        CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
+                        CustomTextfield(text: $name, placeholder: "name your quest...", icon: "textformat", background: Color.customNavyBlue, color: Color.white)
                         
                         // difficulty picker
                         GenericPickerButton(pickerText: "Difficulty", selectionText: selectedDifficulty.rawValue, isPresenting: $showDifficultyPicker) {
@@ -116,7 +116,7 @@ struct CreatePrivateTaskSheet: View {
                             taskVM.createPrivateTask(name: name, timeCreated: Date(), createdBy: currentUserID, assignTo: selectedKidID!, difficulty: selectedDifficulty.rawValue, routine: selectedRoutine!.rawValue, dueOrStartDate: selectedDate, repeatingPattern: selectedRepeat.rawValue, selectedDays: daysArray)
                           
                         }){
-                            Text("Create task")
+                            Text("create individual quest")
                         }
                         .frame(width: 330, height: 50)
                         .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))

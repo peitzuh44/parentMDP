@@ -19,3 +19,21 @@ extension Date {
         var date: Date
     }
 }
+
+extension Date {
+    func startOfCurrentWeek() -> Date {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: self)
+        let weekday = calendar.component(.weekday, from: today)
+        let daysToSubtract = (weekday - calendar.firstWeekday) % 7
+        let startOfWeek = calendar.date(byAdding: .day, value: -daysToSubtract, to: today)!
+        return calendar.startOfDay(for: startOfWeek)
+    }
+    
+    func endOfCurrentWeek() -> Date {
+        let calendar = Calendar.current
+        let startOfWeek = self.startOfCurrentWeek()
+        let endOfWeek = calendar.date(byAdding: .day, value: 7, to: startOfWeek)!
+        return endOfWeek
+    }
+}
