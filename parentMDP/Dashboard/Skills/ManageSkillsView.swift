@@ -7,7 +7,10 @@
 
 import SwiftUI
 
+// FIX: requires real time fetching
+
 struct ManageSkillsView: View {
+    
     
     // MARK: Properties
     var kidID: String

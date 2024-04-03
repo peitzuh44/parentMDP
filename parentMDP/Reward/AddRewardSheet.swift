@@ -23,6 +23,8 @@ struct AddRewardSheet: View {
     //selected values
     @State private var name: String = ""
     @State private var selectedRarity: RarityOptions = .common
+    @State private var selectedCategory: RewardCategoryOption = .object
+
     @State private var selectedprice: Int = 0
     
  
@@ -98,7 +100,7 @@ struct AddRewardSheet: View {
                         Spacer()
                         Button(action:{
                             presentationMode.wrappedValue.dismiss()
-                            rewardVM.createReward(name: name, rarity: selectedRarity.rawValue, price: selectedprice, createdBy: currentUserID)
+                            rewardVM.createReward(name: name, category: selectedCategory.description, rarity: selectedRarity.rawValue, price: selectedprice, createdBy: currentUserID)
 
                         }){
                             Text("Create reward")

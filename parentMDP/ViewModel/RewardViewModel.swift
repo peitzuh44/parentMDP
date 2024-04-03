@@ -98,10 +98,10 @@ class RewardViewModel: ObservableObject {
     }
     
     // MARK: Create Reward
-    func createReward(name: String, rarity: String, price: Int, createdBy: String){
+    func createReward(name: String, category: String, rarity: String, price: Int, createdBy: String){
         let newRewardRef = db.collection("rewards").document()
         let rewardID = newRewardRef.documentID
-        let reward = RewardModel(id: rewardID, name: name, createdBy: createdBy, timeCreated: Date(), rarity: rarity, price: price)
+        let reward = RewardModel(id: rewardID, name: name, category: category, createdBy: createdBy, timeCreated: Date(), rarity: rarity, price: price)
   
         do {
             try db.collection("rewards").document(rewardID).setData(from: reward)
@@ -175,6 +175,7 @@ extension RewardViewModel {
         let purchaseReward = RewardPurchaseModel(
             id: purchaseRewardID,
             name: reward.name,
+            category: reward.category,
             timePurchased: Date(),
             createdBy: reward.createdBy,
             status: "not yet redeem",

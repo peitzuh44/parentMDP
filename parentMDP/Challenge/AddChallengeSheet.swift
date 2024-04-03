@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 
+
 struct AddChallengeSheet: View {
     // MARK: Properties
 

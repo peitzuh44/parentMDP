@@ -33,6 +33,8 @@ class KidViewModel: ObservableObject {
     @Published var kids: [KidModel] = []
     @Published var skills: [SkillModel] = []
     @Published var skillTemplates: [SkillTemplateModel] = []
+    private var listeners: [ListenerRegistration] = []
+
 
     private let db = Firestore.firestore()
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
@@ -171,41 +173,51 @@ extension KidViewModel {
     }
 
     func fetchSkills(withConfig config: FetchSkillsConfig) {
-            var query: Query = db.collection("kids").document(config.kidID).collection("skills")
-            
-            // Apply criteria
-            for criterion in config.criteria {
-                switch criterion {
-                case .createdBy(let userID):
-                    query = query.whereField("createdBy", isEqualTo: userID)
-                }
-            }
-            
-            // Apply sorting
-            for sortOption in config.sortOptions {
-                switch sortOption {
-                case .exp(let ascending):
-                    query = query.order(by: "exp", descending: !ascending)
-                }
-            }
-            
-            // Apply limit
-            if let limit = config.limit {
-                query = query.limit(to: limit)
-            }
-            
-            // Execute query
-            query.getDocuments { [weak self] querySnapshot, error in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error fetching documents: \(error?.localizedDescription ?? "")")
-                    return
-                }
-                
-                self?.skills = documents.compactMap { doc -> SkillModel? in
-                    try? doc.data(as: SkillModel.self)
-                }
+        var query: Query = db.collection("kids").document(config.kidID).collection("skills")
+        
+        // Apply criteria
+        for criterion in config.criteria {
+            switch criterion {
+            case .createdBy(let userID):
+                query = query.whereField("createdBy", isEqualTo: userID)
             }
         }
+        
+        // Apply sorting
+        for sortOption in config.sortOptions {
+            switch sortOption {
+            case .exp(let ascending):
+                query = query.order(by: "exp", descending: !ascending)
+            }
+        }
+        
+        // Apply limit
+        if let limit = config.limit {
+            query = query.limit(to: limit)
+        }
+        
+        // Execute query with a real-time listener
+        let listener = query.addSnapshotListener { [weak self] querySnapshot, error in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(error?.localizedDescription ?? "")")
+                return
+            }
+            
+            let skills = documents.compactMap { doc -> SkillModel? in
+                try? doc.data(as: SkillModel.self)
+            }
+            
+            DispatchQueue.main.async {
+                  // Assuming `skills` is an @Published property you want to update
+                self?.skills = documents.compactMap { doc -> SkillModel? in
+                      try? doc.data(as: SkillModel.self)
+                  }
+              }
+          }
+        
+        // Store the listener if you need to remove it later
+        self.listeners.append(listener)
+    }
 
     
     //Update Skills

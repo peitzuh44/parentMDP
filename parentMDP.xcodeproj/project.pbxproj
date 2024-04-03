@@ -80,6 +80,7 @@
 		AF8556B52BAF647B009B7489 /* SkillCategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556B42BAF647B009B7489 /* SkillCategoryPicker.swift */; };
 		AF8556B72BAF7329009B7489 /* HScrollPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556B62BAF7329009B7489 /* HScrollPicker.swift */; };
 		AF8556B92BAF7373009B7489 /* CustomSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8556B82BAF7373009B7489 /* CustomSegmentedPicker.swift */; };
+		AFAA9BC62BBCB77600284D55 /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAA9BC52BBCB77600284D55 /* Notes.swift */; };
 		AFC432A82BA7BAF60053494F /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A72BA7BAF60053494F /* TabBarItem.swift */; };
 		AFC432AA2BA7BB2A0053494F /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */; };
 		AFC432AC2BA7BB4B0053494F /* CustomTabBarContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */; };
@@ -177,6 +178,7 @@
 		AF8556B42BAF647B009B7489 /* SkillCategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillCategoryPicker.swift; sourceTree = "<group>"; };
 		AF8556B62BAF7329009B7489 /* HScrollPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HScrollPicker.swift; sourceTree = "<group>"; };
 		AF8556B82BAF7373009B7489 /* CustomSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedPicker.swift; sourceTree = "<group>"; };
+		AFAA9BC52BBCB77600284D55 /* Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
 		AFC432A72BA7BAF60053494F /* TabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		AFC432A92BA7BB2A0053494F /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		AFC432AB2BA7BB4B0053494F /* CustomTabBarContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarContainerView.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 		AF2B767A2B7585F400B9535F /* parentMDP */ = {
 			isa = PBXGroup;
 			children = (
+				AFAA9BC52BBCB77600284D55 /* Notes.swift */,
 				AFC6ECA92B85D201000CFB9B /* GoogleService-Info.plist */,
 				AF5573A62B7E886200A8724A /* Extensions */,
 				7C3B11C62B9A6DD30058368E /* Manage Kids */,
@@ -554,6 +557,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF75D72E2B7C3E7C009CBF30 /* RewardView.swift in Sources */,
+				AFAA9BC62BBCB77600284D55 /* Notes.swift in Sources */,
 				AF2B76C22B758DEC00B9535F /* AddTaskSheet.swift in Sources */,
 				AF2B76A12B758B4700B9535F /* CustomSegmentedControl.swift in Sources */,
 				AF8556B32BAF609C009B7489 /* AddSkillSheet.swift in Sources */,
