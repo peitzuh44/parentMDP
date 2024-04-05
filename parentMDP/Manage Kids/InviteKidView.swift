@@ -73,7 +73,9 @@ struct InviteKidView: View {
                 // DONE BUTTON START
                 Button(action:{
                     // This changes the authFlow to authenticated which will redirect the user to the main dashboard
-                    authFlow = .authenticated
+                    withAnimation {
+                        authFlow = .authenticated
+                    }
                 }){
                     Text("Done")
                 }

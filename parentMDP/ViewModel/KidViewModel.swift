@@ -74,6 +74,7 @@ class KidViewModel: ObservableObject {
     // MARK: Add kids
     // function that adds kids to your database given a name, gender, and birthdate
     func addKids(name: String, gender: String, birthdate: Date) {
+        // Check if the current user has logged in or not
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             print("User not logged in")
             return
@@ -88,6 +89,7 @@ class KidViewModel: ObservableObject {
 
             if let userData = snapshot.data(), let self = self {
                 let parentID = currentUserID
+                // Parent Code Fetched
                 let myParent = userData["parentCode"] as? String ?? ""
 
                 // Proceed to add the kid with the fetched parentID and myParent
