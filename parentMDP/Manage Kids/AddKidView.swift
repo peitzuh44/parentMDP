@@ -22,6 +22,7 @@ struct AddKidView: View {
             Color.customDarkBlue.ignoresSafeArea(.all)
             VStack{
                 VStack{
+                    // MARK: HEADER
                     // HEADER START
                     VStack(alignment: .leading){
                         Text("Add your kids")

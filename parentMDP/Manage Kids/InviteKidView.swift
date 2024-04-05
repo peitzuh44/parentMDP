@@ -4,6 +4,7 @@
 //
 //  Created by Pei-Tzu Huang on 2024/2/8.
 //
+//  Edited by Eric Tran 2024/4/4
 
 import SwiftUI
 import FirebaseFirestore
@@ -38,14 +39,18 @@ struct InviteKidView: View {
             Color.customDarkBlue.ignoresSafeArea(.all)
             VStack{
                 VStack(alignment: .leading){
+                    // HEADER START
                     Text("Invite your kids")
                         .foregroundStyle(Color.white)
                         .font(.title2)
                         .bold()
                         .padding()
+                    // HEADER END
                 }
+                
                 Spacer()
                 
+                // Box containing the parent code START
                 HStack{
                     Text(parentCode) // fetch the parent code
                         .foregroundStyle(Color.white)
@@ -61,8 +66,13 @@ struct InviteKidView: View {
                 .frame(width: 200)
                 .background(Color.customNavyBlue)
                 .cornerRadius(10)
+                // Box containing the parent code END
+            
                 Spacer()
+                
+                // DONE BUTTON START
                 Button(action:{
+                    // This changes the authFlow to authenticated which will redirect the user to the main dashboard
                     authFlow = .authenticated
                 }){
                     Text("Done")
@@ -70,7 +80,9 @@ struct InviteKidView: View {
                 .frame(width: 330, height: 50)
                 .buttonStyle(ThreeD(backgroundColor: .customPurple, shadowColor: .black))
                 .foregroundColor(.white)
+                // DONE BUTTON END
             }
+            // When page appears, calls the fetching function to grab the parent code that will be shared
             .onAppear() {
                 let parentID = Auth.auth().currentUser?.uid ?? ""
                 fetchParentCode(forParentID: parentID) { code in
