@@ -13,7 +13,14 @@
  3. add reward from template
  4. add challege from template
  
- bulk assign tasks 
+ bulk assign tasks
+ 
+ - manage skills view real time fetching
+ - custom text field
+ - improve UI for the completed challenge detail view
+ 
+
+
  
  
  
