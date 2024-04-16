@@ -29,8 +29,12 @@ struct LoginView: View {
                 Color.customDarkBlue.ignoresSafeArea(.all)
                 VStack {
                     // Header START
+                    Spacer()
+                    
                     HStack {
-                        Text("Welcome Back!")
+                        Spacer()
+                        
+                        Text("Kiddoo")
                             .font(.largeTitle)
                             .foregroundStyle(Color.white)
                             .bold()
@@ -61,6 +65,8 @@ struct LoginView: View {
                                 .foregroundColor(.gray)
                         }
                     }
+                    
+                    Spacer()
                     
                     // Button for switching between LoginView and SignupView END
                     
@@ -104,7 +110,9 @@ struct LoginView: View {
 // MARK: Previews
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(currentShowingView: .constant("login"), authFlow: Binding.constant(.notAuthenticated))
+        NavigationStack {
+            ContentView()
+        }
     }
 }
 
