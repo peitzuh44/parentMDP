@@ -81,8 +81,13 @@ struct SignupView: View {
                 
                 VStack {
                     // HEADER START
+                    Spacer()
+                    
                     HStack {
-                        Text("Welcome to Kidoo!")
+                        Spacer()
+                        
+                        Text("Create an account")
+                            .multilineTextAlignment(.center)
                             .foregroundColor(.white)
                             .font(.largeTitle)
                             .bold()
@@ -142,7 +147,9 @@ struct SignupView: View {
 // MARK: Preview
 struct SignupView_Previews: PreviewProvider {
     static var previews: some View {
-        SignupView(currentShowingView: .constant("signup"), authFlow: Binding.constant(.notAuthenticated))
+        NavigationStack {
+            ContentView()
+        }
     }
 }
 
