@@ -61,6 +61,7 @@
 		AF5573B82B7EE5F700A8724A /* ChallengeActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5573B72B7EE5F700A8724A /* ChallengeActionSheet.swift */; };
 		AF5573BA2B7FCA9D00A8724A /* AssignedChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5573B92B7FCA9D00A8724A /* AssignedChallengeView.swift */; };
 		AF5573BC2B7FCAAD00A8724A /* SelfSelectedChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5573BB2B7FCAAD00A8724A /* SelfSelectedChallengeView.swift */; };
+		AF5F7C3E2BFFF04300FA77A0 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = AF5F7C3D2BFFF04300FA77A0 /* FirebaseFunctions */; };
 		AF66DC372BAA77CA00875D7B /* ManageKidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF66DC362BAA77CA00875D7B /* ManageKidView.swift */; };
 		AF75D72A2B7C3D62009CBF30 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D7292B7C3D62009CBF30 /* AuthViewModel.swift */; };
 		AF75D72C2B7C3E5A009CBF30 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D72B2B7C3E5A009CBF30 /* MainView.swift */; };
@@ -214,6 +215,7 @@
 				AF2B76FE2B75919900B9535F /* FirebaseFirestore in Frameworks */,
 				AF2B76EA2B75919900B9535F /* FirebaseAnalyticsSwift in Frameworks */,
 				AF2B76E62B75919900B9535F /* FirebaseAnalytics in Frameworks */,
+				AF5F7C3E2BFFF04300FA77A0 /* FirebaseFunctions in Frameworks */,
 				AF2B77022B75919900B9535F /* FirebaseFirestoreSwift in Frameworks */,
 				AF2B76F22B75919900B9535F /* FirebaseAuth in Frameworks */,
 			);
@@ -256,6 +258,7 @@
 			children = (
 				AF2B767A2B7585F400B9535F /* parentMDP */,
 				AF2B76792B7585F400B9535F /* Products */,
+				AF5F7C3C2BFFF04300FA77A0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -454,6 +457,13 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		AF5F7C3C2BFFF04300FA77A0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AF8556AB2BADF0D5009B7489 /* Skills */ = {
 			isa = PBXGroup;
 			children = (
@@ -497,6 +507,7 @@
 				AF2B76F12B75919900B9535F /* FirebaseAuth */,
 				AF2B76FD2B75919900B9535F /* FirebaseFirestore */,
 				AF2B77012B75919900B9535F /* FirebaseFirestoreSwift */,
+				AF5F7C3D2BFFF04300FA77A0 /* FirebaseFunctions */,
 			);
 			productName = parentMDP;
 			productReference = AF2B76782B7585F400B9535F /* parentMDP.app */;
@@ -901,6 +912,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AF2B76E42B75919900B9535F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		AF5F7C3D2BFFF04300FA77A0 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF2B76E42B75919900B9535F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -34,7 +34,7 @@ struct LoginView: View {
                     HStack {
                         Spacer()
                         
-                        Text("Kiddoo")
+                        Text("Kidoo")
                             .font(.largeTitle)
                             .foregroundStyle(Color.white)
                             .bold()
@@ -100,7 +100,7 @@ struct LoginView: View {
                     }
                     // Button to initiate the sign in process END
                     
-                    
+            
                 }
             }
         }
