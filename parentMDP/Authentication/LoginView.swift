@@ -34,8 +34,8 @@ struct LoginView: View {
                     HStack {
                         Spacer()
                         
-                        Text("Kidoo")
-                            .font(.largeTitle)
+                        Text("Welcome back to Kidoo")
+                            .font(.title)
                             .foregroundStyle(Color.white)
                             .bold()
                         
