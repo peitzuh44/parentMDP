@@ -174,20 +174,6 @@ struct TaskView: View {
                     secondaryButton: .cancel()
                 )
             }
-            
-            // MARK: Fetching Conditions
-//            .onAppear {
-//                kidVM.fetchKids()
-//            }
-//            .onReceive(kidVM.$kids) { kids in
-//                if selectedKidID == "", let firstKid = kids.first {
-//                    selectedKidID = firstKid.id
-//                    taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)
-//                }
-//            }
-//            .onChange(of: privateOrPublic) {taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)}
-//            .onChange(of: dateToFetch) {taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)}
-//            .onChange(of: selectedKidID) {taskVM.fetchTasks(forUserID: currentUserID, dateToFetch: dateToFetch, selectedKidID: selectedKidID, privateOrPublic: privateOrPublic)}
             // MARK: Fetching Conditions
             .onAppear {
                 kidVM.fetchKids()
@@ -209,7 +195,6 @@ struct TaskView: View {
                 fetchTasksForTaskView()
             }
             
-                
                     // Add Task Button
                     Button(action:{
                         showAddView.toggle()
