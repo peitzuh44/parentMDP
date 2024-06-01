@@ -63,6 +63,7 @@
 		AF5573BC2B7FCAAD00A8724A /* SelfSelectedChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5573BB2B7FCAAD00A8724A /* SelfSelectedChallengeView.swift */; };
 		AF5F7C3E2BFFF04300FA77A0 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = AF5F7C3D2BFFF04300FA77A0 /* FirebaseFunctions */; };
 		AF66DC372BAA77CA00875D7B /* ManageKidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF66DC362BAA77CA00875D7B /* ManageKidView.swift */; };
+		AF6F91AC2C0BB2E000CC2A8E /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF6F91AB2C0BB2E000CC2A8E /* Launch Screen.storyboard */; };
 		AF75D72A2B7C3D62009CBF30 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D7292B7C3D62009CBF30 /* AuthViewModel.swift */; };
 		AF75D72C2B7C3E5A009CBF30 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D72B2B7C3E5A009CBF30 /* MainView.swift */; };
 		AF75D72E2B7C3E7C009CBF30 /* RewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF75D72D2B7C3E7C009CBF30 /* RewardView.swift */; };
@@ -161,6 +162,7 @@
 		AF5573B92B7FCA9D00A8724A /* AssignedChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignedChallengeView.swift; sourceTree = "<group>"; };
 		AF5573BB2B7FCAAD00A8724A /* SelfSelectedChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSelectedChallengeView.swift; sourceTree = "<group>"; };
 		AF66DC362BAA77CA00875D7B /* ManageKidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageKidView.swift; sourceTree = "<group>"; };
+		AF6F91AB2C0BB2E000CC2A8E /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		AF75D7292B7C3D62009CBF30 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		AF75D72B2B7C3E5A009CBF30 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		AF75D72D2B7C3E7C009CBF30 /* RewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardView.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				AF2B767D2B7585F400B9535F /* ContentView.swift */,
 				AF2B767F2B7585F600B9535F /* Assets.xcassets */,
 				AF2B76812B7585F600B9535F /* Preview Content */,
+				AF6F91AB2C0BB2E000CC2A8E /* Launch Screen.storyboard */,
 			);
 			path = parentMDP;
 			sourceTree = "<group>";
@@ -556,6 +559,7 @@
 			files = (
 				AF2B76832B7585F600B9535F /* Preview Assets.xcassets in Resources */,
 				AFC6ECAA2B85D201000CFB9B /* GoogleService-Info.plist in Resources */,
+				AF6F91AC2C0BB2E000CC2A8E /* Launch Screen.storyboard in Resources */,
 				AF2B76802B7585F600B9535F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -805,6 +809,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -837,6 +842,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
