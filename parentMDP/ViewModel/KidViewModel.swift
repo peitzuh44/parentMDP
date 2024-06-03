@@ -257,6 +257,7 @@ extension KidViewModel {
     // MARK: Fetch Skills Template
     func fetchSkillTemplates(category: String){
         db.collection("skillTemplates")
+            .whereField("category", isEqualTo: category)
             .addSnapshotListener { [weak self] querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
                     print("Error fetching documents: \(String(describing: error?.localizedDescription))")

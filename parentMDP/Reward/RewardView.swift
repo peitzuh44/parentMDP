@@ -25,94 +25,99 @@ struct RewardView: View {
     // MARK: Body
 
     var body: some View {
-        ZStack(alignment: .bottomTrailing){
-            Color.customDarkBlue.ignoresSafeArea(.all)
-            // MARK: Foreground
-                List{
-                    ForEach(rewardVM.rewards) { reward in
-                        RewardListItem(reward: reward)
-                            .onTapGesture {
-                                self.selectedReward = reward
-                                self.showActionSheet = true
-                            }
+        NavigationStack {
+            ZStack(alignment: .bottomTrailing){
+                Color.customDarkBlue.ignoresSafeArea(.all)
+                // MARK: Foreground
+                    List{
+                        ForEach(rewardVM.rewards) { reward in
+                            RewardListItem(reward: reward)
+                                .onTapGesture {
+                                    self.selectedReward = reward
+                                    self.showActionSheet = true
+                                }
+                        }
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.customNavyBlue)
+                                .padding(.vertical, 2)
+                        )
                     }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.customNavyBlue)
-                            .padding(.vertical, 2)
-                    )
-                }
-            
-                // MARK: Fetching Factors
-                .onAppear{
-                    rewardVM.fetchRewards()
-                }
-                .scrollContentBackground(.hidden)
-                .scrollIndicators(.hidden)
-        
-            // MARK: Add Reward Button
-            Button(action:{
-                showAddSheet.toggle()
-            }){
-                ZStack(){
-                    Circle()
-                        .frame(width: 60, height: 60)
-                        .foregroundColor(.customPurple)
-                    Image(systemName: "plus")
-                .foregroundColor(.white)
-                        .font(.title)
-                    
-                }
-            }
-            // MARK: Sheets and Alerts
-            .sheet(isPresented: $showAddSheet) {
-                AddRewardSheet()
-                    .presentationDetents([.height(750)])
-                    .presentationDragIndicator(.hidden)
-            }
-            //reward action sheet
-            .sheet(isPresented: Binding(
-                            get: { showActionSheet },
-                            set: { showActionSheet = $0 }
-            )) {
-                if let rewardDetail = selectedReward {
-                    RewardActionSheet(rewardVM: rewardVM, kidVM: kidVM, reward: rewardDetail, showEditSheet: $showEditSheet, showDeleteAlert: $showDeleteAlert, showPurchaseByPicker: $showPurchasedByPicker)
-                    .presentationDetents([.height(350)])
-                    .presentationDragIndicator(.hidden)
-                    
-                }
                 
-            }
-            // Purchased by picker
-            .sheet(isPresented: $showPurchasedByPicker) {
-                PurchasedByPicker(rewardVM: rewardVM, kidVM: kidVM, reward: selectedReward!)
-                    .presentationDetents([.height(250)])
-                    .presentationDragIndicator(.hidden)
-            }
-            // EDIT - edit reward (NEEDED)
-            .sheet(isPresented: $showEditSheet) {
-                if let reward = $selectedReward.wrappedValue {
-                    EditRewardSheet(selectedReward: reward, rewardVM: rewardVM, kidVM: kidVM)
-                        .presentationDetents([.height(800)])
+                    // MARK: Fetching Factors
+                    .onAppear{
+                        rewardVM.fetchRewards()
+                    }
+                    .scrollContentBackground(.hidden)
+                    .scrollIndicators(.hidden)
+            
+                // MARK: Add Reward Button
+                Button(action:{
+                    showAddSheet.toggle()
+                }){
+                    ZStack(){
+                        Circle()
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(.customPurple)
+                        Image(systemName: "plus")
+                    .foregroundColor(.white)
+                            .font(.title)
+                        
+                    }
+                }
+                // MARK: Sheets and Alerts
+                .sheet(isPresented: $showAddSheet) {
+                    AddRewardSheet()
+                        .presentationDetents([.height(750)])
                         .presentationDragIndicator(.hidden)
                 }
+                //reward action sheet
+                .sheet(isPresented: Binding(
+                                get: { showActionSheet },
+                                set: { showActionSheet = $0 }
+                )) {
+                    if let rewardDetail = selectedReward {
+                        RewardActionSheet(rewardVM: rewardVM, kidVM: kidVM, reward: rewardDetail, showEditSheet: $showEditSheet, showDeleteAlert: $showDeleteAlert, showPurchaseByPicker: $showPurchasedByPicker)
+                        .presentationDetents([.height(350)])
+                        .presentationDragIndicator(.hidden)
+                        
+                    }
+                    
+                }
+                // Purchased by picker
+                .sheet(isPresented: $showPurchasedByPicker) {
+                    PurchasedByPicker(rewardVM: rewardVM, kidVM: kidVM, reward: selectedReward!)
+                        .presentationDetents([.height(250)])
+                        .presentationDragIndicator(.hidden)
+                }
+                // EDIT - edit reward (NEEDED)
+                .sheet(isPresented: $showEditSheet) {
+                    if let reward = $selectedReward.wrappedValue {
+                        EditRewardSheet(selectedReward: reward, rewardVM: rewardVM, kidVM: kidVM)
+                            .presentationDetents([.height(800)])
+                            .presentationDragIndicator(.hidden)
+                    }
+                }
+                // DELETE
+                .alert(isPresented: $showDeleteAlert) {
+                    Alert(
+                        title: Text("Delete Quest"),
+                        message: Text("Are you sure you want to delete this quest?"),
+                        primaryButton: .destructive(Text("Delete"), action: {
+                            if let rewardID = selectedReward?.id  {
+                                rewardVM.deleteReward(rewardID: rewardID)
+                            }
+                        }),
+                        secondaryButton: .cancel()
+                    )
+                }
+                .padding()
             }
-            // DELETE 
-            .alert(isPresented: $showDeleteAlert) {
-                Alert(
-                    title: Text("Delete Quest"),
-                    message: Text("Are you sure you want to delete this quest?"),
-                    primaryButton: .destructive(Text("Delete"), action: {
-                        if let rewardID = selectedReward?.id  {
-                            rewardVM.deleteReward(rewardID: rewardID)
-                        }
-                    }),
-                    secondaryButton: .cancel()
-                )
-            }
-            .padding()
+            .navigationTitle("Rewards")
+            .toolbarColorScheme(.dark, for: .navigationBar)
         }
+
     
     }
 }

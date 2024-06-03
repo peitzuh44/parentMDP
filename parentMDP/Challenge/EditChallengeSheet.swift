@@ -19,7 +19,6 @@ struct EditChallengeSheet: View {
     @State private var selectedDate: Date
     @State private var selectedKidID: String? = nil
     @State private var selectedDifficulty: DifficultyOptions
-    @State private var selectedType: ChallengeTypeOptions
     @State private var selectedreward: Int
     
     // Pickers
@@ -39,7 +38,6 @@ struct EditChallengeSheet: View {
         _selectedDate = State(initialValue: selectedChallenge.due)
         _selectedKidID = State(initialValue: selectedChallenge.assignTo)
         _selectedreward = State(initialValue: selectedChallenge.reward)
-        _selectedType = State(initialValue: ChallengeTypeOptions(rawValue: selectedChallenge.assignedOrSelfSelected)!)
     }
     
     // MARK: Functions
@@ -101,7 +99,6 @@ struct EditChallengeSheet: View {
                             .presentationDetents([.height(380)])
                             .presentationDragIndicator(.hidden)
                         }
-                        ChallengeTypePicker(selectedType: $selectedType)
                         
 
                         Spacer()
@@ -113,7 +110,6 @@ struct EditChallengeSheet: View {
                             updatedChallenge.name = name
                             updatedChallenge.difficulty = selectedDifficulty.rawValue
                             updatedChallenge.reward = selectedreward
-                            updatedChallenge.assignedOrSelfSelected = selectedType.rawValue
                             challengeVM.updateChallenge(updatedChallenge: updatedChallenge)
                             
                         }){

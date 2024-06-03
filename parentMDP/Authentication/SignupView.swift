@@ -11,6 +11,8 @@ import SwiftUI
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
+import GoogleSignIn
+import GoogleSignInSwift
 
 struct SignupView: View {
     // MARK: Properties
@@ -112,6 +114,9 @@ struct SignupView: View {
                         }) {
                             Text("Already have an account?")
                                 .foregroundColor(.white)
+                        }
+                        GoogleSignInButton(viewModel: GoogleSignInButtonViewModel(scheme: .dark, style: .wide, state: .normal)) {
+                            
                         }
                     }
                     Spacer()

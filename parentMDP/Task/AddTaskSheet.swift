@@ -10,7 +10,7 @@ import SwiftUI
 struct AddTaskSheet: View {
     // MARK: Properties
     @Environment(\.presentationMode) var presentationMode
-    @Binding var showAddPrivateTaskSheet: Bool
+    @Binding var showAddPrivateTaskTemplateSheet: Bool
     @Binding var showAddPublicTaskSheet: Bool
     
     // MARK: Body
@@ -22,7 +22,7 @@ struct AddTaskSheet: View {
                 Button(action:{
                     presentationMode.wrappedValue.dismiss()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        showAddPrivateTaskSheet = true
+                        showAddPrivateTaskTemplateSheet = true
                     }
                 }){
                     ZStack{

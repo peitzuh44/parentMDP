@@ -1,30 +1,29 @@
 //
-//  SkillTemplateSheet.swift
+//  TaskTemplateSheet.swift
 //  parentMDP
 //
-//  Created by Pei-Tzu Huang on 2024/2/27.
+//  Created by Pei-Tzu Huang on 2024/6/1.
 //
 
 import SwiftUI
 
-struct SkillTemplateSheet: View {
+struct PrivateTaskTemplateSheet: View {
     @Environment(\.presentationMode) var presentationMode
-
+    
     // MARK: Properties
-    var kidID: String
     @ObservedObject var kidVM = KidViewModel()
-    @State private var selectedSkillTemplate: SkillTemplateModel?
-    @State private var selectedCategory: SkillCategoryOption = .sports
+    @State private var selectedTaskTemplate: TaskTemplateModel?
+    @State private var selectedCategory: TaskCategorySelection = .mental
     @State private var searchTerm: String = ""
-    @Binding var showAddSkillSheet: Bool
-
-    // MARK: Body
+    @Binding var showAddPrivateTaskSheet: Bool
+    
+    
     var body: some View {
         ZStack {
             Color.customDarkBlue.ignoresSafeArea(.all)
                 VStack {
                     // search
-                    CustomTextfield(text: $searchTerm, placeholder: "search for skill", icon: "", background: Color.customNavyBlue, color: Color.white)
+                    CustomTextfield(text: $searchTerm, placeholder: "search for task", icon: "", background: Color.customNavyBlue, color: Color.white)
                     
                     // MARK: CHANGE TO "HScrollPicker"
 
@@ -51,8 +50,8 @@ struct SkillTemplateSheet: View {
                                 }
                                 .padding(.vertical, 8)
                                 .onTapGesture {
-                                    selectedSkillTemplate = template
-                                    kidVM.addSkillFromTemplate(selectedKidID: kidID, template: template)
+//                                    selectedTaskTemplate = template
+//                                    kidVM.addSkillFromTemplate(selectedKidID: kidID, template: template)
                                 }
                                 
                             }
@@ -69,10 +68,10 @@ struct SkillTemplateSheet: View {
                     Button {
                         presentationMode.wrappedValue.dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            showAddSkillSheet = true
+                            showAddPrivateTaskSheet = true
                         }
                     } label: {
-                        Text("add new")
+                        Text("Add custom task")
                             .padding()
                             .foregroundStyle(.white)
                             .background(Color.customPurple)
@@ -101,79 +100,25 @@ struct SkillTemplateSheet: View {
 
 
 
-
-enum SkillCategoryOption: CaseIterable, Hashable, CustomStringConvertible {
-    case sports, mathLogic, language, dance, music, stem, visualArt
+enum TaskCategorySelection: CaseIterable, Hashable, CustomStringConvertible {
+    case physical, mental, social, learning
 
     var description: String {
         switch self {
-        case .sports: return "Sports"
-        case .mathLogic: return "Math"
-        case .language: return "Language"
-        case .dance: return "Dance"
-        case .music: return "Music"
-        case .stem: return "STEM"
-        case .visualArt: return "Visual Arts"
+        case .physical: return "fitness"
+        case .mental: return "mind"
+        case .social: return "social"
+        case .learning: return "knowledge & skills"
         }
     }
 
     func emoji() -> String {
         switch self {
-        case .sports: return "💪🏻"
-        case .mathLogic: return "🧮"
-        case .language: return "📝"
-        case .dance: return "💃🏻"
-        case .music: return "🎹"
-        case .stem: return "🧪"
-        case .visualArt: return "🎨"
+        case .physical: return "💪🏻"
+        case .mental: return "🧘🏻‍♀️"
+        case .social: return "🤝🏻"
+        case .learning: return "🧠"
+
         }
     }
 }
-
-//struct SkillCategorySelector: View {
-//    @Binding var selectedCategory: SkillCategoryOption
-//
-//    var body: some View {
-//        ScrollView(.horizontal, showsIndicators: false) {
-//            HStack(spacing: 8) {
-//                ForEach(SkillCategoryOption.allCases, id: \.self) {
-//                    category in
-//                    Button(action: {
-//                        selectedCategory = category
-//                    }) {
-//                        HStack(spacing: 10) {
-//                            Text(emoji(for: category))
-//                            Text(category.rawValue)
-//                                .foregroundColor(.white)
-//                        }
-//                        .padding()
-//                        .background(selectedCategory == category ? Color.customPurple : Color.black.opacity(0.6))
-//                        .cornerRadius(10)
-//                    }
-//                }
-//            }
-//            .padding(.horizontal, 10)
-//        }
-//    }
-//    private func emoji(for category: SkillCategoryOption) -> String {
-//        switch category {
-//
-//        case .sports:
-//            return "💪🏻"
-//        case .mathLogic:
-//            return "🧮"
-//        case .language:
-//            return "📝"
-//        case .dance:
-//            return "💃🏻"
-//        case .music:
-//            return "🎹"
-//        case .stem:
-//            return "🧪"
-//        case .visualArt:
-//            return "🎨"
-//        }
-//    }
-//
-//}
-//

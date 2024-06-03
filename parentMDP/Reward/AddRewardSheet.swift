@@ -52,7 +52,7 @@ struct AddRewardSheet: View {
                 .background(Color.customNavyBlue)
                 ScrollView{
                     VStack(spacing: 12){
-                        CustomTextfield(text: $name, placeholder: "ready for the next mission", icon: "", background: Color.customNavyBlue, color: Color.white)
+                        CustomTextfield(text: $name, placeholder: "reward name...", icon: "gift", background: Color.customNavyBlue, color: Color.white)
                         // rarity picker
                         Button(action: {
                             self.showRarityPicker = true

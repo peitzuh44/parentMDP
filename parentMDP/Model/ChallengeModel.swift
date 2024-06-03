@@ -20,12 +20,11 @@ struct ChallengeModel: Identifiable, Codable {
     var difficulty: String
     var reward: Int
     var due: Date
-    var assignedOrSelfSelected: String
     var relatedSkills: [String]? // IDs of skills related to this challenge
     var status: String
     var dateCompleted: Date?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, description, comment, timeCreated, createdBy, assignTo, difficulty, reward, due, assignedOrSelfSelected, relatedSkills, status, dateCompleted
+        case id, name, description, comment, timeCreated, createdBy, assignTo, difficulty, reward, due, relatedSkills, status, dateCompleted
     }
 }

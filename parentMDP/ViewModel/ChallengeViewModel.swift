@@ -20,7 +20,6 @@ struct FetchChallengesConfig {
     enum Criteria {
         case createdBy(String)
         case assignTo(String)
-        case assignedOrSelfSelected(String)
         case dueDateNotPassed
         case status(String)
         case dateCompleted
@@ -51,8 +50,6 @@ class ChallengeViewModel: ObservableObject {
                 query = query.whereField("createdBy", isEqualTo: userID)
             case .assignTo(let kidID):
                 query = query.whereField("assignTo", isEqualTo: kidID)
-            case .assignedOrSelfSelected(let value):
-                query = query.whereField("assignedOrSelfSelected", isEqualTo: value)
             case .dueDateNotPassed:
                 query = query.whereField("due", isGreaterThan: Date())
             case .status(let status):
@@ -98,7 +95,7 @@ class ChallengeViewModel: ObservableObject {
         let newChallengeRef = db.collection("challenges").document()
         let challengeID = newChallengeRef.documentID
         let challenge =
-        ChallengeModel(id: challengeID, name: name, description: description, comment: "no comment", timeCreated: Date(), createdBy: createdBy, assignTo: assignTo, difficulty: difficulty, reward: reward, due: due, assignedOrSelfSelected: assignedOrSelfSelected, relatedSkills: skills, status: "ongoing", dateCompleted: Date())
+        ChallengeModel(id: challengeID, name: name, description: description, comment: "no comment", timeCreated: Date(), createdBy: createdBy, assignTo: assignTo, difficulty: difficulty, reward: reward, due: due, relatedSkills: skills, status: "ongoing", dateCompleted: Date())
         do {
             try db.collection("challenges").document(challengeID).setData(from: challenge)
         } catch let error {
@@ -152,13 +149,8 @@ extension ChallengeViewModel {
 
             // Pass the comment parameter to the markChallengeAsComplete function
             markChallengeAsComplete(challengeID: challenge.id, comment: comment, dateCompleted: dateComplete) { [self] in
-                if challenge.assignedOrSelfSelected == "assigned" {
-                    self.updateKidGemBalance(kidID: challenge.assignTo, gemToAdd: amountToAdd)
-                } else if challenge.assignedOrSelfSelected == "self-selected" {
-                    self.updateKidGoldBalance(kidID: challenge.assignTo, goldToAdd: amountToAdd)
-                }
+                self.updateKidGemBalance(kidID: challenge.assignTo, gemToAdd: amountToAdd)
                 let expToAdd = self.expForChallengeDifficulty(challenge.difficulty)
-
                 // Update the experience for each realted skill
                 if !challenge.relatedSkills!.isEmpty {
                     for skillID in challenge.relatedSkills! {
@@ -265,34 +257,7 @@ private func updateKidGemBalance(kidID: String, gemToAdd: Int) {
             }
         }
     }
-    // MARK: Update coin balance
-    private func updateKidGoldBalance(kidID: String, goldToAdd: Int) {
-            let kidRef = db.collection("kids").document(kidID)
-            db.runTransaction({ (transaction, errorPointer) -> Any? in
-                let kidDocument: DocumentSnapshot
-                do {
-                    try kidDocument = transaction.getDocument(kidRef)
-                } catch let fetchError as NSError {
-                    errorPointer?.pointee = fetchError
-                    return nil
-                }
-                guard let oldGoldBalance = kidDocument.data()?["goldBalance"] as? Int else {
-                    let error = NSError(domain: "AppErrorDomain", code: -1, userInfo: [
-                        NSLocalizedDescriptionKey: "Unable to retrieve gem balance from snapshot \(kidDocument)"
-                    ])
-                    errorPointer?.pointee = error
-                    return nil
-                }
-                transaction.updateData(["goldBalance": oldGoldBalance + goldToAdd], forDocument: kidRef)
-                return nil
-            }) { (object, error) in
-                if let error = error {
-                    print("Transaction failed: \(error)")
-                } else {
-                    print("Transaction successfully committed!")
-                }
-            }
-        }
+
 }
 
 

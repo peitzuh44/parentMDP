@@ -97,6 +97,9 @@ struct DashboardView: View {
                 .onAppear {
                      rewardVM.updateRewardCount(userID: currentUserID)
                  }
+//                .onAppear {
+//                        FirestoreUploader.uploadSkillsData()
+//                    }
                 // MARK: Navigation Destinations
                 .navigationDestination(for: KidModel.self) { kid in
                     KidProfileView(challengeVM: challengeVM, kidVM: kidVM, kid: kid)

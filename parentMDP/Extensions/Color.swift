@@ -2,10 +2,8 @@
 //  Color.swift
 //  parentMDP
 //
-//  Created by Pei-Tzu Huang on 2024/2/8.
-//  Edited by Eric Tran on 2024/3/6
+//  Created by Pei-Tzu Huang on 2024/6/1.
 //
-// This file contains the custom colors of the project that we need as well as the background gradient
 
 import Foundation
 import SwiftUI

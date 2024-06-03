@@ -28,11 +28,3 @@ struct AuthViewModel: View {
         }
     }
 }
-
-
-// MARK: Preview
-struct AuthViewModel_Previews: PreviewProvider {
-    static var previews: some View {
-        AuthViewModel(authFlow: .constant(.notAuthenticated))
-    }
-}

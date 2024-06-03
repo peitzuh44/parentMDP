@@ -32,14 +32,10 @@ struct LoginView: View {
                     Spacer()
                     
                     HStack {
-                        Spacer()
-                        
                         Text("Welcome back to Kidoo")
                             .font(.title)
                             .foregroundStyle(Color.white)
                             .bold()
-                        
-                        Spacer()
                     }
                     .padding()
                     .padding(.top)

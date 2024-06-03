@@ -14,6 +14,8 @@
  2. add skills from template
  3. add reward from template
  4. add challege from template
+    - PBL
+ 
  
  bulk assign tasks
  
@@ -23,7 +25,7 @@
  
 
 
- 
+ 1. google and apple authentication
  
  
  */

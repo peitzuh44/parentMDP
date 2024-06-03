@@ -8,15 +8,26 @@
 import Foundation
 
 // MARK: Skill Template Model
-struct SkillTemplateModel: Identifiable, Codable, Hashable{
+//struct SkillTemplateModel: Identifiable, Codable, Hashable{
+//    var id: String
+//    var name: String
+//    var category: String
+//    
+//    
+//    enum CodingKeys: String, CodingKey {
+//        case id
+//        case name
+//        case category
+//    }
+//}
+
+
+struct TaskTemplateModel: Identifiable, Codable, Hashable {
     var id: String
     var name: String
     var category: String
     
-    
     enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case category
+        case id, name, category
     }
 }

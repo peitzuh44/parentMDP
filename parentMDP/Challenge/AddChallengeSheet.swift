@@ -102,8 +102,6 @@ struct AddChallengeSheet: View {
                             .presentationDetents([.medium])
                             .presentationDragIndicator(.hidden)
                         }
-                        ChallengeTypePicker(selectedType: $selectedType)
-                        
 
                         Spacer()
                         Button(action:{

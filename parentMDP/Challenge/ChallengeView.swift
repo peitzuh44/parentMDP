@@ -12,7 +12,6 @@ import FirebaseFirestore
 
 struct ChallengeView: View {
     // MARK: Properties
-    
     // Initializing View Model
     @ObservedObject var challengeVM = ChallengeViewModel()
     @ObservedObject var kidVM = KidViewModel()
@@ -23,14 +22,6 @@ struct ChallengeView: View {
     let status: String = "ongoing"
     @State private var showKidSelector = false
     @State private var selectedKidID: String = ""
-    
-
-    // Customize Picker
-    @State private var assignedOrSelfSelected: String = "assigned"
-    @Namespace private var namespace
-    private var animationSlideInFromLeading: Bool {
-        assignedOrSelfSelected == "assigned"
-    }
     
     //sheets
     @Environment(\.presentationMode) var presentationMode
@@ -57,8 +48,7 @@ struct ChallengeView: View {
             criteria: [
                 .createdBy(currentUserID),
                 .status(status),
-                .assignTo(selectedKidID),
-                .assignedOrSelfSelected(assignedOrSelfSelected)
+                .assignTo(selectedKidID)
             ],
             sortOptions: [
                 .dueDate(ascending: true)
@@ -71,24 +61,36 @@ struct ChallengeView: View {
     
     // MARK: Body
     var body: some View {
-        ZStack (alignment: .bottomTrailing){
-            Color.customDarkBlue.ignoresSafeArea(.all)
-            VStack {
-                CustomSegmentedControl(segments: ["assigned", "self-selected"], selectedSegment: $assignedOrSelfSelected)
-                
-                // MARK: Kid Picker
-                KidSelector(kidVM: kidVM, selectedKidID: $selectedKidID)
-                    .padding(.vertical)
+        NavigationStack{
+            ZStack (alignment: .bottomTrailing){
+                Color.customDarkBlue.ignoresSafeArea(.all)
+                VStack {
+                    // MARK: Kid Picker
+                    KidSelector(kidVM: kidVM, selectedKidID: $selectedKidID)
+                        .padding(.vertical)
 
-                
-                // MARK: Return View By Case
-                if assignedOrSelfSelected == "assigned" {
+                    
+                    // MARK: Return View By Case
                     AssignedChallengeView(challengeVM: challengeVM, kidVM: kidVM, selectedChallenge: $selectedChallenge, showActionSheet: $showActionSheet)
-                } else if assignedOrSelfSelected == "self-selected" {
-                    SelfSelectedChallengeView(challengeVM: challengeVM, kidVM: kidVM, selectedChallenge: $selectedChallenge, showActionSheet: $showActionSheet)
                 }
-            }
-            
+                // MARK: Add Challenge Button
+                Button(action:{
+                    showAddChallengeSheet.toggle()
+                }){
+                    ZStack(){
+                        Circle()
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(.customPurple)
+                        Image(systemName: "plus")
+                            .foregroundColor(.white)
+                            .font(.title)
+                        
+                    }
+                }
+                .padding()
+        }
+            .navigationTitle("Challenges")
+            .toolbarColorScheme(.dark, for: .navigationBar)
             // MARK: Sheets
             .sheet(isPresented: Binding(
                 get: { showActionSheet },
@@ -146,23 +148,7 @@ struct ChallengeView: View {
             }
             .onChange(of: selectedKidID) { _ in                     fetchChallengesForChallengeView()
             }
-            .onChange(of: assignedOrSelfSelected) { _ in                     fetchChallengesForChallengeView()
-            }
-            // MARK: Add Challenge Button
-            Button(action:{
-                showAddChallengeSheet.toggle()
-            }){
-                ZStack(){
-                    Circle()
-                        .frame(width: 60, height: 60)
-                        .foregroundColor(.customPurple)
-                    Image(systemName: "plus")
-                        .foregroundColor(.white)
-                        .font(.title)
-                    
-                }
-            }
-            .padding()
+
         }
     }
 }

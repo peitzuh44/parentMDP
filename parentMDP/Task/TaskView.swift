@@ -29,6 +29,10 @@ struct TaskView: View {
     @State private var selectedKidID: String = ""
     //sheets
     @State private var showAddView = false
+    @State private var showAddPrivateTaskTemplateSheet = false
+    @State private var showAddPublicTaskTemplateSheet = false
+
+
     @State private var showAddPrivateTask = false
     @State private var showAddPublicTask = false
     @State private var showActionSheet = false
@@ -66,7 +70,6 @@ struct TaskView: View {
         guard let selectedKidID = selectedKidID else { return nil }
         return kidVM.kids.first { $0.id == selectedKidID }?.name
     }
-    
     // MARK: Body
     var body: some View {
         ZStack(alignment: .bottomTrailing){
@@ -100,18 +103,24 @@ struct TaskView: View {
             }
             // MARK: Sheets and Alerts
             .sheet(isPresented: $showAddView) {
-                AddTaskSheet(showAddPrivateTaskSheet: $showAddPrivateTask, showAddPublicTaskSheet: $showAddPublicTask)
+                AddTaskSheet(showAddPrivateTaskTemplateSheet: $showAddPrivateTaskTemplateSheet, showAddPublicTaskSheet: $showAddPublicTask)
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.hidden)
                 
             }
-            
+            .sheet(isPresented: $showAddPrivateTaskTemplateSheet) {
+                PrivateTaskTemplateSheet(showAddPrivateTaskSheet: $showAddPrivateTask)
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.hidden)
+                
+            }
             .sheet(isPresented: $showAddPrivateTask) {
                 CreatePrivateTaskSheet()
                     .presentationDetents([.large])
                     .presentationDragIndicator(.hidden)
                 
             }
+
             .sheet(isPresented: $showAddPublicTask) {
                 CreatePublicTaskSheet()
                     .presentationDetents([.large])

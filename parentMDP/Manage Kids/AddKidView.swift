@@ -85,7 +85,7 @@ struct AddKidView: View {
                     .padding(.horizontal)
                     .sheet(isPresented: $showAddKidSheet) {
                         AddKidSheet(kidVM: kidVM)
-                            .presentationDetents([.height(750)])
+                            .presentationDetents([.large])
                             .presentationDragIndicator(.hidden)
                     }
                     // Button to pull up the add kid sheet END
