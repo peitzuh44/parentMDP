@@ -110,6 +110,8 @@
 		AFEFEA0C2C0D4BC900B24730 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = AFEFEA0B2C0D4BC900B24730 /* GoogleSignIn */; };
 		AFEFEA0E2C0D4BC900B24730 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AFEFEA0D2C0D4BC900B24730 /* GoogleSignInSwift */; };
 		AFEFEA112C0D4CEE00B24730 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AFEFEA102C0D4CEE00B24730 /* GoogleService-Info.plist */; };
+		AFEFEA722C0EE56200B24730 /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = AFEFEA712C0EE56200B24730 /* OpenAISwift */; };
+		AFEFEA742C0EE57000B24730 /* AIViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEFEA732C0EE57000B24730 /* AIViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -211,6 +213,7 @@
 		AFEFEA0F2C0D4C4700B24730 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AFEFEA102C0D4CEE00B24730 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AFEFEA132C0D523B00B24730 /* skills_template.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = skills_template.json; sourceTree = "<group>"; };
+		AFEFEA732C0EE57000B24730 /* AIViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +225,7 @@
 				AF2B76EA2B75919900B9535F /* FirebaseAnalyticsSwift in Frameworks */,
 				AF2B76E62B75919900B9535F /* FirebaseAnalytics in Frameworks */,
 				AFEFEA0E2C0D4BC900B24730 /* GoogleSignInSwift in Frameworks */,
+				AFEFEA722C0EE56200B24730 /* OpenAISwift in Frameworks */,
 				AF5F7C3E2BFFF04300FA77A0 /* FirebaseFunctions in Frameworks */,
 				AF2B77022B75919900B9535F /* FirebaseFirestoreSwift in Frameworks */,
 				AF2B76F22B75919900B9535F /* FirebaseAuth in Frameworks */,
@@ -293,6 +297,7 @@
 				AF2B767F2B7585F600B9535F /* Assets.xcassets */,
 				AF2B76812B7585F600B9535F /* Preview Content */,
 				AFEFEA082C0D419000B24730 /* FirestorUploader.swift */,
+				AFEFEA732C0EE57000B24730 /* AIViewModel.swift */,
 			);
 			path = parentMDP;
 			sourceTree = "<group>";
@@ -521,6 +526,7 @@
 				AF5F7C3D2BFFF04300FA77A0 /* FirebaseFunctions */,
 				AFEFEA0B2C0D4BC900B24730 /* GoogleSignIn */,
 				AFEFEA0D2C0D4BC900B24730 /* GoogleSignInSwift */,
+				AFEFEA712C0EE56200B24730 /* OpenAISwift */,
 			);
 			productName = parentMDP;
 			productReference = AF2B76782B7585F400B9535F /* parentMDP.app */;
@@ -553,6 +559,7 @@
 			packageReferences = (
 				AF2B76E42B75919900B9535F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				AFEFEA0A2C0D4BC900B24730 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				AFEFEA702C0EE56200B24730 /* XCRemoteSwiftPackageReference "OpenAISwift" */,
 			);
 			productRefGroup = AF2B76792B7585F400B9535F /* Products */;
 			projectDirPath = "";
@@ -588,6 +595,7 @@
 				AF2B76A12B758B4700B9535F /* CustomSegmentedControl.swift in Sources */,
 				AF8556B32BAF609C009B7489 /* AddSkillSheet.swift in Sources */,
 				AF2B76DD2B758F4A00B9535F /* AddKidSheet.swift in Sources */,
+				AFEFEA742C0EE57000B24730 /* AIViewModel.swift in Sources */,
 				AF2B769A2B758A3100B9535F /* Button.swift in Sources */,
 				AF8556A22BABF704009B7489 /* ReviewChallengeView.swift in Sources */,
 				AF2B76B82B758D7900B9535F /* InventoryModel.swift in Sources */,
@@ -920,6 +928,14 @@
 				minimumVersion = 7.1.0;
 			};
 		};
+		AFEFEA702C0EE56200B24730 /* XCRemoteSwiftPackageReference "OpenAISwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adamrushy/OpenAISwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -962,6 +978,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AFEFEA0A2C0D4BC900B24730 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		AFEFEA712C0EE56200B24730 /* OpenAISwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFEFEA702C0EE56200B24730 /* XCRemoteSwiftPackageReference "OpenAISwift" */;
+			productName = OpenAISwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
