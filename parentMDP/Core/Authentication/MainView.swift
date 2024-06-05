@@ -8,14 +8,17 @@
 import SwiftUI
 import Foundation
 
+import SwiftUI
+import Foundation
+
 struct MainView: View {
     @Binding var authFlow: AuthFlow
     @State private var selection: TabBarItem = .home
-
+    @State private var hideTabBar: Bool = false
 
     var body: some View {
-        CustomTabBarContainerView(selection: $selection) {
-            DashboardView(authFlow: $authFlow)
+        CustomTabBarContainerView(selection: $selection, hideTabBar: $hideTabBar) {
+            DashboardView(authFlow: $authFlow, hideTabBar: $hideTabBar)
                 .tabBarItem(tab: .home, selection: $selection)
             TaskView()
                 .tabBarItem(tab: .quest, selection: $selection)
@@ -23,8 +26,8 @@ struct MainView: View {
                 .tabBarItem(tab: .challenge, selection: $selection)
             RewardView()
                 .tabBarItem(tab: .reward, selection: $selection)
-
         }
-           }
     }
+}
+
 

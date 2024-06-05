@@ -24,6 +24,8 @@ struct DashboardView: View {
     // Fetching Conditions
     let currentUserID = Auth.auth().currentUser?.uid ?? ""
     let status: String = "reviewing"
+    @Binding var hideTabBar: Bool
+
  
     // MARK: Body
     var body: some View {
@@ -117,7 +119,6 @@ struct DashboardView: View {
                         Image(systemName: "line.3.horizontal")
 
                     }
-
                 }
                 
                 ToolbarItem(placement: .principal) {
@@ -125,6 +126,13 @@ struct DashboardView: View {
                         .foregroundStyle(.white)
                         .bold()
                 }
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(destination: GameView().onAppear { hideTabBar = true }.onDisappear { hideTabBar = false }) {
+                        Image(systemName: "gamecontroller")
+
+                             }
+                }
+                
 //                ToolbarItem(placement: .principal) {
 //                    HStack(spacing: 24){
 //                        // login streak
